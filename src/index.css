@@ -1,0 +1,84 @@
+:root {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  color: #e2e8f0;
+  background: radial-gradient(circle at top, #1f2937, #0f172a);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: inherit;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+.app {
+  width: min(920px, 100%);
+  padding: 18px;
+}
+
+#game-canvas canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #334155;
+}
+
+.hud {
+  margin-top: 12px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.classes,
+.actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 10px 0;
+}
+
+button {
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #334155;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 14px;
+}
+
+ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.afk {
+  color: #86efac;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
