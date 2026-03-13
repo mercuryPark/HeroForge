@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { gsap } from "gsap"
+import { Icon } from "@iconify/react"
+import broadswordIcon from "@iconify-icons/game-icons/broadsword"
+import fireballIcon from "@iconify-icons/game-icons/fireball"
+import bowArrowIcon from "@iconify-icons/game-icons/bow-arrow"
+import plainDaggerIcon from "@iconify-icons/game-icons/plain-dagger"
 import { HERO_CLASSES } from "../game/data/classes"
 import { useGameStore } from "../game/state/gameStore"
 import { useShallow } from "zustand/react/shallow"
@@ -51,6 +56,13 @@ export function HudPanel() {
       <div className="row">
         <h1>히어로포지</h1>
         <span>전투력 {state.power}</span>
+      </div>
+
+      <div className="skill-icons">
+        <span><Icon icon={broadswordIcon} /> 전사</span>
+        <span><Icon icon={fireballIcon} /> 마법사</span>
+        <span><Icon icon={bowArrowIcon} /> 궁수</span>
+        <span><Icon icon={plainDaggerIcon} /> 도적</span>
       </div>
 
       {showGuide && (

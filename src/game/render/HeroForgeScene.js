@@ -57,6 +57,7 @@ export class HeroForgeScene extends Phaser.Scene {
     this.touchState = {
       joystickPointerId: null,
       joystickVec: new Phaser.Math.Vector2(0, 0),
+      joystick: null,
       actions: { basic: false, q: false, e: false, r: false, dash: false },
     }
     this.hitStopActive = false
@@ -67,6 +68,11 @@ export class HeroForgeScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.spritesheet("lpc-idle", "/assets/reference/lpc/body_idle_light.png", { frameWidth: 64, frameHeight: 64 })
+    this.load.spritesheet("lpc-walk", "/assets/reference/lpc/body_walk_light.png", { frameWidth: 64, frameHeight: 64 })
+    this.load.spritesheet("lpc-slash", "/assets/reference/lpc/body_slash_light.png", { frameWidth: 64, frameHeight: 64 })
+    this.load.spritesheet("lpc-hurt", "/assets/reference/lpc/body_hurt_light.png", { frameWidth: 64, frameHeight: 64 })
+
     for (const [classId, paths] of Object.entries(SPRITE_MANIFEST.heroes)) {
       this.load.svg(heroTextureKey(classId, "idle"), paths.idle, { width: 64, height: 64 })
       this.load.svg(heroTextureKey(classId, "run"), paths.run, { width: 64, height: 64 })
@@ -88,6 +94,7 @@ export class HeroForgeScene extends Phaser.Scene {
 
     this.classId = initial.hero.classId
     this.classProfile = CLASS_PROFILE[this.classId] || CLASS_PROFILE.warrior
+    this.useLpcSprite = true
 
     this.heroStats = {
       maxHp: initial.hero.maxHp,
@@ -119,13 +126,18 @@ export class HeroForgeScene extends Phaser.Scene {
     this.cameras.main.setZoom(1.18)
 
     this.drawArena()
-    this.createPlayerActionFrames()
-    this.createPlayerAnimations()
+    if (this.useLpcSprite) {
+      this.createLpcAnimations()
+    } else {
+      this.createPlayerActionFrames()
+      this.createPlayerAnimations()
+    }
 
-    this.player = this.physics.add.sprite(420, 300, heroTextureKey(this.classId, "idle"))
+    this.player = this.physics.add.sprite(420, 300, this.useLpcSprite ? "lpc-idle" : heroTextureKey(this.classId, "idle"))
     this.player.setCollideWorldBounds(true)
     this.player.setDrag(700, 700)
     this.player.setDepth(20)
+    this.applyClassTint()
 
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08)
 
@@ -196,10 +208,64 @@ export class HeroForgeScene extends Phaser.Scene {
       if (this.classId !== state.hero.classId) {
         this.classId = state.hero.classId
         this.classProfile = CLASS_PROFILE[this.classId] || CLASS_PROFILE.warrior
+        this.applyClassTint()
       }
 
       this.heroHp = clamp(this.heroHp, 1, this.heroStats.maxHp)
     })
+  }
+
+  applyClassTint() {
+    if (!this.player) return
+    if (!this.useLpcSprite) return
+    this.player.setTint(this.classProfile.color)
+  }
+
+  createLpcAnimations() {
+    if (!this.anims.exists("lpc-idle-anim")) {
+      this.anims.create({
+        key: "lpc-idle-anim",
+        frames: [{ key: "lpc-idle", frame: 4 }, { key: "lpc-idle", frame: 5 }],
+        frameRate: 3,
+        repeat: -1,
+      })
+    }
+
+    if (!this.anims.exists("lpc-run-anim")) {
+      this.anims.create({
+        key: "lpc-run-anim",
+        frames: Array.from({ length: 9 }, (_, i) => ({ key: "lpc-walk", frame: 18 + i })),
+        frameRate: 12,
+        repeat: -1,
+      })
+    }
+
+    if (!this.anims.exists("lpc-attack-anim")) {
+      this.anims.create({
+        key: "lpc-attack-anim",
+        frames: Array.from({ length: 6 }, (_, i) => ({ key: "lpc-slash", frame: 12 + i })),
+        frameRate: 12,
+        repeat: 0,
+      })
+    }
+
+    if (!this.anims.exists("lpc-hit-anim")) {
+      this.anims.create({
+        key: "lpc-hit-anim",
+        frames: Array.from({ length: 6 }, (_, i) => ({ key: "lpc-hurt", frame: i })),
+        frameRate: 12,
+        repeat: 0,
+      })
+    }
+
+    if (!this.anims.exists("lpc-dead-anim")) {
+      this.anims.create({
+        key: "lpc-dead-anim",
+        frames: [{ key: "lpc-hurt", frame: 4 }, { key: "lpc-hurt", frame: 5 }],
+        frameRate: 3,
+        repeat: 0,
+      })
+    }
   }
 
   createPlayerActionFrames() {
@@ -408,30 +474,23 @@ export class HeroForgeScene extends Phaser.Scene {
     this.joyBase = this.add.circle(90, this.scale.height - 90, 58, 0x0f172a, 0.35).setScrollFactor(0).setDepth(120)
     this.joyCap = this.add.circle(90, this.scale.height - 90, 28, 0x94a3b8, 0.6).setScrollFactor(0).setDepth(121)
 
+    const joyPlugin = this.plugins.get("rexVirtualJoystick")
+    if (joyPlugin) {
+      this.touchState.joystick = joyPlugin.add(this, {
+        x: this.joyBase.x,
+        y: this.joyBase.y,
+        radius: 46,
+        base: this.joyBase,
+        thumb: this.joyCap,
+        forceMin: 8,
+      })
+    }
+
     this.bindTouchBadge("basic")
     this.bindTouchBadge("q")
     this.bindTouchBadge("e")
     this.bindTouchBadge("r")
     this.bindTouchBadge("dash")
-
-    this.input.on("pointerdown", (pointer) => {
-      if (distance(pointer.x, pointer.y, this.joyBase.x, this.joyBase.y) <= 75) {
-        this.touchState.joystickPointerId = pointer.id
-        this.updateJoystick(pointer)
-      }
-    })
-
-    this.input.on("pointermove", (pointer) => {
-      if (this.touchState.joystickPointerId === pointer.id) this.updateJoystick(pointer)
-    })
-
-    this.input.on("pointerup", (pointer) => {
-      if (this.touchState.joystickPointerId === pointer.id) {
-        this.touchState.joystickPointerId = null
-        this.touchState.joystickVec.set(0, 0)
-        this.joyCap.setPosition(this.joyBase.x, this.joyBase.y)
-      }
-    })
   }
 
   bindTouchBadge(keyName) {
@@ -442,24 +501,6 @@ export class HeroForgeScene extends Phaser.Scene {
     hitCircle.on("pointerdown", () => {
       this.touchState.actions[keyName] = true
     })
-  }
-
-  updateJoystick(pointer) {
-    const maxR = 46
-    const dx = pointer.x - this.joyBase.x
-    const dy = pointer.y - this.joyBase.y
-    const len = Math.hypot(dx, dy)
-
-    if (len <= maxR) {
-      this.joyCap.setPosition(pointer.x, pointer.y)
-      this.touchState.joystickVec.set(dx / maxR, dy / maxR)
-      return
-    }
-
-    const nx = dx / len
-    const ny = dy / len
-    this.joyCap.setPosition(this.joyBase.x + nx * maxR, this.joyBase.y + ny * maxR)
-    this.touchState.joystickVec.set(nx, ny)
   }
 
   consumeTouchAction(name) {
@@ -548,9 +589,12 @@ export class HeroForgeScene extends Phaser.Scene {
       manual = true
     }
 
-    vx += this.touchState.joystickVec.x
-    vy += this.touchState.joystickVec.y
-    if (Math.abs(this.touchState.joystickVec.x) > 0.01 || Math.abs(this.touchState.joystickVec.y) > 0.01) manual = true
+    const joy = this.touchState.joystick
+    if (joy) {
+      vx += joy.forceX / 100
+      vy += joy.forceY / 100
+      if (Math.abs(joy.forceX) > 1 || Math.abs(joy.forceY) > 1) manual = true
+    }
 
     if (this.playerDead) {
       this.player.setVelocity(0, 0)
@@ -611,7 +655,9 @@ export class HeroForgeScene extends Phaser.Scene {
     if (this.playerAction && now < this.actionLockUntil) return
     if (this.playerAction && now >= this.actionLockUntil) this.playerAction = null
 
-    const animKey = isMoving ? `${this.classId}-run-anim` : `${this.classId}-idle-anim`
+    const animKey = this.useLpcSprite
+      ? (isMoving ? "lpc-run-anim" : "lpc-idle-anim")
+      : (isMoving ? `${this.classId}-run-anim` : `${this.classId}-idle-anim`)
     if (this.player.anims.currentAnim?.key !== animKey) this.player.anims.play(animKey, true)
 
     if (isMoving) {
@@ -626,7 +672,7 @@ export class HeroForgeScene extends Phaser.Scene {
 
   playActionAnim(type, lockMs) {
     if (this.playerDead) return
-    const key = `${this.classId}-${type}-anim`
+    const key = this.useLpcSprite ? `lpc-${type}-anim` : `${this.classId}-${type}-anim`
     if (!this.anims.exists(key)) return
 
     this.playerAction = type
@@ -982,7 +1028,7 @@ export class HeroForgeScene extends Phaser.Scene {
       this.playerDead = false
       this.playerAction = null
       this.player.setPosition(420, 300)
-      this.player.anims.play(`${this.classId}-idle-anim`, true)
+      this.player.anims.play(this.useLpcSprite ? "lpc-idle-anim" : `${this.classId}-idle-anim`, true)
     })
 
     this.enemies.children.iterate((enemy) => this.destroyEnemyBars(enemy))
@@ -1170,9 +1216,7 @@ export class HeroForgeScene extends Phaser.Scene {
 
   shutdown() {
     this.enemies?.children?.iterate((enemy) => this.destroyEnemyBars(enemy))
-    this.input.removeAllListeners("pointerdown")
-    this.input.removeAllListeners("pointermove")
-    this.input.removeAllListeners("pointerup")
+    this.touchState.joystick?.destroy()
     if (this.unsubscribe) this.unsubscribe()
   }
 }

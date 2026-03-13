@@ -112,6 +112,24 @@ button:hover {
   color: #cbd5e1;
 }
 
+.skill-icons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+  color: #cbd5e1;
+}
+
+.skill-icons span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: 1px solid rgba(71, 85, 105, 0.6);
+  border-radius: 999px;
+  font-size: 12px;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

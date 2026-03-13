@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import Phaser from "phaser"
+import VirtualJoystickPlugin from "phaser3-rex-plugins/plugins/virtualjoystick-plugin.js"
 import { HeroForgeScene } from "../game/render/HeroForgeScene"
 
 export function GameCanvas() {
@@ -17,6 +18,15 @@ export function GameCanvas() {
       physics: { default: "arcade" },
       render: { antialias: true },
       fps: { target: 60 },
+      plugins: {
+        global: [
+          {
+            key: "rexVirtualJoystick",
+            plugin: VirtualJoystickPlugin,
+            start: true,
+          },
+        ],
+      },
     })
 
     return () => game.destroy(true)
