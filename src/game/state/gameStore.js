@@ -4,7 +4,7 @@ import { computePower } from "../core/formulas"
 import { runCombatTick, spawnEnemy } from "../systems/combatSystem"
 import { calculateAfkRewards } from "../systems/afkSystem"
 import { applyExp } from "../systems/growthSystem"
-import { enhanceWeapon } from "../systems/equipmentSystem"
+import { enhanceWeapon, rollEquipmentDrop } from "../systems/equipmentSystem"
 import { loadSnapshot, saveSnapshot } from "../../infra/storage/saveGame"
 
 function buildHero(classId = DEFAULT_CLASS) {
@@ -39,6 +39,8 @@ function initialState() {
     hero,
     stage: 1,
     enemy: spawnEnemy(1),
+    autoHunt: false,
+    inventory: [],
     lootLog: [],
     afkSummary: null,
     lastTickAt: Date.now(),
@@ -54,6 +56,14 @@ export const useGameStore = create((set, get) => ({
     next.hero = buildHero(classId)
     next.power = computePower(next.hero)
     set(next)
+  },
+
+  toggleAutoHunt: () => {
+    set((s) => ({
+      ...s,
+      autoHunt: !s.autoHunt,
+      lootLog: [`자동사냥 ${!s.autoHunt ? "활성화" : "비활성화"}`, ...s.lootLog].slice(0, 8),
+    }))
   },
 
   tick: (dt) => {
@@ -85,14 +95,37 @@ export const useGameStore = create((set, get) => ({
     const hero = applyExp({ ...s.hero, gold: s.hero.gold + goldGain }, expGain)
     const stage = s.stage + 1
     const enemy = spawnEnemy(stage)
+    const inventory = s.inventory.slice(0, 49)
+    const lootLog = [`스테이지 ${s.stage} 클리어 (+경험치 ${expGain} / +골드 ${goldGain})`, ...s.lootLog].slice(0, 8)
+
+    if (Math.random() < 0.36) {
+      const drop = rollEquipmentDrop(Math.random)
+      const item = {
+        id: `it-${Date.now()}-${Math.floor(Math.random() * 9999)}`,
+        name: `${drop.label} 무기`,
+        rarity: drop.id,
+        rarityLabel: drop.label,
+        atkBonus: drop.atkBonus,
+        obtainedAt: Date.now(),
+      }
+      inventory.unshift(item)
+      lootLog.unshift(`획득: ${item.name} (공격 +${item.atkBonus})`)
+
+      if (item.atkBonus > hero.weapon.bonusAtk) {
+        hero.weapon = { ...hero.weapon, bonusAtk: item.atkBonus }
+        hero.atk = Number((hero.baseAtk + hero.weapon.bonusAtk).toFixed(2))
+        lootLog.unshift(`자동 장착: ${item.name}`)
+      }
+    }
 
     set({
       ...s,
       hero,
       stage,
       enemy,
+      inventory,
       power: computePower(hero),
-      lootLog: [`Clear Stage ${s.stage} (+${expGain} EXP / +${goldGain} Gold)`, ...s.lootLog].slice(0, 8),
+      lootLog: lootLog.slice(0, 8),
       lastTickAt: Date.now(),
     })
   },
@@ -108,7 +141,7 @@ export const useGameStore = create((set, get) => ({
       hero,
       stage,
       enemy,
-      lootLog: ["You were defeated. Stage -1", ...s.lootLog].slice(0, 8),
+      lootLog: ["전투에서 패배했습니다. 스테이지가 1 감소합니다.", ...s.lootLog].slice(0, 8),
       lastTickAt: Date.now(),
     })
   },
@@ -116,7 +149,7 @@ export const useGameStore = create((set, get) => ({
   tryEnhanceWeapon: () => {
     const cost = Math.floor(80 * Math.pow(1.25, get().hero.weapon.level))
     const { hero, result } = enhanceWeapon(get().hero, cost, Math.random)
-    const msg = result === "success" ? `Enhance +${hero.weapon.level} success` : result === "fail" ? "Enhance failed" : "Not enough gold"
+    const msg = result === "success" ? `강화 성공: +${hero.weapon.level}` : result === "fail" ? "강화 실패" : "골드가 부족합니다"
 
     set((s) => ({
       ...s,
@@ -124,6 +157,29 @@ export const useGameStore = create((set, get) => ({
       power: computePower(hero),
       lootLog: [msg, ...s.lootLog].slice(0, 8),
     }))
+  },
+
+  equipInventoryItem: (itemId) => {
+    const s = get()
+    const item = s.inventory.find((it) => it.id === itemId)
+    if (!item) return
+
+    const hero = {
+      ...s.hero,
+      weapon: {
+        ...s.hero.weapon,
+        bonusAtk: item.atkBonus,
+      },
+    }
+    hero.atk = Number((hero.baseAtk + hero.weapon.bonusAtk).toFixed(2))
+
+    set({
+      ...s,
+      hero,
+      power: computePower(hero),
+      lootLog: [`장착: ${item.name} (공격 +${item.atkBonus})`, ...s.lootLog].slice(0, 8),
+      lastTickAt: Date.now(),
+    })
   },
 
   save: () => {
@@ -139,6 +195,8 @@ export const useGameStore = create((set, get) => ({
 
     set({
       ...snapshot,
+      autoHunt: snapshot.autoHunt ?? false,
+      inventory: snapshot.inventory ?? [],
       hero: heroWithAfk,
       afkSummary: afk,
       power: computePower(heroWithAfk),

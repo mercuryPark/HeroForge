@@ -1,9 +1,9 @@
 export const RARITY_TABLE = [
-  { id: "common", weight: 700, atkBonus: 0 },
-  { id: "uncommon", weight: 220, atkBonus: 5 },
-  { id: "rare", weight: 65, atkBonus: 12 },
-  { id: "epic", weight: 14, atkBonus: 24 },
-  { id: "legendary", weight: 1, atkBonus: 45 },
+  { id: "common", label: "일반", weight: 700, atkBonus: 0 },
+  { id: "uncommon", label: "고급", weight: 220, atkBonus: 5 },
+  { id: "rare", label: "희귀", weight: 65, atkBonus: 12 },
+  { id: "epic", label: "영웅", weight: 14, atkBonus: 24 },
+  { id: "legendary", label: "전설", weight: 1, atkBonus: 45 },
 ]
 
 export const ENHANCE_RULES = {

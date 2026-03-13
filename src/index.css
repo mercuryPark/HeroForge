@@ -16,23 +16,27 @@ body {
 }
 
 .app {
-  width: min(920px, 100%);
+  width: min(1160px, 100%);
   padding: 18px;
 }
 
 #game-canvas canvas {
   width: 100%;
-  height: auto;
+  height: min(70vh, 640px);
+  object-fit: contain;
+  display: block;
   border-radius: 12px;
-  border: 1px solid #334155;
+  border: 1px solid #475569;
+  box-shadow: 0 18px 45px rgba(2, 6, 23, 0.55);
 }
 
 .hud {
   margin-top: 12px;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(2, 6, 23, 0.72);
   border: 1px solid #334155;
   border-radius: 12px;
   padding: 14px;
+  backdrop-filter: blur(8px);
 }
 
 .row {
@@ -62,6 +66,52 @@ button:hover {
   background: #334155;
 }
 
+.guide {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.guide p {
+  margin: 6px 0;
+}
+
+.class-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 120px;
+}
+
+.class-btn span {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.class-btn.warrior {
+  border-color: #94a3b8;
+}
+
+.class-btn.mage {
+  border-color: #38bdf8;
+}
+
+.class-btn.archer {
+  border-color: #22c55e;
+}
+
+.class-btn.thief {
+  border-color: #f97316;
+}
+
+.class-summary {
+  margin: 6px 0 10px;
+  color: #cbd5e1;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -73,11 +123,59 @@ ul {
   padding-left: 18px;
 }
 
+.inventory-panel {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.65);
+}
+
+.inventory-panel h3 {
+  margin: 0 0 8px;
+}
+
+.three-preview {
+  margin: 8px 0 10px;
+  width: 160px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #334155;
+}
+
+.inventory-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.inventory-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+}
+
+.inventory-item:last-child {
+  border-bottom: 0;
+}
+
 .afk {
   color: #86efac;
 }
 
 @media (max-width: 640px) {
+  .app {
+    padding: 10px;
+  }
+
+  #game-canvas canvas {
+    height: 52vh;
+  }
+
   .grid {
     grid-template-columns: 1fr;
   }

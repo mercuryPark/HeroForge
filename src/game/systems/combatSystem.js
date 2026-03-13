@@ -17,7 +17,7 @@ export function spawnEnemy(stage) {
   const scale = stageScale(stage)
   return {
     id: `enemy-${stage}`,
-    name: `Stage ${stage} Foe`,
+    name: `스테이지 ${stage} 몬스터`,
     maxHp: Math.floor(65 * scale + stage * 7),
     hp: Math.floor(65 * scale + stage * 7),
     atk: Number((8 * scale).toFixed(2)),
@@ -74,7 +74,7 @@ export function runCombatTick(state, dt, rng) {
     if (rng() < 0.18) {
       const drop = rollEquipmentDrop(rng)
       hero.weapon.bonusAtk = Math.max(hero.weapon.bonusAtk, drop.atkBonus)
-      lootLog = [`Drop: ${drop.id.toUpperCase()} (+${drop.atkBonus} ATK)`, ...lootLog].slice(0, 8)
+      lootLog = [`장비 획득: ${drop.label} 등급 (공격 +${drop.atkBonus})`, ...lootLog].slice(0, 8)
     }
 
     stage += 1
