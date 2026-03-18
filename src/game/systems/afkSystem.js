@@ -1,11 +1,13 @@
+import { AFK_BALANCE, getAfkRewardsPerSecond } from "../data/balance"
+import { clampStage } from "../data/stages"
+
 export function calculateAfkRewards(snapshot, now = Date.now()) {
-  const maxSeconds = 8 * 60 * 60
+  const maxSeconds = AFK_BALANCE.maxSeconds
   const elapsedSec = Math.max(0, Math.floor((now - (snapshot.lastTickAt || now)) / 1000))
   const effectiveSec = Math.min(elapsedSec, maxSeconds)
 
-  const stageFactor = 1 + (snapshot.stage - 1) * 0.08
-  const goldPerSec = 0.9 * stageFactor
-  const expPerSec = 0.7 * stageFactor
+  const stage = clampStage(snapshot.stage ?? snapshot.globalStage ?? 1)
+  const { goldPerSec, expPerSec } = getAfkRewardsPerSecond(stage)
 
   return {
     effectiveSec,

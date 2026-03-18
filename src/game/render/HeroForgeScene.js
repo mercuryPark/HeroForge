@@ -1,20 +1,24 @@
 import Phaser from "phaser"
 import Matter from "matter-js"
 import { Howler } from "howler"
+import { getSkillDamageMultiplier } from "../data/skills"
 import { useGameStore } from "../state/gameStore"
-import { SPRITE_MANIFEST, heroTextureKey } from "./assets/manifest"
+import { getStageMeta } from "../data/stages"
+import { buildTerrainLayout } from "../data/terrain"
+import { SPRITE_MANIFEST } from "./assets/manifest"
 
 const WORLD_WIDTH = 2200
 const WORLD_HEIGHT = 1400
 const PLAYER_SPEED = 260
 const DASH_DISTANCE = 150
 const SYNC_INTERVAL_MS = 160
+const SAFE_MARGIN = 18
 
 const ENEMY_PROFILE = {
-  slime: { idle: "enemy-slime-idle", move: "enemy-slime-move", hpMul: 1, atkMul: 1, speed: [86, 116], color: 0xfb7185 },
-  golem: { idle: "enemy-golem-idle", move: "enemy-golem-move", hpMul: 2.1, atkMul: 1.45, speed: [60, 80], color: 0xa3a3a3 },
-  bat: { idle: "enemy-bat-idle", move: "enemy-bat-move", hpMul: 0.72, atkMul: 0.9, speed: [130, 170], color: 0xa78bfa },
-  boss: { idle: "enemy-boss-idle", move: "enemy-boss-idle", hpMul: 9.5, atkMul: 2.4, speed: [70, 90], color: 0xdc2626 },
+  slime: { sheet: "enemy-slime-sheet", idle: "enemy-slime-idle", move: "enemy-slime-move", hpMul: 1, atkMul: 1, speed: [86, 116], color: 0xfb7185 },
+  golem: { sheet: "enemy-golem-sheet", idle: "enemy-golem-idle", move: "enemy-golem-move", hpMul: 2.1, atkMul: 1.45, speed: [60, 80], color: 0xa3a3a3 },
+  bat: { sheet: "enemy-bat-sheet", idle: "enemy-bat-idle", move: "enemy-bat-move", hpMul: 0.72, atkMul: 0.9, speed: [130, 170], color: 0xa78bfa },
+  boss: { sheet: "enemy-boss-sheet", idle: "enemy-boss-idle", move: "enemy-boss-move", hpMul: 9.5, atkMul: 2.4, speed: [70, 90], color: 0xdc2626 },
 }
 
 const CLASS_PROFILE = {
@@ -32,6 +36,34 @@ const TUTORIAL_TEXT = [
   "튜토리얼 완료: 성장과 강화를 반복해 전투력을 올리세요",
 ]
 
+const CHAPTER_THEMES = [
+  { floorA: 0x17324d, floorB: 0x214467, grass: 0x84cc16, haze: 0x60a5fa, ambient: 0xe0f2fe },
+  { floorA: 0x123a43, floorB: 0x19515e, grass: 0x2dd4bf, haze: 0x22d3ee, ambient: 0xccfbf1 },
+  { floorA: 0x263759, floorB: 0x334775, grass: 0x38bdf8, haze: 0xa78bfa, ambient: 0xe9d5ff },
+  { floorA: 0x3d2b56, floorB: 0x51376f, grass: 0xf472b6, haze: 0xfb7185, ambient: 0xfce7f3 },
+  { floorA: 0x4a3326, floorB: 0x654431, grass: 0xf59e0b, haze: 0xfb923c, ambient: 0xffedd5 },
+  { floorA: 0x183526, floorB: 0x24563b, grass: 0x4ade80, haze: 0x86efac, ambient: 0xdcfce7 },
+  { floorA: 0x1f2b48, floorB: 0x283966, grass: 0x60a5fa, haze: 0x93c5fd, ambient: 0xdbeafe },
+  { floorA: 0x2f2f3f, floorB: 0x46465e, grass: 0xc4b5fd, haze: 0xe879f9, ambient: 0xf5d0fe },
+  { floorA: 0x2f2219, floorB: 0x513621, grass: 0xf97316, haze: 0xfb7185, ambient: 0xffedd5 },
+  { floorA: 0x320f17, floorB: 0x52141f, grass: 0xdc2626, haze: 0xfca5a5, ambient: 0xfee2e2 },
+]
+
+const CHAPTER_BGM = [
+  [196, 246.94, 293.66, 392],
+  [220, 261.63, 329.63, 440],
+  [174.61, 233.08, 277.18, 369.99],
+  [207.65, 246.94, 311.13, 415.3],
+  [164.81, 220, 293.66, 329.63],
+  [196, 261.63, 311.13, 392],
+  [185, 246.94, 277.18, 369.99],
+  [155.56, 207.65, 261.63, 311.13],
+  [146.83, 196, 246.94, 329.63],
+  [130.81, 174.61, 220, 293.66],
+]
+
+const BOSS_BGM = [110, 146.83, 174.61, 196, 174.61, 146.83]
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value))
 }
@@ -41,11 +73,78 @@ function distance(x1, y1, x2, y2) {
 }
 
 function chooseEnemyType(stage) {
-  if (stage % 5 === 0) return "boss"
+  const meta = getStageMeta(stage)
+  if (meta.isBossStage) return "boss"
   const r = Math.random()
   if (r < 0.2 + Math.min(0.2, stage * 0.01)) return "golem"
   if (r < 0.45) return "bat"
   return "slime"
+}
+
+function heroSheetKey(classId) {
+  return `hero-sheet-${classId}`
+}
+
+function heroOverlayKey(classId) {
+  return `hero-body-${classId}`
+}
+
+function heroHelmetKey(classId) {
+  return `hero-helmet-${classId}`
+}
+
+function heroWeaponKey(classId) {
+  return `hero-weapon-${classId}`
+}
+
+function heroWeaponVariantKey(classId, tier) {
+  return `${heroWeaponKey(classId)}-${tier}`
+}
+
+function heroBodyVariantKey(classId, tier) {
+  return `${heroOverlayKey(classId)}-${tier}`
+}
+
+function heroHelmetVariantKey(classId, tier) {
+  return `${heroHelmetKey(classId)}-${tier}`
+}
+
+function resolveWeaponAppearance(weapon = {}) {
+  const rarity = weapon.rarity ?? "common"
+  const rarityTint = {
+    common: 0xe5e7eb,
+    uncommon: 0x86efac,
+    rare: 0x93c5fd,
+    epic: 0xc4b5fd,
+    legendary: 0xfde68a,
+  }
+
+  return {
+    rarity,
+    tint: rarityTint[rarity] ?? 0xe5e7eb,
+    scale: 1.08 + Math.min(weapon.level ?? 0, 10) * 0.03,
+    alpha: rarity === "legendary" ? 1 : 0.94,
+    textureTier: rarity === "legendary" ? "legendary" : rarity === "epic" || rarity === "rare" ? "rare" : "common",
+  }
+}
+
+function resolveEquipmentTier(item = {}) {
+  const rarity = item.rarity ?? "common"
+  if (rarity === "legendary") return "legendary"
+  if (rarity === "epic" || rarity === "rare") return "rare"
+  return "common"
+}
+
+function getPerformanceProfile(scale) {
+  const width = scale?.width ?? 1280
+  const height = scale?.height ?? 720
+  const isCompact = width < 900 || height < 640
+  return {
+    ambientDots: isCompact ? 18 : 30,
+    arenaDeco: isCompact ? 34 : 54,
+    maxEnemies: isCompact ? 9 : 12,
+    zoom: width < 720 ? 0.94 : width < 1180 ? 1.02 : 1.12,
+  }
 }
 
 export class HeroForgeScene extends Phaser.Scene {
@@ -65,6 +164,11 @@ export class HeroForgeScene extends Phaser.Scene {
     this.playerDead = false
     this.playerAction = null
     this.actionLockUntil = 0
+    this.lastHeroLevel = 1
+    this.currentChapter = 1
+    this.terrainTick = 0
+    this.terrainEffects = { playerSlow: 1, playerAtkMul: 1 }
+    this.performanceProfile = getPerformanceProfile({ width: 1280, height: 720 })
   }
 
   preload() {
@@ -73,19 +177,74 @@ export class HeroForgeScene extends Phaser.Scene {
     this.load.spritesheet("lpc-slash", "/assets/reference/lpc/body_slash_light.png", { frameWidth: 64, frameHeight: 64 })
     this.load.spritesheet("lpc-hurt", "/assets/reference/lpc/body_hurt_light.png", { frameWidth: 64, frameHeight: 64 })
 
-    for (const [classId, paths] of Object.entries(SPRITE_MANIFEST.heroes)) {
-      this.load.svg(heroTextureKey(classId, "idle"), paths.idle, { width: 64, height: 64 })
-      this.load.svg(heroTextureKey(classId, "run"), paths.run, { width: 64, height: 64 })
+    for (const [classId, config] of Object.entries(SPRITE_MANIFEST.heroes)) {
+      this.load.spritesheet(heroSheetKey(classId), config.sheet, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.spritesheet(heroBodyVariantKey(classId, "common"), config.bodyVariants.common, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.spritesheet(heroBodyVariantKey(classId, "rare"), config.bodyVariants.rare, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.spritesheet(heroBodyVariantKey(classId, "legendary"), config.bodyVariants.legendary, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.spritesheet(heroHelmetVariantKey(classId, "common"), config.helmetVariants.common, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.spritesheet(heroHelmetVariantKey(classId, "rare"), config.helmetVariants.rare, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.spritesheet(heroHelmetVariantKey(classId, "legendary"), config.helmetVariants.legendary, {
+        frameWidth: config.frameWidth,
+        frameHeight: config.frameHeight,
+      })
+      this.load.image(heroWeaponVariantKey(classId, "common"), config.weaponVariants.common)
+      this.load.image(heroWeaponVariantKey(classId, "rare"), config.weaponVariants.rare)
+      this.load.image(heroWeaponVariantKey(classId, "legendary"), config.weaponVariants.legendary)
     }
 
-    this.load.svg("enemy-slime-idle", SPRITE_MANIFEST.enemies.slimeIdle, { width: 48, height: 48 })
-    this.load.svg("enemy-slime-move", SPRITE_MANIFEST.enemies.slimeMove, { width: 48, height: 48 })
-    this.load.svg("enemy-golem-idle", SPRITE_MANIFEST.enemies.golemIdle, { width: 56, height: 56 })
-    this.load.svg("enemy-golem-move", SPRITE_MANIFEST.enemies.golemMove, { width: 56, height: 56 })
-    this.load.svg("enemy-bat-idle", SPRITE_MANIFEST.enemies.batIdle, { width: 52, height: 52 })
-    this.load.svg("enemy-bat-move", SPRITE_MANIFEST.enemies.batMove, { width: 52, height: 52 })
-    this.load.svg("enemy-boss-idle", SPRITE_MANIFEST.enemies.bossIdle, { width: 84, height: 84 })
-    this.load.svg("fx-projectile", SPRITE_MANIFEST.fx.projectile, { width: 24, height: 24 })
+    this.load.spritesheet("enemy-slime-sheet", SPRITE_MANIFEST.enemies.slime.sheet, {
+      frameWidth: SPRITE_MANIFEST.enemies.slime.frameWidth,
+      frameHeight: SPRITE_MANIFEST.enemies.slime.frameHeight,
+    })
+    this.load.spritesheet("enemy-golem-sheet", SPRITE_MANIFEST.enemies.golem.sheet, {
+      frameWidth: SPRITE_MANIFEST.enemies.golem.frameWidth,
+      frameHeight: SPRITE_MANIFEST.enemies.golem.frameHeight,
+    })
+    this.load.spritesheet("enemy-bat-sheet", SPRITE_MANIFEST.enemies.bat.sheet, {
+      frameWidth: SPRITE_MANIFEST.enemies.bat.frameWidth,
+      frameHeight: SPRITE_MANIFEST.enemies.bat.frameHeight,
+    })
+    this.load.spritesheet("enemy-boss-sheet", SPRITE_MANIFEST.enemies.boss.sheet, {
+      frameWidth: SPRITE_MANIFEST.enemies.boss.frameWidth,
+      frameHeight: SPRITE_MANIFEST.enemies.boss.frameHeight,
+    })
+
+    this.load.image("fx-projectile", SPRITE_MANIFEST.fx.projectile.sheet)
+    this.load.spritesheet("fx-slashing", SPRITE_MANIFEST.fx.slashing.sheet, {
+      frameWidth: SPRITE_MANIFEST.fx.slashing.frameWidth,
+      frameHeight: SPRITE_MANIFEST.fx.slashing.frameHeight,
+    })
+    this.load.spritesheet("fx-healing", SPRITE_MANIFEST.fx.healing.sheet, {
+      frameWidth: SPRITE_MANIFEST.fx.healing.frameWidth,
+      frameHeight: SPRITE_MANIFEST.fx.healing.frameHeight,
+    })
+    this.load.spritesheet("fx-strike", SPRITE_MANIFEST.fx.strike.sheet, {
+      frameWidth: SPRITE_MANIFEST.fx.strike.frameWidth,
+      frameHeight: SPRITE_MANIFEST.fx.strike.frameHeight,
+    })
+    this.load.spritesheet("fx-rings", SPRITE_MANIFEST.fx.rings.sheet, {
+      frameWidth: SPRITE_MANIFEST.fx.rings.frameWidth,
+      frameHeight: SPRITE_MANIFEST.fx.rings.frameHeight,
+    })
   }
 
   create() {
@@ -94,7 +253,10 @@ export class HeroForgeScene extends Phaser.Scene {
 
     this.classId = initial.hero.classId
     this.classProfile = CLASS_PROFILE[this.classId] || CLASS_PROFILE.warrior
-    this.useLpcSprite = true
+    this.useLpcSprite = false
+    this.currentChapter = initial.chapter ?? getStageMeta(initial.stage).chapter
+    this.lastHeroLevel = initial.hero.level
+    this.performanceProfile = getPerformanceProfile(this.scale)
 
     this.heroStats = {
       maxHp: initial.hero.maxHp,
@@ -103,6 +265,10 @@ export class HeroForgeScene extends Phaser.Scene {
       critRate: initial.hero.critRate,
       critDmg: initial.hero.critDmg,
       name: initial.hero.className,
+      skillLevels: initial.hero.skillLevels ?? { q: 1, e: 1, r: 1 },
+      weapon: initial.hero.weapon,
+      armor: initial.hero.armor,
+      helmet: initial.hero.helmet,
     }
     this.enemyStats = {
       maxHp: initial.enemy.maxHp,
@@ -123,28 +289,34 @@ export class HeroForgeScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
     this.cameras.main.setBackgroundColor("#0f172a")
     this.cameras.main.setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
-    this.cameras.main.setZoom(1.18)
+    this.cameras.main.setZoom(this.performanceProfile.zoom)
 
-    this.drawArena()
+    this.drawArena(this.getChapterTheme(this.currentChapter))
+    this.createParallaxBackdrop()
     if (this.useLpcSprite) {
       this.createLpcAnimations()
     } else {
-      this.createPlayerActionFrames()
       this.createPlayerAnimations()
     }
+    this.createEnemyAnimations()
+    this.createFxAnimations()
 
-    this.player = this.physics.add.sprite(420, 300, this.useLpcSprite ? "lpc-idle" : heroTextureKey(this.classId, "idle"))
+    this.player = this.physics.add.sprite(420, 300, this.useLpcSprite ? "lpc-idle" : heroSheetKey(this.classId), 0)
     this.player.setCollideWorldBounds(true)
     this.player.setDrag(700, 700)
     this.player.setDepth(20)
     this.applyClassTint()
+    if (!this.useLpcSprite) this.player.setScale(1.9)
+    if (!this.useLpcSprite) this.createPlayerEquipmentLayers()
 
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08)
 
     this.enemies = this.physics.add.group()
     this.projectiles = this.physics.add.group()
+    this.createTerrainFeatures()
+    this.bindTerrainCollisions()
 
-    for (let i = 0; i < 12; i += 1) this.spawnEnemy()
+    for (let i = 0; i < this.performanceProfile.maxEnemies; i += 1) this.spawnEnemy()
 
     this.physics.add.overlap(this.projectiles, this.enemies, (projectile, enemy) => {
       this.hitEnemy(enemy, projectile.getData("damage") || 1)
@@ -167,7 +339,7 @@ export class HeroForgeScene extends Phaser.Scene {
     this.fxLayer = this.add.layer().setDepth(50)
     this.overlay = this.add.text(16, 16, "", {
       fontFamily: "monospace",
-      fontSize: "14px",
+      fontSize: "13px",
       color: "#e2e8f0",
       backgroundColor: "rgba(2,6,23,0.55)",
       padding: { x: 8, y: 6 },
@@ -189,6 +361,8 @@ export class HeroForgeScene extends Phaser.Scene {
     this.setupTouchControls()
     this.setupAudioEngine()
     this.setupMatterEngine()
+    this.scale.on("resize", this.handleResize, this)
+    this.handleResize(this.scale.gameSize)
 
     this.unsubscribe = this.store.subscribe((state) => {
       this.heroStats = {
@@ -198,6 +372,10 @@ export class HeroForgeScene extends Phaser.Scene {
         critRate: state.hero.critRate,
         critDmg: state.hero.critDmg,
         name: state.hero.className,
+        skillLevels: state.hero.skillLevels ?? { q: 1, e: 1, r: 1 },
+        weapon: state.hero.weapon,
+        armor: state.hero.armor,
+        helmet: state.hero.helmet,
       }
       this.enemyStats = {
         maxHp: state.enemy.maxHp,
@@ -208,11 +386,66 @@ export class HeroForgeScene extends Phaser.Scene {
       if (this.classId !== state.hero.classId) {
         this.classId = state.hero.classId
         this.classProfile = CLASS_PROFILE[this.classId] || CLASS_PROFILE.warrior
+        if (!this.useLpcSprite) {
+          this.player.setTexture(heroSheetKey(this.classId), 0)
+          this.playerBodyOverlay?.setTexture(heroBodyVariantKey(this.classId, "common"), 0)
+          this.playerHelmet?.setTexture(heroHelmetVariantKey(this.classId, "common"), 0)
+          this.playerWeapon?.setTexture(heroWeaponVariantKey(this.classId, "common"))
+        }
         this.applyClassTint()
+      }
+
+      const nextChapter = state.chapter ?? getStageMeta(state.stage).chapter
+      if (nextChapter !== this.currentChapter) {
+        this.currentChapter = nextChapter
+        this.refreshChapterTheme()
+        this.showChapterBanner(nextChapter)
+      }
+
+      if (state.hero.level > this.lastHeroLevel) {
+        this.lastHeroLevel = state.hero.level
+        this.emitLevelBurst(this.player.x, this.player.y)
       }
 
       this.heroHp = clamp(this.heroHp, 1, this.heroStats.maxHp)
     })
+  }
+
+  getChapterTheme(chapter) {
+    return CHAPTER_THEMES[Math.max(0, Math.min(CHAPTER_THEMES.length - 1, chapter - 1))]
+  }
+
+  refreshChapterTheme() {
+    this.arenaLayer?.destroy()
+    this.parallaxLayer?.destroy()
+    this.clearTerrainFeatures()
+    this.drawArena(this.getChapterTheme(this.currentChapter))
+    this.createParallaxBackdrop()
+    this.createTerrainFeatures()
+    this.bindTerrainCollisions()
+  }
+
+  createParallaxBackdrop() {
+    const theme = this.getChapterTheme(this.currentChapter)
+    this.parallaxLayer = this.add.layer().setDepth(1)
+    this.parallaxDots = []
+
+    const glowA = this.add.ellipse(280, 220, 420, 240, theme.haze, 0.16).setScrollFactor(0.12, 0.08)
+    const glowB = this.add.ellipse(WORLD_WIDTH - 320, 280, 360, 220, theme.ambient, 0.1).setScrollFactor(0.18, 0.1)
+    this.parallaxLayer.add([glowA, glowB])
+
+    for (let i = 0; i < this.performanceProfile.ambientDots; i += 1) {
+      const dot = this.add.circle(
+        Phaser.Math.Between(0, WORLD_WIDTH),
+        Phaser.Math.Between(0, WORLD_HEIGHT),
+        Phaser.Math.Between(2, 7),
+        theme.ambient,
+        Phaser.Math.FloatBetween(0.08, 0.22)
+      )
+      dot.setScrollFactor(Phaser.Math.FloatBetween(0.15, 0.45), Phaser.Math.FloatBetween(0.12, 0.35))
+      this.parallaxLayer.add(dot)
+      this.parallaxDots.push(dot)
+    }
   }
 
   applyClassTint() {
@@ -269,16 +502,7 @@ export class HeroForgeScene extends Phaser.Scene {
   }
 
   createPlayerActionFrames() {
-    const classes = Object.keys(CLASS_PROFILE)
-
-    for (const classId of classes) {
-      const baseKey = heroTextureKey(classId, "idle")
-      for (let frame = 1; frame <= 2; frame += 1) {
-        this.createDerivedFrame(baseKey, heroTextureKey(classId, `attack-${frame}`), "attack", frame)
-        this.createDerivedFrame(baseKey, heroTextureKey(classId, `hit-${frame}`), "hit", frame)
-        this.createDerivedFrame(baseKey, heroTextureKey(classId, `dead-${frame}`), "dead", frame)
-      }
-    }
+    // Intersect 시트 기반으로 전환되면서 별도 파생 프레임 생성은 사용하지 않는다.
   }
 
   createDerivedFrame(baseKey, newKey, mode, frame) {
@@ -337,17 +561,18 @@ export class HeroForgeScene extends Phaser.Scene {
   }
 
   createPlayerAnimations() {
-    for (const classId of Object.keys(CLASS_PROFILE)) {
+    for (const [classId, config] of Object.entries(SPRITE_MANIFEST.heroes)) {
       const idleKey = `${classId}-idle-anim`
       const runKey = `${classId}-run-anim`
       const attackKey = `${classId}-attack-anim`
       const hitKey = `${classId}-hit-anim`
       const deadKey = `${classId}-dead-anim`
+      const sheetKey = heroSheetKey(classId)
 
       if (!this.anims.exists(idleKey)) {
         this.anims.create({
           key: idleKey,
-          frames: [{ key: heroTextureKey(classId, "idle") }],
+          frames: [{ key: sheetKey, frame: config.idleFrame }],
           frameRate: 2,
           repeat: -1,
         })
@@ -356,7 +581,7 @@ export class HeroForgeScene extends Phaser.Scene {
       if (!this.anims.exists(runKey)) {
         this.anims.create({
           key: runKey,
-          frames: [{ key: heroTextureKey(classId, "idle") }, { key: heroTextureKey(classId, "run") }],
+          frames: config.runFrames.map((frame) => ({ key: sheetKey, frame })),
           frameRate: 7,
           repeat: -1,
         })
@@ -365,7 +590,7 @@ export class HeroForgeScene extends Phaser.Scene {
       if (!this.anims.exists(attackKey)) {
         this.anims.create({
           key: attackKey,
-          frames: [{ key: heroTextureKey(classId, "attack-1") }, { key: heroTextureKey(classId, "attack-2") }],
+          frames: config.runFrames.slice(0, 3).map((frame) => ({ key: sheetKey, frame })),
           frameRate: 12,
           repeat: 0,
         })
@@ -374,7 +599,7 @@ export class HeroForgeScene extends Phaser.Scene {
       if (!this.anims.exists(hitKey)) {
         this.anims.create({
           key: hitKey,
-          frames: [{ key: heroTextureKey(classId, "hit-1") }, { key: heroTextureKey(classId, "hit-2") }],
+          frames: [{ key: sheetKey, frame: config.idleFrame }, { key: sheetKey, frame: config.runFrames[1] ?? config.idleFrame }],
           frameRate: 10,
           repeat: 0,
         })
@@ -383,7 +608,7 @@ export class HeroForgeScene extends Phaser.Scene {
       if (!this.anims.exists(deadKey)) {
         this.anims.create({
           key: deadKey,
-          frames: [{ key: heroTextureKey(classId, "dead-1") }, { key: heroTextureKey(classId, "dead-2") }],
+          frames: [{ key: sheetKey, frame: 12 }, { key: sheetKey, frame: 13 }],
           frameRate: 4,
           repeat: 0,
         })
@@ -391,13 +616,108 @@ export class HeroForgeScene extends Phaser.Scene {
     }
   }
 
+  createPlayerEquipmentLayers() {
+    const classConfig = SPRITE_MANIFEST.heroes[this.classId]
+    if (!classConfig) return
+
+    this.playerBodyOverlay = this.add.sprite(this.player.x, this.player.y, heroBodyVariantKey(this.classId, "common"), classConfig.idleFrame)
+      .setDepth(21)
+      .setScale(this.player.scaleX, this.player.scaleY)
+    this.playerHelmet = this.add.sprite(this.player.x, this.player.y, heroHelmetVariantKey(this.classId, "common"), classConfig.idleFrame)
+      .setDepth(22)
+      .setScale(this.player.scaleX, this.player.scaleY)
+    this.playerWeapon = this.add.image(this.player.x, this.player.y, heroWeaponVariantKey(this.classId, "common"))
+      .setDepth(19)
+      .setScale(1.25)
+
+    this.syncPlayerEquipmentLayers()
+  }
+
+  syncPlayerEquipmentLayers() {
+    if (!this.playerBodyOverlay || !this.playerHelmet || !this.playerWeapon || this.useLpcSprite) return
+
+    const classConfig = SPRITE_MANIFEST.heroes[this.classId]
+    const weaponOffset = classConfig?.weaponOffset ?? { x: 12, y: 6 }
+    const facingLeft = this.player.flipX
+    const offsetX = facingLeft ? -weaponOffset.x : weaponOffset.x
+    const weaponAppearance = resolveWeaponAppearance(this.heroStats.weapon)
+    const bodyTexture = heroBodyVariantKey(this.classId, resolveEquipmentTier(this.heroStats.armor))
+    const helmetTexture = heroHelmetVariantKey(this.classId, resolveEquipmentTier(this.heroStats.helmet))
+    const weaponTexture = heroWeaponVariantKey(this.classId, weaponAppearance.textureTier)
+
+    if (this.playerBodyOverlay.texture?.key !== bodyTexture) this.playerBodyOverlay.setTexture(bodyTexture, 0)
+    if (this.playerHelmet.texture?.key !== helmetTexture) this.playerHelmet.setTexture(helmetTexture, 0)
+
+    this.playerBodyOverlay.setPosition(this.player.x, this.player.y)
+    this.playerBodyOverlay.setScale(this.player.scaleX, this.player.scaleY)
+    this.playerBodyOverlay.setFlipX(facingLeft)
+    this.playerBodyOverlay.setFrame(this.player.frame.name)
+
+    this.playerHelmet.setPosition(this.player.x, this.player.y)
+    this.playerHelmet.setScale(this.player.scaleX, this.player.scaleY)
+    this.playerHelmet.setFlipX(facingLeft)
+    this.playerHelmet.setFrame(this.player.frame.name)
+
+    if (this.playerWeapon.texture?.key !== weaponTexture) this.playerWeapon.setTexture(weaponTexture)
+    this.playerWeapon.setPosition(this.player.x + offsetX, this.player.y + weaponOffset.y)
+    this.playerWeapon.setFlipX(facingLeft)
+    this.playerWeapon.setRotation(facingLeft ? -0.22 : 0.22)
+    this.playerWeapon.setScale((this.classId === "mage" ? 1.1 : 1.25) * weaponAppearance.scale)
+    this.playerWeapon.setTint(weaponAppearance.tint)
+    this.playerWeapon.setAlpha(weaponAppearance.alpha)
+  }
+
+  createEnemyAnimations() {
+    for (const [enemyType, config] of Object.entries(SPRITE_MANIFEST.enemies)) {
+      const profile = ENEMY_PROFILE[enemyType]
+      if (!profile) continue
+
+      if (!this.anims.exists(profile.idle)) {
+        this.anims.create({
+          key: profile.idle,
+          frames: config.idleFrames.map((frame) => ({ key: profile.sheet, frame })),
+          frameRate: 5,
+          repeat: -1,
+        })
+      }
+
+      if (!this.anims.exists(profile.move)) {
+        this.anims.create({
+          key: profile.move,
+          frames: config.moveFrames.map((frame) => ({ key: profile.sheet, frame })),
+          frameRate: 7,
+          repeat: -1,
+        })
+      }
+    }
+  }
+
+  createFxAnimations() {
+    const configs = [
+      { key: "fx-slashing-anim", sheet: "fx-slashing", frames: SPRITE_MANIFEST.fx.slashing.frames, frameRate: 18 },
+      { key: "fx-healing-anim", sheet: "fx-healing", frames: SPRITE_MANIFEST.fx.healing.frames, frameRate: 18 },
+      { key: "fx-strike-anim", sheet: "fx-strike", frames: SPRITE_MANIFEST.fx.strike.frames, frameRate: 18 },
+      { key: "fx-rings-anim", sheet: "fx-rings", frames: SPRITE_MANIFEST.fx.rings.frames, frameRate: 18 },
+    ]
+
+    for (const config of configs) {
+      if (this.anims.exists(config.key)) continue
+      this.anims.create({
+        key: config.key,
+        frames: Array.from({ length: config.frames }, (_, frame) => ({ key: config.sheet, frame })),
+        frameRate: config.frameRate,
+        repeat: 0,
+      })
+    }
+  }
+
   createCooldownHud() {
     this.cooldownHud = {
-      basic: this.createSkillBadge("공", "basic", this.scale.width - 88, this.scale.height - 90, 32),
-      q: this.createSkillBadge("Q", "q", this.scale.width - 170, this.scale.height - 134, 24),
-      e: this.createSkillBadge("E", "e", this.scale.width - 122, this.scale.height - 182, 24),
-      r: this.createSkillBadge("R", "r", this.scale.width - 74, this.scale.height - 134, 24),
-      dash: this.createSkillBadge("회", "dash", this.scale.width - 226, this.scale.height - 86, 22),
+      basic: this.createSkillBadge("공", "basic", 0, 0, 32),
+      q: this.createSkillBadge("Q", "q", 0, 0, 24),
+      e: this.createSkillBadge("E", "e", 0, 0, 24),
+      r: this.createSkillBadge("R", "r", 0, 0, 24),
+      dash: this.createSkillBadge("회", "dash", 0, 0, 22),
     }
   }
 
@@ -409,7 +729,7 @@ export class HeroForgeScene extends Phaser.Scene {
       .setOrigin(0.5).setScrollFactor(0).setDepth(121)
     const remain = this.add.text(x, y + radius + 7, "", { fontFamily: "monospace", fontSize: "10px", color: "#cbd5e1" })
       .setOrigin(0.5).setScrollFactor(0).setDepth(121)
-    return { keyName, x, y, radius, cooldownMask, text, remain }
+    return { keyName, x, y, radius, bg, cooldownMask, text, remain }
   }
 
   updateCooldownHud() {
@@ -435,6 +755,9 @@ export class HeroForgeScene extends Phaser.Scene {
 
   setupAudioEngine() {
     this.audioCtx = null
+    this.musicStep = 0
+    this.musicMode = null
+    this.musicTimer = null
     Howler.volume(0.25)
   }
 
@@ -452,6 +775,10 @@ export class HeroForgeScene extends Phaser.Scene {
         this.audioCtx = new Ctx()
       }
 
+      if (this.audioCtx.state === "suspended") {
+        this.audioCtx.resume().catch(() => {})
+      }
+
       const osc = this.audioCtx.createOscillator()
       const gain = this.audioCtx.createGain()
       osc.type = type
@@ -465,6 +792,41 @@ export class HeroForgeScene extends Phaser.Scene {
     } catch {
       // ignore audio issues
     }
+  }
+
+  getMusicPattern(mode) {
+    if (mode === "boss") return BOSS_BGM
+    return CHAPTER_BGM[Math.max(0, Math.min(CHAPTER_BGM.length - 1, this.currentChapter - 1))]
+  }
+
+  setMusicMode(mode) {
+    if (this.musicMode === mode) return
+    this.musicMode = mode
+    this.musicStep = 0
+    this.musicTimer?.remove(false)
+    this.musicTimer = this.time.addEvent({
+      delay: mode === "boss" ? 320 : 430,
+      loop: true,
+      callback: () => this.playMusicTick(),
+    })
+  }
+
+  playMusicTick() {
+    const pattern = this.getMusicPattern(this.musicMode)
+    if (!pattern?.length) return
+    const freq = pattern[this.musicStep % pattern.length]
+    const gain = this.musicMode === "boss" ? 0.013 : 0.009
+    const type = this.musicMode === "boss" ? "sawtooth" : "triangle"
+    this.playTone(freq, this.musicMode === "boss" ? 0.24 : 0.2, type, gain)
+    if (this.musicStep % 2 === 0) {
+      this.playTone(freq / 2, this.musicMode === "boss" ? 0.18 : 0.14, "sine", gain * 0.55)
+    }
+    this.musicStep += 1
+  }
+
+  updateMusicState() {
+    const bossAlive = this.enemies?.children?.getChildren?.().some((enemy) => enemy?.active && enemy.getData("enemyType") === "boss")
+    this.setMusicMode(bossAlive ? "boss" : "field")
   }
 
   setupTouchControls() {
@@ -526,12 +888,16 @@ export class HeroForgeScene extends Phaser.Scene {
     }
 
     this.animatePlayer(movement.isMoving)
+    this.syncPlayerEquipmentLayers()
     this.updateEnemyAI(dt)
     this.handleInputs(movement.manual)
     this.updateTutorialState()
     this.updateOverlay()
     this.updateObjectiveText()
     this.updateCooldownHud()
+    this.updateEnvironmentFx(delta)
+    this.updateTerrainEffects(dt)
+    this.updateMusicState()
     Matter.Body.setPosition(this.matterPlayer, { x: this.player.x, y: this.player.y })
 
     if (this.time.now - this.lastSyncAt > SYNC_INTERVAL_MS) {
@@ -544,27 +910,188 @@ export class HeroForgeScene extends Phaser.Scene {
     }
   }
 
-  drawArena() {
+  updateEnvironmentFx(delta) {
+    if (!this.parallaxDots) return
+    const drift = delta * 0.004
+    for (const dot of this.parallaxDots) {
+      dot.y += drift * (dot.scrollFactorY * 24)
+      dot.x += Math.sin((this.animClock + dot.y) * 0.0008) * 0.08
+      dot.alpha = 0.08 + Math.abs(Math.sin((this.animClock + dot.x) * 0.0012)) * 0.18
+      if (dot.y > WORLD_HEIGHT + 30) {
+        dot.y = -20
+        dot.x = Phaser.Math.Between(0, WORLD_WIDTH)
+      }
+    }
+  }
+
+  drawArena(theme) {
+    const terrainLayout = buildTerrainLayout(this.currentChapter, WORLD_WIDTH, WORLD_HEIGHT)
     const g = this.add.graphics()
-    g.fillStyle(0x13233b, 1)
+    g.fillStyle(theme.floorA, 1)
     g.fillRect(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
 
     for (let y = 0; y < WORLD_HEIGHT; y += 80) {
       for (let x = 0; x < WORLD_WIDTH; x += 80) {
-        const shade = (x / 80 + y / 80) % 2 === 0 ? 0x1b2f4e : 0x1f3558
+        const shade = (x / 80 + y / 80) % 2 === 0 ? theme.floorA : theme.floorB
         g.fillStyle(shade, 0.24)
         g.fillRect(x + 2, y + 2, 76, 76)
       }
     }
 
-    for (let i = 0; i < 90; i += 1) {
+    for (const band of terrainLayout.pathBands) {
+      g.fillStyle(theme.ambient, 0.08)
+      g.fillRoundedRect(band.x - band.width / 2, band.y - band.height / 2, band.width, band.height, 34)
+    }
+
+    for (let i = 0; i < this.performanceProfile.arenaDeco; i += 1) {
       const x = Phaser.Math.Between(40, WORLD_WIDTH - 40)
       const y = Phaser.Math.Between(40, WORLD_HEIGHT - 40)
-      g.fillStyle(0x84cc16, 0.18)
+      g.fillStyle(theme.grass, 0.18)
       g.fillCircle(x, y, Phaser.Math.Between(12, 26))
     }
 
+    terrainLayout.decoClusters.forEach((cluster, index) => {
+      g.fillStyle(index % 2 === 0 ? theme.grass : theme.ambient, 0.12)
+      g.fillCircle(cluster.x, cluster.y, cluster.radius)
+      g.fillStyle(theme.floorB, 0.16)
+      g.fillCircle(cluster.x + 14, cluster.y - 8, cluster.radius * 0.45)
+    })
+
     g.setDepth(0)
+    this.arenaLayer = g
+    this.terrainLayout = terrainLayout
+  }
+
+  createTerrainFeatures() {
+    const theme = this.getChapterTheme(this.currentChapter)
+    const layout = this.terrainLayout ?? buildTerrainLayout(this.currentChapter, WORLD_WIDTH, WORLD_HEIGHT)
+    this.terrainColliders = this.physics.add.staticGroup()
+    this.terrainHazards = []
+    this.terrainBlessings = []
+    this.terrainVisuals = this.add.layer().setDepth(7)
+
+    layout.obstacleRects.forEach((rect, index) => {
+      const block = this.add.rectangle(rect.x, rect.y, rect.width, rect.height, theme.floorB, 0.85)
+        .setDepth(8)
+        .setStrokeStyle(2, theme.ambient, 0.22)
+      const shadow = this.add.ellipse(rect.x, rect.y + rect.height * 0.38, rect.width * 0.82, 28, 0x020617, 0.18).setDepth(6)
+      this.physics.add.existing(block, true)
+      this.terrainColliders.add(block)
+      this.terrainVisuals.add([shadow, block])
+
+      const topper = this.add.rectangle(rect.x, rect.y - rect.height * 0.22, rect.width * 0.62, 12 + index * 2, theme.grass, 0.28).setDepth(9)
+      this.terrainVisuals.add(topper)
+    })
+
+    layout.rockCircles.forEach((rock, index) => {
+      const stone = this.add.circle(rock.x, rock.y, rock.radius, theme.floorB, 0.92).setDepth(8).setStrokeStyle(2, theme.ambient, 0.18)
+      const moss = this.add.circle(rock.x - rock.radius * 0.25, rock.y - rock.radius * 0.3, rock.radius * 0.34, theme.grass, 0.24).setDepth(9)
+      this.physics.add.existing(stone, true)
+      this.terrainColliders.add(stone)
+      this.terrainVisuals.add([stone, moss])
+      if (index % 2 === 0) {
+        const rim = this.add.circle(rock.x + rock.radius * 0.2, rock.y + rock.radius * 0.15, rock.radius * 0.24, theme.ambient, 0.12).setDepth(9)
+        this.terrainVisuals.add(rim)
+      }
+    })
+
+    layout.hazardZones.forEach((zone) => {
+      const ring = this.add.circle(zone.x, zone.y, zone.radius, 0x7f1d1d, 0.12).setDepth(5).setStrokeStyle(3, 0xf97316, 0.32)
+      const core = this.add.circle(zone.x, zone.y, zone.radius * 0.55, 0xfb7185, 0.08).setDepth(5)
+      const label = this.add.text(zone.x, zone.y - zone.radius - 16, zone.label, {
+        fontFamily: "monospace",
+        fontSize: "10px",
+        color: "#fdba74",
+        backgroundColor: "rgba(67,20,7,0.58)",
+        padding: { x: 5, y: 2 },
+      }).setOrigin(0.5).setDepth(10)
+      this.terrainVisuals.add([ring, core, label])
+      this.terrainHazards.push({ ...zone, ring, core, label, tick: 0 })
+    })
+
+    layout.blessingZones.forEach((zone) => {
+      const ring = this.add.circle(zone.x, zone.y, zone.radius, theme.haze, 0.09).setDepth(5).setStrokeStyle(2, theme.ambient, 0.28)
+      const core = this.add.circle(zone.x, zone.y, zone.radius * 0.42, theme.ambient, 0.08).setDepth(5)
+      const label = this.add.text(zone.x, zone.y - zone.radius - 16, zone.label, {
+        fontFamily: "monospace",
+        fontSize: "10px",
+        color: "#bfdbfe",
+        backgroundColor: "rgba(15,23,42,0.52)",
+        padding: { x: 5, y: 2 },
+      }).setOrigin(0.5).setDepth(10)
+      this.terrainVisuals.add([ring, core, label])
+      this.terrainBlessings.push({ ...zone, ring, core, label })
+    })
+  }
+
+  clearTerrainFeatures() {
+    this.terrainVisuals?.destroy()
+    this.terrainColliders?.clear(true, true)
+    this.terrainColliders = null
+    this.terrainHazards = []
+    this.terrainBlessings = []
+  }
+
+  bindTerrainCollisions() {
+    this.terrainColliderBindings?.forEach((binding) => binding.destroy())
+    this.terrainColliderBindings = []
+    if (!this.terrainColliders) return
+    this.terrainColliderBindings.push(this.physics.add.collider(this.player, this.terrainColliders))
+    this.terrainColliderBindings.push(this.physics.add.collider(this.enemies, this.terrainColliders))
+    this.terrainColliderBindings.push(this.physics.add.collider(this.projectiles, this.terrainColliders, (projectile) => {
+      projectile.destroy()
+    }))
+  }
+
+  handleResize(gameSize) {
+    this.performanceProfile = getPerformanceProfile(gameSize)
+    this.cameras.main.setZoom(this.performanceProfile.zoom)
+    this.layoutScreenUi(gameSize)
+  }
+
+  layoutScreenUi(gameSize) {
+    const width = gameSize?.width ?? this.scale.width
+    const height = gameSize?.height ?? this.scale.height
+    const compact = width < 780
+    const left = SAFE_MARGIN
+    const top = SAFE_MARGIN
+    const bottom = height - SAFE_MARGIN
+    const right = width - SAFE_MARGIN
+
+    this.overlay?.setPosition(left, top)
+    this.overlay?.setWordWrapWidth(Math.min(width * 0.58, compact ? width - 32 : 520))
+
+    this.playerHpBarBg?.setPosition(left + 106, top + 92)
+    this.playerHpBar?.setPosition(left + 1, top + 92)
+    this.objectiveText?.setPosition(left, top + 110)
+    this.objectiveText?.setWordWrapWidth(Math.min(width * 0.48, compact ? width - 32 : 420))
+
+    if (this.cooldownHud) {
+      const clusterX = right - (compact ? 86 : 110)
+      const clusterY = bottom - (compact ? 76 : 92)
+      this.positionSkillBadge(this.cooldownHud.basic, clusterX, clusterY, 32)
+      this.positionSkillBadge(this.cooldownHud.q, clusterX - 88, clusterY - 42, 24)
+      this.positionSkillBadge(this.cooldownHud.e, clusterX - 40, clusterY - 92, 24)
+      this.positionSkillBadge(this.cooldownHud.r, clusterX + 8, clusterY - 42, 24)
+      this.positionSkillBadge(this.cooldownHud.dash, clusterX - 140, clusterY + 2, 22)
+    }
+
+    if (this.joyBase && this.joyCap) {
+      this.joyBase.setPosition(left + 70, bottom - 56)
+      this.joyCap.setPosition(this.joyBase.x, this.joyBase.y)
+      this.touchState.joystick?.setPosition(this.joyBase.x, this.joyBase.y)
+    }
+  }
+
+  positionSkillBadge(hud, x, y, radius) {
+    if (!hud) return
+    hud.x = x
+    hud.y = y
+    hud.radius = radius
+    hud.bg.setPosition(x, y)
+    hud.bg.setRadius(radius)
+    hud.text.setPosition(x, y)
+    hud.remain.setPosition(x, y + radius + 7)
   }
 
   movePlayer() {
@@ -603,7 +1130,7 @@ export class HeroForgeScene extends Phaser.Scene {
 
     if (Math.abs(vx) > 0.01 || Math.abs(vy) > 0.01) {
       const vec = new Phaser.Math.Vector2(vx, vy).normalize()
-      this.player.setVelocity(vec.x * PLAYER_SPEED, vec.y * PLAYER_SPEED)
+      this.player.setVelocity(vec.x * PLAYER_SPEED * (this.terrainEffects.playerSlow ?? 1), vec.y * PLAYER_SPEED * (this.terrainEffects.playerSlow ?? 1))
       this.facing = vec
       this.hasMoved = true
       return { isMoving: true, manual }
@@ -622,7 +1149,7 @@ export class HeroForgeScene extends Phaser.Scene {
     this.facing = dir
 
     if (d > 95 && this.playerAction == null) {
-      this.player.setVelocity(dir.x * PLAYER_SPEED * 0.85, dir.y * PLAYER_SPEED * 0.85)
+      this.player.setVelocity(dir.x * PLAYER_SPEED * 0.85 * (this.terrainEffects.playerSlow ?? 1), dir.y * PLAYER_SPEED * 0.85 * (this.terrainEffects.playerSlow ?? 1))
     } else if (this.playerAction == null) {
       this.player.setVelocity(0, 0)
     }
@@ -733,14 +1260,13 @@ export class HeroForgeScene extends Phaser.Scene {
   }
 
   updateObjectiveText() {
-    const stage = this.store.getState().stage
-    const bossStage = stage % 5 === 0
+    const stageMeta = getStageMeta(this.store.getState().stage)
 
-    if (bossStage) {
-      this.objectiveText.setText("현재 목표: 보스 처치 후 스테이지 돌파")
+    if (stageMeta.isBossStage) {
+      this.objectiveText.setText(`현재 목표: 챕터 ${stageMeta.chapter} 보스 처치`)
       this.objectiveText.setColor("#fca5a5")
     } else {
-      this.objectiveText.setText("현재 목표: 몬스터 5마리 처치")
+      this.objectiveText.setText(`현재 목표: 몬스터 ${stageMeta.killTarget}마리 처치`)
       this.objectiveText.setColor("#fde68a")
     }
   }
@@ -751,10 +1277,12 @@ export class HeroForgeScene extends Phaser.Scene {
     this.playActionAnim("attack", 150)
     this.hitEnemy(enemy, this.rollHeroDamage(this.classProfile.basicMul))
     this.emitSlash(enemy.x, enemy.y, this.classProfile.color)
+    this.emitSparkBurst(enemy.x, enemy.y, this.classProfile.color, 5)
     this.playTone(260, 0.05, "square", 0.018)
   }
 
   castSkillQ() {
+    const skillLevelMul = getSkillDamageMultiplier("q", this.heroStats.skillLevels?.q ?? 1)
     this.playActionAnim("attack", 220)
     this.cameras.main.shake(70, 0.002)
     this.playTone(380, 0.08, "sawtooth", 0.024)
@@ -764,10 +1292,11 @@ export class HeroForgeScene extends Phaser.Scene {
       this.enemies.children.iterate((enemy) => {
         if (!enemy?.active) return
         if (Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y) <= range) {
-          this.hitEnemy(enemy, this.rollHeroDamage(2.0))
+          this.hitEnemy(enemy, this.rollHeroDamage(2.0 * skillLevelMul))
         }
       })
       this.emitRing(this.player.x, this.player.y, 0xfde68a)
+      this.emitSparkBurst(this.player.x, this.player.y, 0xfde68a, 10)
       this.applyHitStop(45)
       return
     }
@@ -777,30 +1306,33 @@ export class HeroForgeScene extends Phaser.Scene {
       this.enemies.children.iterate((enemy) => {
         if (!enemy?.active) return
         if (Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y) <= range) {
-          this.hitEnemy(enemy, this.rollHeroDamage(1.75))
+          this.hitEnemy(enemy, this.rollHeroDamage(1.75 * skillLevelMul))
         }
       })
       this.emitRing(this.player.x, this.player.y, 0x67e8f9)
+      this.emitSparkBurst(this.player.x, this.player.y, 0x67e8f9, 10)
       this.applyHitStop(35)
       return
     }
 
     if (this.classId === "archer") {
-      this.spawnProjectile(this.facing, this.rollHeroDamage(1.35), 700)
-      this.spawnProjectile(this.facing.clone().rotate(0.15), this.rollHeroDamage(1.25), 700)
-      this.spawnProjectile(this.facing.clone().rotate(-0.15), this.rollHeroDamage(1.25), 700)
+      this.spawnProjectile(this.facing, this.rollHeroDamage(1.35 * skillLevelMul), 700)
+      this.spawnProjectile(this.facing.clone().rotate(0.15), this.rollHeroDamage(1.25 * skillLevelMul), 700)
+      this.spawnProjectile(this.facing.clone().rotate(-0.15), this.rollHeroDamage(1.25 * skillLevelMul), 700)
       return
     }
 
     const target = this.getNearestEnemy(210)
     if (!target) return
     this.player.setPosition(target.x - 18, target.y - 18)
-    this.hitEnemy(target, this.rollHeroDamage(2.35))
+    this.hitEnemy(target, this.rollHeroDamage(2.35 * skillLevelMul))
     this.emitRing(target.x, target.y, 0xfb923c)
+    this.emitSparkBurst(target.x, target.y, 0xfb923c, 12)
     this.applyHitStop(40)
   }
 
   castSkillE() {
+    const skillLevelMul = getSkillDamageMultiplier("e", this.heroStats.skillLevels?.e ?? 1)
     this.playActionAnim("attack", 200)
     this.playTone(320, 0.08, "triangle", 0.022)
 
@@ -814,48 +1346,54 @@ export class HeroForgeScene extends Phaser.Scene {
         if (!enemy?.active) return
         const dist = Phaser.Math.Distance.Between(enemy.x, enemy.y, tx, ty)
         const dist2 = Phaser.Math.Distance.Between(enemy.x, enemy.y, before.x, before.y)
-        if (Math.min(dist, dist2) < 86) this.hitEnemy(enemy, this.rollHeroDamage(1.7))
+        if (Math.min(dist, dist2) < 86) this.hitEnemy(enemy, this.rollHeroDamage(1.7 * skillLevelMul))
       })
       this.emitSlash(tx, ty, 0x93c5fd)
+      this.emitSparkBurst(tx, ty, 0x93c5fd, 9)
       return
     }
 
     if (this.classId === "mage") {
-      this.spawnProjectile(this.facing, this.rollHeroDamage(1.6), 640)
-      this.spawnProjectile(this.facing.clone().rotate(0.28), this.rollHeroDamage(1.45), 620)
-      this.spawnProjectile(this.facing.clone().rotate(-0.28), this.rollHeroDamage(1.45), 620)
+      this.spawnProjectile(this.facing, this.rollHeroDamage(1.6 * skillLevelMul), 640)
+      this.spawnProjectile(this.facing.clone().rotate(0.28), this.rollHeroDamage(1.45 * skillLevelMul), 620)
+      this.spawnProjectile(this.facing.clone().rotate(-0.28), this.rollHeroDamage(1.45 * skillLevelMul), 620)
       return
     }
 
     if (this.classId === "archer") {
-      this.spawnProjectile(this.facing, this.rollHeroDamage(2.05), 920)
+      this.spawnProjectile(this.facing, this.rollHeroDamage(2.05 * skillLevelMul), 920)
       return
     }
 
-    for (let i = -2; i <= 2; i += 1) this.spawnProjectile(this.facing.clone().rotate(i * 0.17), this.rollHeroDamage(1.15), 750)
+    for (let i = -2; i <= 2; i += 1) this.spawnProjectile(this.facing.clone().rotate(i * 0.17), this.rollHeroDamage(1.15 * skillLevelMul), 750)
   }
 
   castSkillR() {
+    const skillLevelMul = getSkillDamageMultiplier("r", this.heroStats.skillLevels?.r ?? 1)
     this.playActionAnim("attack", 250)
     this.playTone(520, 0.1, "sine", 0.025)
 
     if (this.classId === "warrior") {
-      this.heroHp = clamp(this.heroHp + this.heroStats.maxHp * 0.18, 0, this.heroStats.maxHp)
+      this.heroHp = clamp(this.heroHp + this.heroStats.maxHp * (0.18 * skillLevelMul), 0, this.heroStats.maxHp)
+      this.emitFxAnimation(this.player.x, this.player.y, "fx-healing", "fx-healing-anim", { scale: 1.6 })
       this.emitRing(this.player.x, this.player.y, 0xe2e8f0)
+      this.emitSparkBurst(this.player.x, this.player.y, 0xe2e8f0, 14)
       return
     }
 
     if (this.classId === "mage") {
       const target = this.getNearestEnemy(420)
       if (!target) return
+      this.emitFxAnimation(target.x, target.y, "fx-strike", "fx-strike-anim", { scale: 1.25, tint: 0x67e8f9 })
       this.emitRing(target.x, target.y, 0x22d3ee)
       this.time.delayedCall(180, () => {
         this.enemies.children.iterate((enemy) => {
           if (!enemy?.active) return
-          if (Phaser.Math.Distance.Between(target.x, target.y, enemy.x, enemy.y) < 145) this.hitEnemy(enemy, this.rollHeroDamage(2.7))
+          if (Phaser.Math.Distance.Between(target.x, target.y, enemy.x, enemy.y) < 145) this.hitEnemy(enemy, this.rollHeroDamage(2.7 * skillLevelMul))
         })
       })
       this.cameras.main.shake(100, 0.003)
+      this.emitSparkBurst(target.x, target.y, 0x22d3ee, 16)
       this.applyHitStop(55)
       return
     }
@@ -867,25 +1405,26 @@ export class HeroForgeScene extends Phaser.Scene {
         this.time.delayedCall(i * 80, () => {
           const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
           const radius = Phaser.Math.Between(20, 120)
-          const x = target.x + Math.cos(angle) * radius
-          const y = target.y + Math.sin(angle) * radius
-          this.emitSlash(x, y, 0x4ade80)
-          this.enemies.children.iterate((enemy) => {
-            if (!enemy?.active) return
-            if (Phaser.Math.Distance.Between(x, y, enemy.x, enemy.y) < 55) this.hitEnemy(enemy, this.rollHeroDamage(1.2))
+            const x = target.x + Math.cos(angle) * radius
+            const y = target.y + Math.sin(angle) * radius
+            this.emitSlash(x, y, 0x4ade80)
+            this.enemies.children.iterate((enemy) => {
+              if (!enemy?.active) return
+              if (Phaser.Math.Distance.Between(x, y, enemy.x, enemy.y) < 55) this.hitEnemy(enemy, this.rollHeroDamage(1.2 * skillLevelMul))
+            })
           })
-        })
-      }
+        }
       return
     }
 
     const range = 150
     this.enemies.children.iterate((enemy) => {
       if (!enemy?.active) return
-      if (Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y) <= range) this.hitEnemy(enemy, this.rollHeroDamage(2.15))
+      if (Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y) <= range) this.hitEnemy(enemy, this.rollHeroDamage(2.15 * skillLevelMul))
     })
-    this.heroHp = clamp(this.heroHp + this.heroStats.maxHp * 0.08, 0, this.heroStats.maxHp)
+    this.heroHp = clamp(this.heroHp + this.heroStats.maxHp * (0.08 * skillLevelMul), 0, this.heroStats.maxHp)
     this.emitRing(this.player.x, this.player.y, 0xfb923c)
+    this.emitSparkBurst(this.player.x, this.player.y, 0xfb923c, 14)
     this.applyHitStop(45)
   }
 
@@ -904,7 +1443,7 @@ export class HeroForgeScene extends Phaser.Scene {
     projectile.setDepth(40)
     projectile.setData("damage", damage)
     projectile.body.setAllowGravity(false)
-    projectile.setTint(this.classProfile.color)
+    projectile.setScale(0.85)
     projectile.setVelocity(direction.x * speed, direction.y * speed)
 
     this.time.delayedCall(1100, () => {
@@ -913,7 +1452,7 @@ export class HeroForgeScene extends Phaser.Scene {
   }
 
   rollHeroDamage(multiplier) {
-    const base = this.heroStats.atk * multiplier
+    const base = this.heroStats.atk * multiplier * (this.terrainEffects.playerAtkMul ?? 1)
     const variance = Phaser.Math.FloatBetween(0.9, 1.12)
     const crit = Math.random() <= this.heroStats.critRate
     const damage = base * variance * (crit ? 1 + this.heroStats.critDmg : 1)
@@ -931,20 +1470,26 @@ export class HeroForgeScene extends Phaser.Scene {
       const attackCd = Math.max(0, (enemy.getData("attackCd") || 0) - dt)
       enemy.setData("attackCd", attackCd)
 
+      let speedMul = 1
+      if (this.terrainHazards?.some((zone) => distance(enemy.x, enemy.y, zone.x, zone.y) <= zone.radius * 0.9)) {
+        speedMul *= 0.82
+      }
+
       if (dist < 300) {
-        this.physics.moveToObject(enemy, this.player, enemy.getData("speed") || 80)
+        this.physics.moveToObject(enemy, this.player, (enemy.getData("speed") || 80) * speedMul)
       } else {
         enemy.setVelocity(0, 0)
       }
 
       const profile = ENEMY_PROFILE[enemy.getData("enemyType")] || ENEMY_PROFILE.slime
       const moving = Math.abs(enemy.body.velocity.x) + Math.abs(enemy.body.velocity.y) > 15
-      enemy.setTexture(moving ? profile.move : profile.idle)
+      const animKey = moving ? profile.move : profile.idle
+      if (enemy.anims.currentAnim?.key !== animKey) enemy.anims.play(animKey, true)
       this.updateEnemyHpBar(enemy)
 
       if (enemy.getData("enemyType") === "boss") {
         const wave = Math.sin(this.animClock * 0.01) * 0.045
-        enemy.setScale(1.08 + wave)
+        enemy.setScale(1.3 + wave)
       }
 
       if (dist < (enemy.getData("enemyType") === "boss" ? 60 : 42) && attackCd <= 0) {
@@ -952,6 +1497,7 @@ export class HeroForgeScene extends Phaser.Scene {
         this.heroHp = clamp(this.heroHp - incoming, 0, this.heroStats.maxHp)
         enemy.setData("attackCd", enemy.getData("enemyType") === "boss" ? 1.4 : 1.05)
         this.emitDamageText(this.player.x, this.player.y - 28, incoming, 0xfca5a5)
+        this.emitSparkBurst(this.player.x, this.player.y, 0xfda4af, enemy.getData("enemyType") === "boss" ? 12 : 6)
         this.triggerHitAnimation()
         this.playTone(140, 0.04, "triangle", 0.015)
 
@@ -983,6 +1529,7 @@ export class HeroForgeScene extends Phaser.Scene {
         const incoming = Math.max(2, Math.floor((boss.getData("atk") || this.enemyStats.atk) * 0.85))
         this.heroHp = clamp(this.heroHp - incoming, 0, this.heroStats.maxHp)
         this.emitDamageText(this.player.x, this.player.y - 30, incoming, 0xfda4af)
+        this.emitSparkBurst(this.player.x, this.player.y, 0xfda4af, 12)
         this.triggerHitAnimation()
         this.cameras.main.shake(110, 0.004)
       }
@@ -994,21 +1541,26 @@ export class HeroForgeScene extends Phaser.Scene {
     enemy.setData("hp", hp)
     this.updateEnemyHpBar(enemy)
     this.emitDamageText(enemy.x, enemy.y - 22, damage, 0xfef08a)
+    if (damage > this.heroStats.atk * 1.8) {
+      this.emitFxAnimation(enemy.x, enemy.y, "fx-strike", "fx-strike-anim", { scale: 1.05, tint: 0xfde68a })
+    }
 
     if (hp <= 0) {
       const isBoss = enemy.getData("enemyType") === "boss"
+      const stageMeta = getStageMeta(this.store.getState().stage)
 
-      this.stageClearKills += isBoss ? 5 : 1
+      this.stageClearKills += isBoss ? stageMeta.killTarget : 1
       this.destroyEnemyBars(enemy)
       enemy.destroy()
       this.emitRing(enemy.x, enemy.y, isBoss ? 0xfca5a5 : 0xfda4af)
+      this.emitSparkBurst(enemy.x, enemy.y, isBoss ? 0xfca5a5 : this.classProfile.color, isBoss ? 20 : 9)
       this.playTone(isBoss ? 860 : 720, isBoss ? 0.15 : 0.06, "square", 0.02)
       this.cameras.main.shake(isBoss ? 150 : 80, isBoss ? 0.005 : 0.002)
 
-      if (this.stageClearKills >= 5) {
+      if (this.stageClearKills >= stageMeta.killTarget) {
         this.stageClearKills = 0
         this.store.getState().onEnemyDefeated()
-        this.pendingBossWarning = this.store.getState().stage % 5 === 0
+        this.pendingBossWarning = !stageMeta.isFinalStage && getStageMeta(this.store.getState().stage).isBossStage
       }
 
       this.time.delayedCall(isBoss ? 1200 : 500, () => this.spawnEnemy())
@@ -1022,6 +1574,7 @@ export class HeroForgeScene extends Phaser.Scene {
     this.playActionAnim("dead", 900)
     this.player.setVelocity(0, 0)
     this.emitRing(this.player.x, this.player.y, 0xfb7185)
+    this.emitSparkBurst(this.player.x, this.player.y, 0xfb7185, 18)
     this.playTone(90, 0.12, "sawtooth", 0.03)
 
     this.time.delayedCall(900, () => {
@@ -1038,18 +1591,20 @@ export class HeroForgeScene extends Phaser.Scene {
 
   spawnEnemy() {
     const stage = this.store.getState().stage
+    const stageMeta = getStageMeta(stage)
     const enemyType = chooseEnemyType(stage)
     const profile = ENEMY_PROFILE[enemyType]
 
     if (enemyType === "boss" && this.pendingBossWarning) {
-      this.showBossWarning(stage)
+      this.showBossWarning(stageMeta)
       this.pendingBossWarning = false
     }
 
-    const x = Phaser.Math.Between(80, WORLD_WIDTH - 80)
-    const y = Phaser.Math.Between(80, WORLD_HEIGHT - 80)
-    const enemy = this.enemies.create(x, y, profile.idle)
+    const { x, y } = this.findSpawnPoint()
+    const enemy = this.enemies.create(x, y, profile.sheet, 0)
     enemy.setDepth(enemyType === "boss" ? 22 : 18)
+    enemy.play(profile.idle, true)
+    enemy.setScale(enemyType === "boss" ? 1.3 : enemyType === "golem" ? 1.12 : 1)
 
     const hp = this.enemyStats.maxHp * profile.hpMul
     const atk = this.enemyStats.atk * profile.atkMul
@@ -1069,7 +1624,7 @@ export class HeroForgeScene extends Phaser.Scene {
     enemy.setData("bar", bar)
 
     if (enemyType === "boss") {
-      const label = this.add.text(x, y - 66, "보스", {
+      const label = this.add.text(x, y - 66, `챕터 ${stageMeta.chapter} 보스`, {
         fontFamily: "monospace",
         fontSize: "11px",
         color: "#fecaca",
@@ -1080,8 +1635,8 @@ export class HeroForgeScene extends Phaser.Scene {
     }
   }
 
-  showBossWarning(stage) {
-    const warning = this.add.text(this.cameras.main.midPoint.x, 72, `경고: 스테이지 ${stage} 보스 등장`, {
+  showBossWarning(stageMeta) {
+    const warning = this.add.text(this.cameras.main.midPoint.x, 72, `경고: 챕터 ${stageMeta.chapter} 최종 보스 등장`, {
       fontFamily: "monospace",
       fontSize: "22px",
       color: "#fecaca",
@@ -1089,7 +1644,12 @@ export class HeroForgeScene extends Phaser.Scene {
       padding: { x: 12, y: 8 },
     }).setOrigin(0.5).setScrollFactor(0).setDepth(140)
 
+    const flash = this.add.rectangle(this.cameras.main.midPoint.x, this.cameras.main.midPoint.y, this.scale.width, this.scale.height, 0x7f1d1d, 0.18)
+      .setScrollFactor(0)
+      .setDepth(139)
+
     this.playTone(120, 0.18, "sawtooth", 0.03)
+    this.emitSparkBurst(this.cameras.main.midPoint.x, this.cameras.main.midPoint.y, 0xfca5a5, 26)
 
     this.tweens.add({
       targets: warning,
@@ -1097,6 +1657,12 @@ export class HeroForgeScene extends Phaser.Scene {
       duration: 1600,
       delay: 500,
       onComplete: () => warning.destroy(),
+    })
+    this.tweens.add({
+      targets: flash,
+      alpha: 0,
+      duration: 620,
+      onComplete: () => flash.destroy(),
     })
   }
 
@@ -1167,31 +1733,88 @@ export class HeroForgeScene extends Phaser.Scene {
   }
 
   emitRing(x, y, color) {
-    const ring = this.add.circle(x, y, 12, color, 0.15).setStrokeStyle(2, color, 0.9)
-    ring.setDepth(45)
+    const ring = this.add.sprite(x, y, "fx-rings", 0).setDepth(45).setScale(1.4).setTint(color)
     this.fxLayer.add(ring)
+    ring.play("fx-rings-anim")
+    ring.once("animationcomplete", () => ring.destroy())
+  }
 
+  emitFxAnimation(x, y, texture, animKey, options = {}) {
+    const fx = this.add.sprite(x, y, texture, 0).setDepth(options.depth ?? 45)
+    if (options.scale) fx.setScale(options.scale)
+    if (options.rotation) fx.setRotation(options.rotation)
+    if (options.tint) fx.setTint(options.tint)
+    this.fxLayer.add(fx)
+    fx.play(animKey)
+    fx.once("animationcomplete", () => fx.destroy())
+  }
+
+  emitSparkBurst(x, y, color, count = 8) {
+    for (let i = 0; i < count; i += 1) {
+      const spark = this.add.circle(x, y, Phaser.Math.Between(2, 4), color, 0.9)
+      spark.setDepth(46)
+      this.fxLayer.add(spark)
+      const angle = Phaser.Math.FloatBetween(0, Math.PI * 2)
+      const distancePx = Phaser.Math.Between(22, 74)
+      this.tweens.add({
+        targets: spark,
+        x: x + Math.cos(angle) * distancePx,
+        y: y + Math.sin(angle) * distancePx,
+        alpha: 0,
+        scale: 0.2,
+        duration: Phaser.Math.Between(220, 420),
+        ease: "Quad.easeOut",
+        onComplete: () => spark.destroy(),
+      })
+    }
+  }
+
+  emitLevelBurst(x, y) {
+    const label = this.add.text(x, y - 42, "레벨 업!", {
+      fontFamily: "monospace",
+      fontSize: "18px",
+      color: "#fde68a",
+      stroke: "#713f12",
+      strokeThickness: 4,
+    }).setOrigin(0.5).setDepth(70)
+    this.fxLayer.add(label)
+    this.emitSparkBurst(x, y, 0xfde68a, 18)
+    this.emitRing(x, y, 0xfacc15)
     this.tweens.add({
-      targets: ring,
-      radius: 58,
+      targets: label,
+      y: y - 84,
       alpha: 0,
-      duration: 340,
-      onComplete: () => ring.destroy(),
+      duration: 900,
+      ease: "Sine.easeOut",
+      onComplete: () => label.destroy(),
+    })
+  }
+
+  showChapterBanner(chapter) {
+    const theme = this.getChapterTheme(chapter)
+    const banner = this.add.text(this.cameras.main.midPoint.x, 112, `챕터 ${chapter} 진입`, {
+      fontFamily: "monospace",
+      fontSize: "24px",
+      color: "#f8fafc",
+      backgroundColor: Phaser.Display.Color.IntegerToColor(theme.haze).rgba,
+      padding: { x: 16, y: 10 },
+    }).setOrigin(0.5).setScrollFactor(0).setDepth(141)
+    this.emitSparkBurst(this.cameras.main.midPoint.x, 112, theme.ambient, 20)
+    this.tweens.add({
+      targets: banner,
+      alpha: 0,
+      y: 84,
+      duration: 1800,
+      delay: 350,
+      onComplete: () => banner.destroy(),
     })
   }
 
   emitSlash(x, y, color) {
-    const slash = this.add.rectangle(x, y, 54, 10, color, 0.9)
-    slash.setDepth(45)
-    slash.setRotation(Phaser.Math.FloatBetween(-0.9, 0.9))
-    this.fxLayer.add(slash)
-
-    this.tweens.add({
-      targets: slash,
-      alpha: 0,
-      scaleX: 1.4,
-      duration: 180,
-      onComplete: () => slash.destroy(),
+    this.emitFxAnimation(x, y, "fx-slashing", "fx-slashing-anim", {
+      scale: 1.15,
+      rotation: Phaser.Math.FloatBetween(-0.9, 0.9),
+      tint: color,
     })
   }
 
@@ -1199,24 +1822,78 @@ export class HeroForgeScene extends Phaser.Scene {
     const nearest = this.getNearestEnemy()
     const enemyHp = nearest ? Math.floor(nearest.getData("hp")) : 0
     const stage = this.store.getState().stage
+    const stageMeta = getStageMeta(stage)
     const autoHunt = this.store.getState().autoHunt
 
     this.playerHpBar.width = 200 * clamp(this.heroHp / this.heroStats.maxHp, 0, 1)
 
     this.overlay.setText(
       [
-        `직업: ${this.heroStats.name} | 스테이지 ${stage} | 처치 ${this.stageClearKills}/5 | 자동사냥: ${autoHunt ? "ON" : "OFF"}`,
-        `체력 ${Math.floor(this.heroHp)} / ${Math.floor(this.heroStats.maxHp)} | 공격 ${Math.floor(this.heroStats.atk)} 방어 ${Math.floor(this.heroStats.def)}`,
-        `기본공격(J) · 스킬(Q:${this.classProfile.skillQ} / E:${this.classProfile.skillE} / R:${this.classProfile.skillR})`,
-        `대시(Space) · 이동(WASD/방향키) · 현재 타겟 체력: ${enemyHp}`,
+        `직업 ${this.heroStats.name} · 챕터 ${stageMeta.chapter}-${stageMeta.stageInChapter} · 전체 ${stageMeta.globalStage} · 자동사냥 ${autoHunt ? "ON" : "OFF"}`,
+        `HP ${Math.floor(this.heroHp)} / ${Math.floor(this.heroStats.maxHp)} · 공격 ${Math.floor(this.heroStats.atk)} · 방어 ${Math.floor(this.heroStats.def)} · 타겟 HP ${enemyHp}`,
+        `이동 WASD/방향키 · 공격 J · 스킬 Q/E/R · 대시 Space · 처치 ${this.stageClearKills}/${stageMeta.killTarget}`,
         TUTORIAL_TEXT[this.tutorialStep],
       ].join("\n")
     )
   }
 
+  findSpawnPoint() {
+    for (let tries = 0; tries < 16; tries += 1) {
+      const x = Phaser.Math.Between(80, WORLD_WIDTH - 80)
+      const y = Phaser.Math.Between(80, WORLD_HEIGHT - 80)
+      if (this.isWalkablePoint(x, y, 54)) return { x, y }
+    }
+    return { x: WORLD_WIDTH * 0.75, y: WORLD_HEIGHT * 0.5 }
+  }
+
+  isWalkablePoint(x, y, padding = 0) {
+    const layout = this.terrainLayout
+    if (!layout) return true
+    if (distance(x, y, this.player?.x ?? 420, this.player?.y ?? 300) < (layout.spawnSafeRadius ?? 90) + padding) return false
+
+    const hitRect = layout.obstacleRects.some((rect) => (
+      x > rect.x - rect.width / 2 - padding &&
+      x < rect.x + rect.width / 2 + padding &&
+      y > rect.y - rect.height / 2 - padding &&
+      y < rect.y + rect.height / 2 + padding
+    ))
+    if (hitRect) return false
+
+    return !layout.rockCircles.some((rock) => distance(x, y, rock.x, rock.y) < rock.radius + padding)
+  }
+
+  updateTerrainEffects(dt) {
+    this.terrainTick += dt
+    const inHazard = this.terrainHazards?.find((zone) => distance(this.player.x, this.player.y, zone.x, zone.y) <= zone.radius)
+    const inBlessing = this.terrainBlessings?.find((zone) => distance(this.player.x, this.player.y, zone.x, zone.y) <= zone.radius)
+
+    this.terrainEffects.playerSlow = inHazard ? inHazard.slow : 1
+    this.terrainEffects.playerAtkMul = inBlessing ? inBlessing.atkMul : 1
+
+    if (inHazard && this.terrainTick >= 0.35) {
+      const damage = Math.max(1, Math.floor(inHazard.dps * 0.5))
+      this.heroHp = clamp(this.heroHp - damage, 0, this.heroStats.maxHp)
+      this.emitDamageText(this.player.x, this.player.y - 30, damage, 0xfb7185)
+      this.emitSparkBurst(this.player.x, this.player.y, 0xfb7185, 3)
+      this.terrainTick = 0
+      if (this.heroHp <= 0) this.onHeroDead()
+    }
+
+    if (inBlessing) {
+      this.heroHp = clamp(this.heroHp + this.heroStats.maxHp * inBlessing.regen * dt, 0, this.heroStats.maxHp)
+    }
+  }
+
   shutdown() {
     this.enemies?.children?.iterate((enemy) => this.destroyEnemyBars(enemy))
+    this.playerBodyOverlay?.destroy()
+    this.playerHelmet?.destroy()
+    this.playerWeapon?.destroy()
     this.touchState.joystick?.destroy()
+    this.musicTimer?.remove(false)
+    this.scale.off("resize", this.handleResize, this)
+    this.terrainColliderBindings?.forEach((binding) => binding.destroy())
+    this.clearTerrainFeatures()
     if (this.unsubscribe) this.unsubscribe()
   }
 }

@@ -92,3 +92,16 @@ When out of range, adjust in this order:
 - New version must include migration function `vN -> vN+1`
 - Never remove old keys without migration
 - Add compatibility test for old save fixtures
+
+Current implementation:
+- active save key: `heroforge.save.v2`
+- legacy read support: `heroforge.save.v1`
+- migration path: `v1 -> v2`
+- `v2` guarantees these fields exist: `profile`, `skillLevels`, `companions`, `dungeons`, `dailyReward`, `progression`, `questClaims`, `achievementClaims`
+
+Release rule:
+1. Add new schema version constant
+2. Keep previous save key readable
+3. Migrate old payload to latest shape before store load
+4. Re-save in latest key after successful migration
+5. Add test coverage for migration defaults

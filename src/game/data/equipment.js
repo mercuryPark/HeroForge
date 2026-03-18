@@ -6,6 +6,20 @@ export const RARITY_TABLE = [
   { id: "legendary", label: "전설", weight: 1, atkBonus: 45 },
 ]
 
+export const EQUIPMENT_SLOTS = [
+  { id: "weapon", label: "무기" },
+  { id: "armor", label: "갑옷" },
+  { id: "helmet", label: "투구" },
+]
+
+export const EQUIPMENT_SLOT_WEIGHTS = [
+  { id: "weapon", weight: 48 },
+  { id: "armor", weight: 32 },
+  { id: "helmet", weight: 20 },
+]
+
+export const FUSION_REQUIREMENT = 3
+
 export const ENHANCE_RULES = {
   0: { success: 1.0, bonus: 2 },
   1: { success: 0.95, bonus: 2 },

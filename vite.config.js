@@ -32,6 +32,23 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return undefined
+          if (id.includes("/react/") || id.includes("/react-dom/") || id.includes("/scheduler/") || id.includes("/zustand/")) return "react-stack"
+          if (id.includes("/phaser3-rex-plugins/")) return "phaser-plugins"
+          if (id.includes("/phaser/")) return "phaser-core"
+          if (id.includes("/matter-js/")) return "physics"
+          if (id.includes("three")) return "three-stack"
+          if (id.includes("framer-motion") || id.includes("gsap")) return "motion-stack"
+          if (id.includes("@iconify")) return "icons"
+          return undefined
+        },
+      },
+    },
+  },
   test: {
     globals: true,
     environment: "jsdom",

@@ -1,4 +1,6 @@
-import { hitChance, stageScale } from "../core/formulas"
+import { hitChance, recalculateHeroAttack } from "../core/formulas"
+import { getDropChance, getEnemyStageStats, getStageRewards } from "../data/balance"
+import { getNextStage, getPreviousStage } from "../data/stages"
 import { applyExp } from "./growthSystem"
 import { rollEquipmentDrop } from "./equipmentSystem"
 
@@ -14,19 +16,19 @@ function calcDamage(attacker, defender, isSkill, rng) {
 }
 
 export function spawnEnemy(stage) {
-  const scale = stageScale(stage)
+  const stats = getEnemyStageStats(stage)
   return {
     id: `enemy-${stage}`,
     name: `스테이지 ${stage} 몬스터`,
-    maxHp: Math.floor(65 * scale + stage * 7),
-    hp: Math.floor(65 * scale + stage * 7),
-    atk: Number((8 * scale).toFixed(2)),
-    def: Number((3 * scale).toFixed(2)),
-    attackSpeed: Number((0.8 + stage * 0.005).toFixed(2)),
+    maxHp: stats.hp,
+    hp: stats.hp,
+    atk: stats.atk,
+    def: stats.def,
+    attackSpeed: stats.attackSpeed,
     critRate: 0.05,
     critDmg: 0.4,
-    evasion: Math.min(0.25, 0.03 + stage * 0.0008),
-    accuracy: 100,
+    evasion: stats.evasion,
+    accuracy: stats.accuracy,
   }
 }
 
@@ -60,30 +62,29 @@ export function runCombatTick(state, dt, rng) {
 
   if (hero.hp <= 0) {
     hero.hp = hero.maxHp
-    stage = Math.max(1, stage - 1)
+    stage = getPreviousStage(stage)
     enemy = spawnEnemy(stage)
   }
 
   if (enemy.hp <= 0) {
-    const expGain = Math.floor(12 + stage * 2.1)
-    const goldGain = Math.floor(15 + stage * 3)
+    const { exp: expGain, gold: goldGain } = getStageRewards(stage)
 
     hero.gold += goldGain
     hero = applyExp(hero, expGain)
 
-    if (rng() < 0.18) {
+    if (rng() < getDropChance(stage)) {
       const drop = rollEquipmentDrop(rng)
       hero.weapon.bonusAtk = Math.max(hero.weapon.bonusAtk, drop.atkBonus)
       lootLog = [`장비 획득: ${drop.label} 등급 (공격 +${drop.atkBonus})`, ...lootLog].slice(0, 8)
     }
 
-    stage += 1
+    stage = getNextStage(stage)
     enemy = spawnEnemy(stage)
   }
 
   hero.hp = Math.max(0, Math.min(hero.maxHp, hero.hp))
   enemy.hp = Math.max(0, Math.min(enemy.maxHp, enemy.hp))
-  hero.atk = Number((hero.baseAtk + hero.weapon.bonusAtk).toFixed(2))
+  hero.atk = recalculateHeroAttack(hero)
 
   return {
     ...state,

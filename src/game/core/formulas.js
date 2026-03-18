@@ -1,9 +1,7 @@
-export function expToNextLevel(level) {
-  return Math.floor(28 * Math.pow(level, 1.42))
-}
+import { EXP_CURVE } from "../data/balance"
 
-export function stageScale(stage) {
-  return 1 + (stage - 1) * 0.15
+export function expToNextLevel(level) {
+  return Math.floor(EXP_CURVE.base * Math.pow(level, EXP_CURVE.exponent))
 }
 
 export function computePower(hero) {
@@ -11,6 +9,12 @@ export function computePower(hero) {
   const speedFactor = Math.sqrt(hero.attackSpeed)
   const defense = hero.def * 0.7 + hero.hp * 0.03
   return Math.floor(offense * speedFactor + defense)
+}
+
+export function recalculateHeroAttack(hero) {
+  const equipmentAtk = hero.equipmentBonus?.atk ?? 0
+  const companionAtk = hero.companionBonus?.atk ?? 0
+  return Number(((hero.baseAtk ?? hero.atk ?? 0) + equipmentAtk + companionAtk).toFixed(2))
 }
 
 export function hitChance(accuracy, evasion) {
