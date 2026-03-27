@@ -1,37 +1,61 @@
 /**
  * DamageNumberSystem — floating damage numbers that pop up and fade out.
  *
- * Uses ObjectPool for zero GC allocation in the hot path.
+ * Uses BitmapText + ObjectPool for zero GC allocation in the hot path.
  * Colors: white = normal, yellow = critical, grey = miss
  * Animation: float up + fade out; crits get a scale pop effect.
  *
  * Numbers live in WORLD SPACE (inside worldContainer) so they move with the camera.
  */
-import { Text, TextStyle } from 'pixi.js'
+import { BitmapText, BitmapFont } from 'pixi.js'
 import { ObjectPool } from '@core/ObjectPool'
 
-/** Shared text styles (created once, reused) */
-const normalStyle = new TextStyle({
-  fontFamily: '"Press Start 2P", monospace',
-  fontSize: 12,
-  fill: 0xffffff,
-  stroke: { color: 0x000000, width: 3 },
-  align: 'center',
-})
+/** Font name constant */
+const FONT_NAME = 'DmgFont'
 
-// Crit and miss styles are applied dynamically by mutating the cloned normalStyle
+/** Whether BitmapFont has been installed */
+let fontInstalled = false
+
+/**
+ * Install BitmapFont at first use. Must be called after document.fonts.ready.
+ * Uses white fill + dynamicFill so .tint can change color per-instance without GC.
+ */
+function ensureFont() {
+  if (fontInstalled) return
+  BitmapFont.install({
+    name: FONT_NAME,
+    style: {
+      fontFamily: '"Press Start 2P", monospace',
+      fontSize: 16,
+      fill: 0xffffff,
+      stroke: { color: 0x000000, width: 3 },
+    },
+    chars: [['0', '9'], '!', 'M', 'I', 'S', ' ', '+', '-'],
+    resolution: 2,
+    padding: 4,
+  })
+  fontInstalled = true
+}
 
 /**
  * Factory: creates a DamageNumberSystem bound to a world container and event bus.
- * @param {import('pixi.js').Container} worldContainer — world-space container (moves with camera)
+ * @param {import('pixi.js').Container} worldContainer
  * @param {import('@core/EventBus').EventBus} eventBus
  * @returns {function} ECS system function
  */
 export function createDamageNumberSystem(worldContainer, eventBus) {
+  ensureFont()
+
   const activeNumbers = []
 
   const pool = new ObjectPool(() => {
-    const text = new Text({ text: '0', style: normalStyle.clone() })
+    const text = new BitmapText({
+      text: '0',
+      style: {
+        fontFamily: FONT_NAME,
+        fontSize: 16,
+      },
+    })
     text.anchor.set(0.5)
     text.visible = false
     worldContainer.addChild(text)
@@ -45,8 +69,7 @@ export function createDamageNumberSystem(worldContainer, eventBus) {
     const text = pool.acquire()
 
     text.text = isCrit ? `${amount}!` : `${amount}`
-    text.style.fill = isCrit ? 0xffff00 : 0xffffff
-    text.style.fontSize = isCrit ? 14 : 12
+    text.tint = isCrit ? 0xffff00 : 0xffffff
     text.x = x + (Math.random() - 0.5) * 20
     text.y = y - 40
     text.scale.set(isCrit ? 1.5 : 1.0)
@@ -68,11 +91,10 @@ export function createDamageNumberSystem(worldContainer, eventBus) {
     const text = pool.acquire()
 
     text.text = 'MISS'
-    text.style.fill = 0x999999
-    text.style.fontSize = 10
+    text.tint = 0x999999
     text.x = x + (Math.random() - 0.5) * 16
     text.y = y - 32
-    text.scale.set(1)
+    text.scale.set(0.75)
     text.alpha = 1
     text.visible = true
 

@@ -6,6 +6,7 @@ import { createGameWorld } from '@core/World'
 import { createGameLoop } from '@core/GameLoop'
 import { SpatialHash } from '@core/SpatialHash'
 import { EventBus } from '@core/EventBus'
+import { SaveManager } from '@core/SaveManager'
 import { SPATIAL_CELL_SIZE, GRAVITY, PIXEL } from '@data/constants'
 import { createWorldContainer } from '@render/PixiApp'
 import { createTilemap } from '@render/TilemapRenderer'
@@ -21,8 +22,11 @@ import { AISystem } from '@systems/logic/AISystem'
 import { CombatSystem } from '@systems/logic/CombatSystem'
 import { spawnMonster, SpawnSystem } from '@systems/logic/SpawnSystem'
 import { createLootSystem } from '@systems/logic/LootSystem'
-import { UIBridgeSystem } from '@systems/logic/UIBridgeSystem'
+import { UIBridgeSystem } from '@systems/render/UIBridgeSystem'
+import { addLootPopup } from '@ui/hud/LootCounter'
 import { createDamageNumberSystem } from '@systems/render/DamageNumberSystem'
+import { createEffectsSystem } from '@systems/render/EffectsSystem'
+import { createParticleSystem } from '@systems/render/ParticleSystem'
 import { Position, PrevPosition, Velocity } from '@components/transform'
 import { Gravity as GravityComp, Collider } from '@components/physics'
 import { PlayerTag, Level } from '@components/character'
@@ -63,13 +67,21 @@ async function boot() {
 
   // 6. Create systems
   const tileCollisionSystem = createTileCollisionSystem(tilemap.grid, tilemap.tileSize)
-  const cameraSystem = createCameraSystem(worldContainer, tilemap.width, tilemap.height, SCREEN_W, SCREEN_H)
+  const cameraSystem = createCameraSystem(worldContainer, tilemap.width, tilemap.height, SCREEN_W, SCREEN_H, world.eventBus)
   const parallaxSystem = createParallaxSystem(bgContainer, SCREEN_W, SCREEN_H)
   const lootSystem = createLootSystem()
   lootSystem.init(world)
   world.playerState = lootSystem.playerState
 
+  // Bridge loot events to UI popups
+  world.eventBus.on('loot:drop', (e) => {
+    if (e.gold > 0) addLootPopup('gold', e.gold)
+    if (e.exp > 0) addLootPopup('exp', e.exp)
+  })
+
   const damageNumberSystem = createDamageNumberSystem(worldContainer, world.eventBus)
+  const effectsSystem = createEffectsSystem(worldContainer, world.eventBus)
+  const particleSystem = createParticleSystem(worldContainer, uiContainer, world.eventBus)
 
   // 7. Create game loop and register systems
   const gameLoop = createGameLoop(world)
@@ -82,14 +94,16 @@ async function boot() {
   gameLoop.addLogicSystem(CombatSystem)
   gameLoop.addLogicSystem(SpawnSystem)
   gameLoop.addLogicSystem(lootSystem.system)
-  gameLoop.addLogicSystem(UIBridgeSystem)
 
   // Render pipeline (display refresh rate)
+  gameLoop.addRenderSystem(UIBridgeSystem)
   gameLoop.addRenderSystem(SpriteSystem)
   gameLoop.addRenderSystem(AnimationSystem)
   gameLoop.addRenderSystem(cameraSystem)
   gameLoop.addRenderSystem(parallaxSystem)
   gameLoop.addRenderSystem(damageNumberSystem)
+  gameLoop.addRenderSystem(effectsSystem)
+  gameLoop.addRenderSystem(particleSystem)
 
   // 8. Spawn player entity
   const playerEid = addEntity(world)
@@ -145,6 +159,15 @@ async function boot() {
 
   world.playerEid = playerEid
 
+  // 10.5. Initialize SaveManager and wire auto-save
+  const saveManager = new SaveManager()
+  await saveManager.init()
+
+  // Auto-save every 30s
+  saveManager.startAutoSave(async () => {
+    await saveManager.save('main', saveManager.serializeState(world, lootSystem.playerState))
+  })
+
   // 9. Spawn monsters at tilemap spawn points
   tilemap.spawnPoints.monsters.forEach((sp, i) => {
     const mid = spawnMonster(world, sp.x, sp.y, i % 5)
@@ -152,7 +175,7 @@ async function boot() {
   })
 
   // 10. Mount Preact UI
-  render(<App pixiApp={pixiApp} world={world} gameLoop={gameLoop} playerState={lootSystem.playerState} />, document.getElementById('ui-root'))
+  render(<App pixiApp={pixiApp} world={world} gameLoop={gameLoop} playerState={lootSystem.playerState} saveManager={saveManager} />, document.getElementById('ui-root'))
 
   // 11. Start game loop
   gameLoop.start()

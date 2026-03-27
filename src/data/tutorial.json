@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "target": null,
+    "title": "HeroForge에 오신 것을 환영합니다!",
+    "text": "용사가 되어 몬스터를 사냥하고 성장하세요.",
+    "position": "center",
+    "highlight": null
+  },
+  {
+    "id": 2,
+    "target": "hud-hp",
+    "title": "체력 바",
+    "text": "HP가 0이 되면 부활합니다. 체력을 주시하세요!",
+    "position": "below",
+    "highlight": "hp-bar"
+  },
+  {
+    "id": 3,
+    "target": "hud-exp",
+    "title": "경험치 바",
+    "text": "몬스터를 처치하면 EXP를 얻고 레벨업합니다.",
+    "position": "below",
+    "highlight": "exp-bar"
+  },
+  {
+    "id": 4,
+    "target": "hud-gold",
+    "title": "골드",
+    "text": "몬스터에서 드롭되는 골드로 장비를 강화하세요.",
+    "position": "below",
+    "highlight": "gold"
+  },
+  {
+    "id": 5,
+    "target": "auto-battle",
+    "title": "오토배틀",
+    "text": "AUTO 버튼으로 자동 전투를 켜고 끌 수 있습니다.",
+    "position": "left",
+    "highlight": "auto-btn"
+  },
+  {
+    "id": 6,
+    "target": null,
+    "title": "사냥을 시작하세요!",
+    "text": "오토배틀이 켜져있으면 자동으로 몬스터를 사냥합니다. 행운을 빕니다!",
+    "position": "center",
+    "highlight": null
+  }
+]

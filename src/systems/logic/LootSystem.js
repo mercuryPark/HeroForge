@@ -8,6 +8,7 @@
 import { hasComponent } from 'bitecs'
 import { MonsterTag, MonsterType } from '@components/monster'
 import { PlayerTag, Level } from '@components/character'
+import { Position } from '@components/transform'
 
 /** Loot table indexed by MonsterType.id */
 const LOOT_TABLE = [
@@ -60,6 +61,8 @@ export function createLootSystem() {
         world.eventBus?.emit('player:levelup', {
           level: Level.current[playerEid],
           eid: playerEid,
+          x: Position.x[playerEid],
+          y: Position.y[playerEid],
         })
       }
     }

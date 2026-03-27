@@ -97,6 +97,8 @@ export function spawnMonster(world, spawnX, spawnY, presetIndex) {
   AnimState.speed[eid] = 8
   AnimState.loop[eid] = 1
 
+  world.eventBus?.emit('entity:spawn', { eid, x: spawnX, y: spawnY })
+
   return eid
 }
 
@@ -135,6 +137,11 @@ export function SpawnSystem(world) {
 
       // Revive
       removeComponent(world, eid, Dead)
+      world.eventBus?.emit('entity:spawn', {
+        eid,
+        x: SpawnPoint.x[eid],
+        y: SpawnPoint.y[eid],
+      })
     }
   }
 
