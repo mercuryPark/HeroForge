@@ -1,0 +1,337 @@
+{
+  "chapters": [
+    {
+      "id": "chapter_1",
+      "name": "Green Forest",
+      "nameKr": "초록 숲",
+      "requiredLevel": 1,
+      "monsters": [
+        {
+          "id": "green_slime",
+          "name": "Green Slime",
+          "nameKr": "초록 슬라임",
+          "hp": 80,
+          "atk": 12,
+          "def": 5,
+          "exp": 18,
+          "gold": 8,
+          "respawnTime": 3
+        },
+        {
+          "id": "blue_snail",
+          "name": "Blue Snail",
+          "nameKr": "파란 달팽이",
+          "hp": 60,
+          "atk": 8,
+          "def": 3,
+          "exp": 12,
+          "gold": 5,
+          "respawnTime": 2
+        },
+        {
+          "id": "orange_mushroom",
+          "name": "Orange Mushroom",
+          "nameKr": "주황버섯",
+          "hp": 120,
+          "atk": 18,
+          "def": 8,
+          "exp": 28,
+          "gold": 12,
+          "respawnTime": 4
+        },
+        {
+          "id": "horned_mushroom",
+          "name": "Horned Mushroom",
+          "nameKr": "뿔버섯",
+          "hp": 160,
+          "atk": 25,
+          "def": 12,
+          "exp": 40,
+          "gold": 18,
+          "respawnTime": 5
+        },
+        {
+          "id": "red_snail",
+          "name": "Red Snail",
+          "nameKr": "빨간 달팽이",
+          "hp": 90,
+          "atk": 14,
+          "def": 6,
+          "exp": 22,
+          "gold": 9,
+          "respawnTime": 3
+        }
+      ],
+      "boss": {
+        "id": "king_slime",
+        "name": "King Slime",
+        "nameKr": "킹 슬라임",
+        "hp": 8000,
+        "atk": 120,
+        "def": 40,
+        "exp": 2000,
+        "gold": 500,
+        "timeLimit": 180,
+        "patterns": [
+          {
+            "id": "slime_slam",
+            "name": "Slime Slam",
+            "trigger": "always",
+            "cooldown": 4,
+            "damage": 1.5,
+            "description": "Leaps and crashes down on the target area"
+          },
+          {
+            "id": "slime_split",
+            "name": "Slime Split",
+            "trigger": "hp_below_50",
+            "cooldown": 12,
+            "damage": 0.8,
+            "description": "Splits into 3 mini-slimes that each deal damage"
+          },
+          {
+            "id": "slime_wave",
+            "name": "Slime Wave",
+            "trigger": "hp_below_25",
+            "cooldown": 8,
+            "damage": 2.0,
+            "description": "Sends a rolling wave of slime across the arena"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 1, "max": 3 }
+      }
+    },
+    {
+      "id": "chapter_2",
+      "name": "Dark Cave",
+      "nameKr": "어둠의 동굴",
+      "requiredLevel": 20,
+      "monsters": [
+        {
+          "id": "cave_bat",
+          "name": "Cave Bat",
+          "nameKr": "동굴 박쥐",
+          "hp": 350,
+          "atk": 55,
+          "def": 22,
+          "exp": 90,
+          "gold": 35,
+          "respawnTime": 3
+        },
+        {
+          "id": "dark_bat",
+          "name": "Dark Bat",
+          "nameKr": "다크 박쥐",
+          "hp": 480,
+          "atk": 72,
+          "def": 30,
+          "exp": 125,
+          "gold": 48,
+          "respawnTime": 4
+        },
+        {
+          "id": "stone_golem",
+          "name": "Stone Golem",
+          "nameKr": "스톤 골렘",
+          "hp": 700,
+          "atk": 85,
+          "def": 55,
+          "exp": 160,
+          "gold": 65,
+          "respawnTime": 6
+        },
+        {
+          "id": "iron_golem",
+          "name": "Iron Golem",
+          "nameKr": "아이언 골렘",
+          "hp": 950,
+          "atk": 110,
+          "def": 80,
+          "exp": 220,
+          "gold": 88,
+          "respawnTime": 7
+        },
+        {
+          "id": "cave_troll",
+          "name": "Cave Troll",
+          "nameKr": "동굴 트롤",
+          "hp": 600,
+          "atk": 95,
+          "def": 45,
+          "exp": 175,
+          "gold": 72,
+          "respawnTime": 5
+        }
+      ],
+      "boss": {
+        "id": "iron_golem_king",
+        "name": "Iron Golem King",
+        "nameKr": "아이언 골렘 킹",
+        "hp": 45000,
+        "atk": 480,
+        "def": 200,
+        "exp": 12000,
+        "gold": 3000,
+        "timeLimit": 240,
+        "patterns": [
+          {
+            "id": "ground_pound",
+            "name": "Ground Pound",
+            "trigger": "always",
+            "cooldown": 5,
+            "damage": 1.8,
+            "description": "Slams fist into ground causing shockwaves"
+          },
+          {
+            "id": "rock_throw",
+            "name": "Rock Throw",
+            "trigger": "always",
+            "cooldown": 8,
+            "damage": 2.2,
+            "description": "Hurls a massive boulder at the target"
+          },
+          {
+            "id": "iron_armor",
+            "name": "Iron Armor",
+            "trigger": "hp_below_60",
+            "cooldown": 20,
+            "damage": 0,
+            "description": "Temporarily boosts defense by 50% for 8 seconds"
+          },
+          {
+            "id": "golem_rage",
+            "name": "Golem Rage",
+            "trigger": "hp_below_30",
+            "cooldown": 15,
+            "damage": 3.0,
+            "description": "Enters enrage mode, rapidly stomping everything"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 3, "max": 8 }
+      }
+    },
+    {
+      "id": "chapter_3",
+      "name": "Cemetery",
+      "nameKr": "묘지",
+      "requiredLevel": 45,
+      "monsters": [
+        {
+          "id": "skeleton_soldier",
+          "name": "Skeleton Soldier",
+          "nameKr": "해골 병사",
+          "hp": 1400,
+          "atk": 185,
+          "def": 90,
+          "exp": 380,
+          "gold": 150,
+          "respawnTime": 4
+        },
+        {
+          "id": "skeleton_archer",
+          "name": "Skeleton Archer",
+          "nameKr": "해골 궁수",
+          "hp": 1100,
+          "atk": 220,
+          "def": 65,
+          "exp": 350,
+          "gold": 140,
+          "respawnTime": 3
+        },
+        {
+          "id": "rotting_zombie",
+          "name": "Rotting Zombie",
+          "nameKr": "좀비",
+          "hp": 1800,
+          "atk": 160,
+          "def": 110,
+          "exp": 420,
+          "gold": 165,
+          "respawnTime": 5
+        },
+        {
+          "id": "ghost",
+          "name": "Ghost",
+          "nameKr": "유령",
+          "hp": 900,
+          "atk": 260,
+          "def": 50,
+          "exp": 410,
+          "gold": 160,
+          "respawnTime": 3
+        },
+        {
+          "id": "skeleton_commander",
+          "name": "Skeleton Commander",
+          "nameKr": "해골 대장",
+          "hp": 2200,
+          "atk": 240,
+          "def": 130,
+          "exp": 580,
+          "gold": 225,
+          "respawnTime": 7
+        }
+      ],
+      "boss": {
+        "id": "lich_king",
+        "name": "Lich King",
+        "nameKr": "리치 킹",
+        "hp": 180000,
+        "atk": 1200,
+        "def": 480,
+        "exp": 55000,
+        "gold": 14000,
+        "timeLimit": 300,
+        "patterns": [
+          {
+            "id": "death_bolt",
+            "name": "Death Bolt",
+            "trigger": "always",
+            "cooldown": 4,
+            "damage": 2.0,
+            "description": "Fires a bolt of necrotic energy at the target"
+          },
+          {
+            "id": "summon_undead",
+            "name": "Summon Undead",
+            "trigger": "always",
+            "cooldown": 15,
+            "damage": 0.6,
+            "description": "Summons 4 skeleton soldiers to fight alongside"
+          },
+          {
+            "id": "curse_of_decay",
+            "name": "Curse of Decay",
+            "trigger": "hp_below_70",
+            "cooldown": 18,
+            "damage": 1.2,
+            "description": "Applies a stacking poison that deals damage over 6 seconds"
+          },
+          {
+            "id": "soul_harvest",
+            "name": "Soul Harvest",
+            "trigger": "hp_below_40",
+            "cooldown": 25,
+            "damage": 0,
+            "description": "Drains life from all nearby entities, healing itself"
+          },
+          {
+            "id": "death_nova",
+            "name": "Death Nova",
+            "trigger": "hp_below_15",
+            "cooldown": 30,
+            "damage": 4.0,
+            "description": "Releases a devastating explosion of necrotic power"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 8, "max": 18 }
+      }
+    }
+  ]
+}

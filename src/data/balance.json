@@ -1,0 +1,37 @@
+{
+  "damage": {
+    "randomRange": [0.95, 1.05],
+    "armorPenCap": 0.8,
+    "minDamage": 1,
+    "excessAccuracyBonus": { "perN": 10, "bonusPct": 1 }
+  },
+  "experience": {
+    "baseXP": 100,
+    "growthRate": 1.12,
+    "maxLevel": 200,
+    "pointsPerLevel": 5,
+    "mapleGradeThreshold": 25
+  },
+  "combatPower": {
+    "weights": {
+      "atk": 3.0,
+      "hp": 0.5,
+      "def": 1.0,
+      "critRate": 200,
+      "critDmg": 100
+    }
+  },
+  "deathPenalty": {
+    "type": "instant_revive",
+    "invincibilitySeconds": 10,
+    "goldLoss": 0
+  },
+  "statReset": {
+    "costFormula": "level * 1000"
+  },
+  "attackSpeed": {
+    "baseInterval": 1.0,
+    "formula": "baseInterval / (1 + atkSpeedPct / 100)"
+  },
+  "normalAttackDpsShare": 0.8
+}

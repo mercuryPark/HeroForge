@@ -1,6 +1,6 @@
 # OpenSpec: HeroForge Idle RPG — Master Execution Plan
 
-> **Version**: 1.0.0
+> **Version**: 1.1.0
 > **Created**: 2026-03-27
 > **Status**: Draft → Review
 > **Spec Source**: `docs/IDLE_RPG_PROJECT.md` (22 systems, 861 lines)
@@ -269,7 +269,81 @@ tests/
   save-migration.test.js        # 세이브 마이그레이션 ★신규
 ```
 
-### 1.4 Core Architecture Patterns
+### 1.4 Design Constants (공유 상수)
+
+#### Pixel Dimensions (에셋 기준 규격)
+
+```
+캐릭터/몬스터 기본 크기:  32×32 px
+타일 크기:               16×16 px (렌더 시 2x 스케일 → 32px 매칭)
+보스 크기:               64×64 px 또는 96×96 px
+UI 아이콘:               16×16 px 또는 32×32 px
+```
+
+#### Grade Color Palette (등급별 색상 — 전체 UI 공유)
+
+```javascript
+// src/data/constants.js
+export const GRADE_COLORS = {
+  NORMAL:    '#AAAAAA',  // 회색
+  RARE:      '#5B9BD5',  // 파란색
+  EPIC:      '#9B59B6',  // 보라색
+  UNIQUE:    '#F39C12',  // 주황색
+  LEGENDARY: '#27AE60',  // 초록색
+  MYTHIC:    '#E74C3C',  // 빨간색 (잠재능력 전용)
+}
+
+// GradeFrame.jsx, GachaPanel.jsx, EquipmentPanel.jsx 등 모든 등급 표시 UI에서 참조
+```
+
+#### UI Visual Rules (UI 디자인 규칙)
+
+- **패널 스타일**: 어두운 반투명 배경 (`rgba(0,0,0,0.75)`) + 픽셀아트 테두리 (UI Essential Pack)
+- **모달**: 중앙 정렬, 딤 배경 오버레이 (`rgba(0,0,0,0.6)`), **slide-in 애니메이션** (아래→위, 200ms ease-out)
+- **폰트**: **모든 텍스트에 픽셀 비트맵 폰트 사용** (Press Start 2P)
+  - PixiJS 캔버스: BitmapText (데미지 넘버, 레벨업 텍스트)
+  - Preact DOM: CSS `font-family: 'Press Start 2P', monospace` 전역 적용
+  - 시스템 폰트 사용 금지
+- **탭바**: 하단 고정, 아이콘 + 라벨, 활성 탭 하이라이트
+- **툴팁**: long-press/hover 시 스탯 비교 (현재 vs 선택, +/- 색상 표시)
+
+### 1.5 Code Style Rules (코딩 컨벤션)
+
+```
+1. 핫패스 변수명: 짧고 간결하게 — eid, dt, dx, dy, hp, atk, def
+2. 시스템 export: `export function PhysicsSystem(world, dt) {}`
+3. 시스템 파이프라인: GameLoop.js에서 명시적 순서 배열로 관리
+4. Preact 컴포넌트: 함수형 + hooks + Preact Signals
+5. 스타일링: CSS Modules 전용 (Tailwind 금지, inline style 금지)
+6. 게임 엔티티: class 사용 금지 — ECS only (인프라 클래스는 OK: ObjectPool, SpatialHash)
+7. 매직 넘버: 코드 내 금지 — 모든 밸런스 값은 data/*.json에서 로드
+```
+
+### 1.6 Git Conventions (Git 규칙)
+
+```
+커밋 포맷:
+  feat(physics): add platform collision + gravity
+  fix(combat): correct crit damage multiplier calculation
+  data(balance): adjust chapter 3 monster HP curve
+  ui(equipment): add stat comparison tooltip
+  test(gacha): add 10k roll probability verification
+
+브랜치 네이밍:
+  phase/00-asset-setup
+  phase/01-platformer-autobattle
+  phase/02-growth-loop
+  phase/03-deep-systems
+  phase/04-content
+  phase/05-retention-polish
+
+규칙:
+  - 커밋 전 반드시 npm test 실행
+  - pre-commit hook 설정: lint + test (Phase 0.1에서 husky 또는 simple-git-hooks 설치)
+  - 시스템/기능 단위로 커밋 (하나의 커밋 = 하나의 논리적 변경)
+```
+
+### 1.7 Core Architecture Patterns
 
 #### Game Loop (Fixed Timestep + Alpha Interpolation)
 
@@ -522,6 +596,8 @@ LAYER 9: RETENTION (← Layer 8)
 - [ ] `src/` 디렉토리 구조 생성 (1.3절 참조)
 - [ ] `index.html` 타이틀 → "HeroForge"
 - [ ] `.gitignore` 업데이트 (assets 원본, node_modules, dist)
+- [ ] pre-commit hook 설정 (simple-git-hooks 또는 husky): `npm test && npm run lint`
+- [ ] `src/data/constants.js` 생성: GRADE_COLORS, PIXEL_DIMENSIONS, UI 상수 정의
 
 **산출물**: `npm run dev` 실행 시 빈 Preact 앱 + PixiJS 캔버스 마운트 확인
 
@@ -547,7 +623,7 @@ LAYER 9: RETENTION (← Layer 8)
 #### 0.3 스프라이트시트 패킹
 
 **작업 목록**:
-- [ ] free-tex-packer CLI 또는 웹앱으로 아틀라스 생성
+- [ ] free-tex-packer CLI/웹앱 (또는 대안: Shoebox, TexturePacker 무료 버전)으로 아틀라스 생성
 - [ ] 설정: rotation OFF, trim ON, POT ON, max 2048x2048
 - [ ] 출력 형식: PixiJS JSON Hash
 - [ ] 카테고리별 아틀라스:
@@ -588,6 +664,11 @@ LAYER 9: RETENTION (← Layer 8)
 - [ ] 모든 스프라이트시트 PixiJS로 로드 성공
 - [ ] Chapter 1 타일맵 PixiJS로 렌더링 성공
 - [ ] 데이터 JSON 파싱 에러 없음
+- [ ] pre-commit hook 작동 (lint + test)
+- [ ] Git branch: `phase/00-asset-setup` 생성, 커밋 포맷 준수
+- [ ] 전역 CSS에 Press Start 2P 폰트 적용 확인
+- [ ] CSS Modules 방식 확인 (inline style / Tailwind 없음)
+- [ ] constants.js에 GRADE_COLORS + PIXEL_DIMENSIONS 정의 확인
 
 ---
 
@@ -969,7 +1050,12 @@ LAYER 9: RETENTION (← Layer 8)
 
 **작업 목록**:
 - [ ] `src/systems/meta/EnhancementSystem.js` (Scroll 파트):
-  - 주문서 종류: 70% (저보너스), 30% (고보너스), 100% (극소보너스)
+  - 주문서 종류:
+    - **70% 주문서**: 성공률 70%, 저보너스 (가장 안전)
+    - **30% 주문서**: 성공률 30%, 고보너스 (도박형)
+    - **15% 주문서**: 성공률 15%, 최고보너스 (하이리스크) — 재화표 기준
+    - **100% 주문서**: 성공률 100%, 극소보너스 (안전 누적용)
+    > **스펙 해소**: 원본 §7a에서 100% 주문서, 재화표(§21)에서 15% 주문서를 각각 정의. 둘 다 별개 아이템으로 공존.
   - 확률 판정 → 성공: 스탯 추가 / 실패: 주문서만 소모
   - 슬롯당 최대 주문서 횟수 제한
   - **★G8 "슬롯 강화"**: 장비를 교체해도 강화 유지
@@ -992,6 +1078,11 @@ LAYER 9: RETENTION (← Layer 8)
   - ★12 도달 시 → Additional Cube 슬롯 해금
   - 각 ★ = 소량 올스탯 보너스
   - Starforce Scrolls 소비 (희소 자원)
+  - **Starforce Scroll 획득처** (3곳 한정):
+    1. Arena 주간 랭킹 보상
+    2. Arena Shop 구매
+    3. 이벤트 보상
+  - **추천 강화 순서**: all ★3 → all ★5 → Gloves ★12 → Bottom ★10 → 나머지 ★10 → Gloves ★15+
 - [ ] `data/starforce.json` 작성:
   - ★0~★25 확률 테이블 (success, maintain, drop, destroy)
   - ★별 스탯 보너스
@@ -1104,6 +1195,7 @@ LAYER 9: RETENTION (← Layer 8)
   - 자물쇠로 원하는 옵션 고정 (리롤 비용 증가)
   - 프리셋 시스템 (여러 설정 저장)
   - Ability Transformation Level: 총 리롤 횟수 → 고등급 확률 개선
+  - 옵션 풀: armor penetration, damage%, main stat, ATK, crit damage%, ATK speed, **EXP 획득량%**, HP, DEF, boss damage%
 - [ ] `data/abilities.json` 작성
 - [ ] `src/ui/panels/WarriorPanel.jsx`
 
@@ -1287,7 +1379,7 @@ LAYER 9: RETENTION (← Layer 8)
     - Minion summon (소환수)
     - Self-buff (ATK 증가)
   - Boss Coins → Boss Shop (SSR 장비 교환)
-  - 주간 입장 제한 (기본 3회)
+  - 주간 입장 제한 (기본 3회, **Red Diamonds로 추가 구매 가능**)
 - [ ] **Zakum Raid** (특별 레이드):
   - 최소 전투력 요구
   - 고유 드롭: **Face Accessory** (11번째 슬롯)
@@ -1334,6 +1426,7 @@ LAYER 9: RETENTION (← Layer 8)
 - [ ] **킹슬라임 파티퀘스트**:
   - 최소 3인 파티 (AI 파티원 충원)
   - Easy / Normal 난이도
+  - 예상 클리어 타임: ~40~60초
   - 전략: 소형 슬라임 먼저 처치 → 킹 슬라임 공격
   - **고유 보상: Party Quest Ring** (반지 슬롯 전용)
   - 링 고유 옵션
@@ -1427,6 +1520,7 @@ LAYER 9: RETENTION (← Layer 8)
 **작업 목록**:
 - [ ] 모든 상점 통합:
   - Arena Shop, Boss Shop, World Boss Shop, Guild Shop, Dungeon Shop(5종)
+  - **Premium Shop** (Red Diamonds 전용): 추가 던전 입장권, 프리미엄 패키지, 편의 아이템
   - 재화별 상품 목록
   - 구매 제한 (일/주간)
 - [ ] `data/shops.json` 완성
@@ -1828,7 +1922,31 @@ sfx/
 | §22 Save/Load & Deployment | Phase 1.6 + 5.12 | ✅ Covered + G10 마이그레이션 |
 | §23 Visual Design & Assets | Phase 0 + Part 7 | ✅ Covered |
 
-**Coverage: 22/22 원본 섹션 + 13 Gap/Enhancement = 100%**
+**Coverage: 22/22 원본 섹션 + 13 Gap/Enhancement + 19 Audit Fixes (v1.1) = 100%**
+
+### Audit v1.1 Fixes (감사 보완 항목)
+
+| # | 항목 | 수정 내용 |
+|---|------|----------|
+| M1 | 등급 색상 hex 코드 | Part 1.4 Design Constants에 GRADE_COLORS 추가 |
+| M2 | Git 커밋 포맷 | Part 1.6 Git Conventions 섹션 신설 |
+| M3 | 브랜치 네이밍 | Part 1.6 Git Conventions에 phase/ 패턴 추가 |
+| M4 | 스타포스 추천 순서 | Phase 2.8에 추천 강화 순서 추가 |
+| M5 | 킹슬라임 클리어 타임 | Phase 4.6에 ~40-60초 추가 |
+| M6 | 픽셀 크기 규격 | Part 1.4에 32x32/16x16 추가 |
+| M7 | 핫패스 변수 네이밍 | Part 1.5 Code Style Rules 섹션 신설 |
+| M8 | Premium Shop | Phase 5.4에 Red Diamonds 전용 상점 추가 |
+| P1 | 주문서 15% vs 100% 모순 | Phase 2.7에 4종 주문서 전부 정의 + 해소 노트 |
+| P2 | 보스 레이드 프리미엄 확장 | Phase 4.3에 "Red Diamonds로 추가 구매" 추가 |
+| P3 | Starforce Scroll 획득처 | Phase 2.8에 3곳 명시 (Arena주간/Arena상점/이벤트) |
+| P4 | UI 패널 스타일 | Part 1.4에 "어두운 반투명 + 픽셀아트 테두리" 명시 |
+| P5 | 모달 애니메이션 | Part 1.4에 "slide-in 200ms ease-out" 명시 |
+| P6 | 전체 비트맵 폰트 | Part 1.4에 Canvas(BitmapText) + DOM(CSS font-family) 양쪽 적용 규칙 |
+| P7 | CSS Modules 강제 | Part 1.5 + QG0에 검증 항목 추가 |
+| P8 | 엔티티 class 금지 | Part 1.5 Code Style Rules에 명시 |
+| P9 | pre-commit hook | Phase 0.1 + QG0에 추가 |
+| P10 | 스프라이트 도구 대안 | Phase 0.3에 Shoebox/TexturePacker 대안 병기 |
+| P11 | Ability EXP 획득량 옵션 | Phase 3.1 옵션 풀에 "EXP 획득량%" 추가 |
 
 ---
 
