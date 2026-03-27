@@ -1,0 +1,108 @@
+.hud {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  pointer-events: none;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes badgeBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.level { color: #FFD700; position: relative; }
+
+.statBadge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 4px;
+  font-size: 7px;
+  color: #0d0d1a;
+  background: #FFD700;
+  border-radius: 2px;
+  animation: badgeBlink 1s ease-in-out infinite;
+  vertical-align: middle;
+}
+.stage { color: #AAAAAA; }
+.gold { color: #F39C12; }
+
+.barContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 2px;
+  padding: 0 8px;
+}
+
+.barLabel {
+  width: 28px;
+  font-size: 8px;
+  text-align: right;
+}
+
+.barBg {
+  flex: 1;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.barFillHp {
+  height: 100%;
+  background: linear-gradient(to bottom, #ff4444, #cc0000);
+  transition: width 0.2s ease;
+}
+
+.barFillMp {
+  height: 100%;
+  background: linear-gradient(to bottom, #4488ff, #0044cc);
+  transition: width 0.2s ease;
+}
+
+.barFillXp {
+  height: 100%;
+  background: linear-gradient(to bottom, #FFD700, #CC9900);
+  transition: width 0.3s ease;
+}
+
+.barText {
+  font-size: 7px;
+  min-width: 80px;
+  text-align: right;
+}
+
+.autoBtn {
+  pointer-events: all;
+  position: absolute;
+  bottom: -60px;
+  right: 0;
+  padding: 6px 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: #999;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #555;
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+
+.autoBtnOn {
+  color: #4f4;
+  border-color: #4f4;
+  box-shadow: 0 0 8px rgba(68, 255, 68, 0.3);
+}

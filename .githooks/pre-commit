@@ -1,0 +1,25 @@
+#!/bin/sh
+# Pre-commit hook: lint and build check
+
+echo "Running pre-commit checks..."
+
+# Run ESLint on staged JS/JSX files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|jsx)$')
+if [ -n "$STAGED_FILES" ]; then
+  echo "Linting staged files..."
+  npx eslint $STAGED_FILES
+  if [ $? -ne 0 ]; then
+    echo "ESLint failed. Fix errors before committing."
+    exit 1
+  fi
+fi
+
+# Quick build check
+echo "Running build check..."
+npm run build --silent
+if [ $? -ne 0 ]; then
+  echo "Build failed. Fix errors before committing."
+  exit 1
+fi
+
+echo "Pre-commit checks passed!"

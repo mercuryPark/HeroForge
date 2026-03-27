@@ -22,3 +22,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Assets source files (raw, pre-packed)
+assets/raw/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+tools/screenshot-*.png
+tools/screenshot-*.log

@@ -1,0 +1,233 @@
+{
+  "frames": {
+    "grotto-boss-dragon-tail": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 1152,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1152,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 1152,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-breath": {
+      "frame": {
+        "x": 1158,
+        "y": 2,
+        "w": 1008,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1008,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 1008,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-idle": {
+      "frame": {
+        "x": 2170,
+        "y": 2,
+        "w": 864,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 864,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 864,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0000_Layer-1": {
+      "frame": {
+        "x": 3038,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0001_Layer-2": {
+      "frame": {
+        "x": 3186,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0002_Layer-3": {
+      "frame": {
+        "x": 3334,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0003_Layer-4": {
+      "frame": {
+        "x": 3482,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0004_Layer-5": {
+      "frame": {
+        "x": 3630,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0005_Layer-6": {
+      "frame": {
+        "x": 3778,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0006_Layer-7": {
+      "frame": {
+        "x": 3926,
+        "y": 2,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    },
+    "grotto-boss-dragon-_0007_Layer-8": {
+      "frame": {
+        "x": 2,
+        "y": 70,
+        "w": 144,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 144,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 144,
+        "h": 64
+      }
+    }
+  },
+  "meta": {
+    "image": "bosses.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 4096,
+      "h": 256
+    },
+    "scale": 1
+  }
+}

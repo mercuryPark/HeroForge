@@ -1,0 +1,445 @@
+{
+  "jobs": [
+    {
+      "id": "hero",
+      "class": "warrior",
+      "name": "Hero",
+      "nameKr": "히어로",
+      "weaponType": "sword",
+      "baseStats": {
+        "str": 80,
+        "dex": 25,
+        "int_": 10,
+        "luk": 15,
+        "hp": 1200,
+        "mp": 300,
+        "atk": 95,
+        "def": 80,
+        "atkSpeed": 1.0,
+        "critRate": 15,
+        "critDmg": 150
+      },
+      "growthPerLevel": {
+        "str": 3.5,
+        "dex": 0.8,
+        "int_": 0.2,
+        "luk": 0.5,
+        "hp": 50,
+        "mp": 8,
+        "atk": 3.2,
+        "def": 2.5
+      },
+      "skills": ["hero_slash", "hero_rage", "hero_guardian", "hero_enrage"],
+      "advancements": [
+        { "level": 10, "quest": "Defeat the Iron Boar at Forest Outpost" },
+        {
+          "level": 30,
+          "bonusStats": { "str": 20, "hp": 300, "atk": 10 },
+          "newSkill": "hero_rage"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "str": 40, "hp": 600, "def": 20 },
+          "newSkill": "hero_guardian"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "str": 80, "hp": 1200, "atk": 30, "critDmg": 25 },
+          "newSkill": "hero_enrage"
+        }
+      ]
+    },
+    {
+      "id": "dark_knight",
+      "class": "warrior",
+      "name": "Dark Knight",
+      "nameKr": "다크나이트",
+      "weaponType": "spear",
+      "baseStats": {
+        "str": 75,
+        "dex": 20,
+        "int_": 15,
+        "luk": 10,
+        "hp": 1500,
+        "mp": 350,
+        "atk": 88,
+        "def": 90,
+        "atkSpeed": 0.9,
+        "critRate": 12,
+        "critDmg": 140
+      },
+      "growthPerLevel": {
+        "str": 3.0,
+        "dex": 0.6,
+        "int_": 0.5,
+        "luk": 0.4,
+        "hp": 65,
+        "mp": 10,
+        "atk": 2.8,
+        "def": 3.2
+      },
+      "skills": ["dk_spear_thrust", "dk_darkness", "dk_beholder", "dk_final_pact"],
+      "advancements": [
+        { "level": 10, "quest": "Embrace the Darkness at Shadow Cliff" },
+        {
+          "level": 30,
+          "bonusStats": { "str": 15, "hp": 450, "def": 15 },
+          "newSkill": "dk_darkness"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "str": 30, "hp": 900, "def": 30 },
+          "newSkill": "dk_beholder"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "str": 60, "hp": 2000, "def": 50, "atk": 20 },
+          "newSkill": "dk_final_pact"
+        }
+      ]
+    },
+    {
+      "id": "paladin",
+      "class": "warrior",
+      "name": "Paladin",
+      "nameKr": "팔라딘",
+      "weaponType": "mace",
+      "baseStats": {
+        "str": 70,
+        "dex": 22,
+        "int_": 30,
+        "luk": 12,
+        "hp": 1350,
+        "mp": 450,
+        "atk": 82,
+        "def": 95,
+        "atkSpeed": 0.85,
+        "critRate": 10,
+        "critDmg": 135
+      },
+      "growthPerLevel": {
+        "str": 2.8,
+        "dex": 0.7,
+        "int_": 1.0,
+        "luk": 0.4,
+        "hp": 55,
+        "mp": 15,
+        "atk": 2.5,
+        "def": 3.5
+      },
+      "skills": ["paladin_smite", "paladin_holy_shield", "paladin_divine_charge", "paladin_holy_ground"],
+      "advancements": [
+        { "level": 10, "quest": "Prove your devotion at the Temple of Light" },
+        {
+          "level": 30,
+          "bonusStats": { "str": 10, "hp": 350, "def": 20, "int_": 15 },
+          "newSkill": "paladin_holy_shield"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "str": 20, "hp": 700, "def": 40, "int_": 25 },
+          "newSkill": "paladin_divine_charge"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "str": 40, "hp": 1500, "def": 80, "int_": 50 },
+          "newSkill": "paladin_holy_ground"
+        }
+      ]
+    },
+    {
+      "id": "archmage_il",
+      "class": "mage",
+      "name": "Archmage I/L",
+      "nameKr": "아크메이지 썬/콜",
+      "weaponType": "staff",
+      "baseStats": {
+        "str": 8,
+        "dex": 15,
+        "int_": 120,
+        "luk": 20,
+        "hp": 500,
+        "mp": 1800,
+        "atk": 110,
+        "def": 30,
+        "atkSpeed": 1.1,
+        "critRate": 20,
+        "critDmg": 160
+      },
+      "growthPerLevel": {
+        "str": 0.2,
+        "dex": 0.5,
+        "int_": 5.5,
+        "luk": 0.6,
+        "hp": 15,
+        "mp": 70,
+        "atk": 4.0,
+        "def": 0.8
+      },
+      "skills": ["il_chain_lightning", "il_blizzard", "il_thunder_spear", "il_frozen_orb"],
+      "advancements": [
+        { "level": 10, "quest": "Channel lightning at the Storm Peak" },
+        {
+          "level": 30,
+          "bonusStats": { "int_": 30, "mp": 400, "atk": 15 },
+          "newSkill": "il_blizzard"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "int_": 60, "mp": 800, "atk": 25, "critRate": 5 },
+          "newSkill": "il_thunder_spear"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "int_": 120, "mp": 1500, "atk": 50, "critDmg": 30 },
+          "newSkill": "il_frozen_orb"
+        }
+      ]
+    },
+    {
+      "id": "archmage_fp",
+      "class": "mage",
+      "name": "Archmage F/P",
+      "nameKr": "아크메이지 불/독",
+      "weaponType": "staff",
+      "baseStats": {
+        "str": 8,
+        "dex": 12,
+        "int_": 125,
+        "luk": 18,
+        "hp": 480,
+        "mp": 1900,
+        "atk": 115,
+        "def": 28,
+        "atkSpeed": 1.15,
+        "critRate": 18,
+        "critDmg": 165
+      },
+      "growthPerLevel": {
+        "str": 0.2,
+        "dex": 0.4,
+        "int_": 5.8,
+        "luk": 0.5,
+        "hp": 14,
+        "mp": 75,
+        "atk": 4.2,
+        "def": 0.7
+      },
+      "skills": ["fp_fire_arrow", "fp_poison_mist", "fp_meteor", "fp_infinity"],
+      "advancements": [
+        { "level": 10, "quest": "Ignite the Flame Altar in Volcanic Canyon" },
+        {
+          "level": 30,
+          "bonusStats": { "int_": 32, "mp": 450, "atk": 18 },
+          "newSkill": "fp_poison_mist"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "int_": 65, "mp": 900, "atk": 28, "critRate": 4 },
+          "newSkill": "fp_meteor"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "int_": 130, "mp": 1600, "atk": 55, "critDmg": 35 },
+          "newSkill": "fp_infinity"
+        }
+      ]
+    },
+    {
+      "id": "bowmaster",
+      "class": "archer",
+      "name": "Bowmaster",
+      "nameKr": "보우마스터",
+      "weaponType": "bow",
+      "baseStats": {
+        "str": 20,
+        "dex": 110,
+        "int_": 15,
+        "luk": 35,
+        "hp": 750,
+        "mp": 600,
+        "atk": 100,
+        "def": 45,
+        "atkSpeed": 1.3,
+        "critRate": 28,
+        "critDmg": 175
+      },
+      "growthPerLevel": {
+        "str": 0.6,
+        "dex": 4.8,
+        "int_": 0.4,
+        "luk": 1.2,
+        "hp": 25,
+        "mp": 20,
+        "atk": 3.5,
+        "def": 1.2
+      },
+      "skills": ["bm_arrow_rain", "bm_sharp_eyes", "bm_quiver_cartridge", "bm_hurricane"],
+      "advancements": [
+        { "level": 10, "quest": "Shoot 100 targets at the Archery Range" },
+        {
+          "level": 30,
+          "bonusStats": { "dex": 25, "atk": 12, "critRate": 5 },
+          "newSkill": "bm_sharp_eyes"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "dex": 50, "atk": 22, "critRate": 8, "atkSpeed": 0.1 },
+          "newSkill": "bm_quiver_cartridge"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "dex": 100, "atk": 40, "critRate": 15, "critDmg": 40 },
+          "newSkill": "bm_hurricane"
+        }
+      ]
+    },
+    {
+      "id": "marksman",
+      "class": "archer",
+      "name": "Marksman",
+      "nameKr": "신궁",
+      "weaponType": "crossbow",
+      "baseStats": {
+        "str": 18,
+        "dex": 105,
+        "int_": 12,
+        "luk": 40,
+        "hp": 720,
+        "mp": 580,
+        "atk": 108,
+        "def": 40,
+        "atkSpeed": 1.0,
+        "critRate": 32,
+        "critDmg": 200
+      },
+      "growthPerLevel": {
+        "str": 0.5,
+        "dex": 4.5,
+        "int_": 0.3,
+        "luk": 1.5,
+        "hp": 24,
+        "mp": 18,
+        "atk": 3.8,
+        "def": 1.0
+      },
+      "skills": ["mm_snipe", "mm_piercing_arrow", "mm_mortal_blow", "mm_true_sight"],
+      "advancements": [
+        { "level": 10, "quest": "Land a perfect shot from 500 paces" },
+        {
+          "level": 30,
+          "bonusStats": { "dex": 22, "atk": 15, "critRate": 7 },
+          "newSkill": "mm_piercing_arrow"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "dex": 45, "atk": 28, "critRate": 10, "critDmg": 20 },
+          "newSkill": "mm_mortal_blow"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "dex": 90, "atk": 50, "critRate": 18, "critDmg": 60 },
+          "newSkill": "mm_true_sight"
+        }
+      ]
+    },
+    {
+      "id": "night_lord",
+      "class": "thief",
+      "name": "Night Lord",
+      "nameKr": "나이트로드",
+      "weaponType": "claw",
+      "baseStats": {
+        "str": 15,
+        "dex": 75,
+        "int_": 12,
+        "luk": 115,
+        "hp": 680,
+        "mp": 550,
+        "atk": 92,
+        "def": 35,
+        "atkSpeed": 1.5,
+        "critRate": 40,
+        "critDmg": 180
+      },
+      "growthPerLevel": {
+        "str": 0.4,
+        "dex": 2.5,
+        "int_": 0.3,
+        "luk": 5.0,
+        "hp": 22,
+        "mp": 18,
+        "atk": 3.2,
+        "def": 0.9
+      },
+      "skills": ["nl_star_throw", "nl_shadow_partner", "nl_venom_star", "nl_quad_throw"],
+      "advancements": [
+        { "level": 10, "quest": "Infiltrate the Bandit Hideout undetected" },
+        {
+          "level": 30,
+          "bonusStats": { "luk": 28, "atk": 12, "critRate": 8 },
+          "newSkill": "nl_shadow_partner"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "luk": 55, "atk": 20, "critRate": 12, "atkSpeed": 0.1 },
+          "newSkill": "nl_venom_star"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "luk": 110, "atk": 38, "critRate": 20, "critDmg": 45 },
+          "newSkill": "nl_quad_throw"
+        }
+      ]
+    },
+    {
+      "id": "shadower",
+      "class": "thief",
+      "name": "Shadower",
+      "nameKr": "섀도어",
+      "weaponType": "dagger",
+      "baseStats": {
+        "str": 20,
+        "dex": 70,
+        "int_": 10,
+        "luk": 120,
+        "hp": 720,
+        "mp": 520,
+        "atk": 96,
+        "def": 42,
+        "atkSpeed": 1.4,
+        "critRate": 35,
+        "critDmg": 190
+      },
+      "growthPerLevel": {
+        "str": 0.5,
+        "dex": 2.2,
+        "int_": 0.3,
+        "luk": 5.2,
+        "hp": 25,
+        "mp": 16,
+        "atk": 3.4,
+        "def": 1.1
+      },
+      "skills": ["shadower_assassinate", "shadower_smokescreen", "shadower_meso_explosion", "shadower_dark_flare"],
+      "advancements": [
+        { "level": 10, "quest": "Steal the Merchant's Seal from Kerning City" },
+        {
+          "level": 30,
+          "bonusStats": { "luk": 30, "atk": 14, "critRate": 6 },
+          "newSkill": "shadower_smokescreen"
+        },
+        {
+          "level": 60,
+          "bonusStats": { "luk": 60, "atk": 22, "critRate": 10, "critDmg": 15 },
+          "newSkill": "shadower_meso_explosion"
+        },
+        {
+          "level": 100,
+          "bonusStats": { "luk": 120, "atk": 42, "critRate": 18, "critDmg": 50 },
+          "newSkill": "shadower_dark_flare"
+        }
+      ]
+    }
+  ]
+}

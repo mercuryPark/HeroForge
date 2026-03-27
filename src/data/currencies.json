@@ -1,0 +1,32 @@
+{
+  "currencies": [
+    { "id": "gold", "name": "Gold", "nameKr": "메소", "icon": "currency_gold", "cap": null },
+    { "id": "gems", "name": "Gems", "nameKr": "보석", "icon": "currency_gems", "cap": null },
+    { "id": "red_diamonds", "name": "Red Diamonds", "nameKr": "레드다이아", "icon": "currency_red_diamond", "cap": null },
+    { "id": "monster_points", "name": "Monster Points", "nameKr": "몬스터 포인트", "icon": "currency_mp", "cap": null },
+    { "id": "armor_stones", "name": "Armor Stones", "nameKr": "아머 스톤", "icon": "currency_armor", "cap": null },
+    { "id": "weapon_materials", "name": "Weapon Materials", "nameKr": "무기 재료", "icon": "currency_weapon", "cap": null },
+    { "id": "warrior_tokens", "name": "Warrior Tokens", "nameKr": "용사의 증표", "icon": "currency_warrior", "cap": null },
+    { "id": "honor_medals", "name": "Honor Medals", "nameKr": "명예의 훈장", "icon": "currency_honor", "cap": null },
+    { "id": "dungeon_coins_weapon", "name": "Weapon Dungeon Coins", "nameKr": "무기 던전 코인", "icon": "currency_dungeon", "cap": null },
+    { "id": "dungeon_coins_exp", "name": "EXP Dungeon Coins", "nameKr": "경험치 던전 코인", "icon": "currency_dungeon", "cap": null },
+    { "id": "dungeon_coins_equip", "name": "Equipment Dungeon Coins", "nameKr": "장비 던전 코인", "icon": "currency_dungeon", "cap": null },
+    { "id": "dungeon_coins_warrior", "name": "Warrior Dungeon Coins", "nameKr": "용사 던전 코인", "icon": "currency_dungeon", "cap": null },
+    { "id": "dungeon_coins_enhance", "name": "Enhancement Dungeon Coins", "nameKr": "강화 던전 코인", "icon": "currency_dungeon", "cap": null },
+    { "id": "boss_coins", "name": "Boss Coins", "nameKr": "보스 코인", "icon": "currency_boss", "cap": null },
+    { "id": "world_boss_coins", "name": "World Boss Coins", "nameKr": "월드보스 코인", "icon": "currency_wboss", "cap": null },
+    { "id": "arena_points", "name": "Arena Points", "nameKr": "아레나 포인트", "icon": "currency_arena", "cap": null },
+    { "id": "guild_coins", "name": "Guild Coins", "nameKr": "길드 코인", "icon": "currency_guild", "cap": null },
+    { "id": "mastery_points", "name": "Mastery Points", "nameKr": "마스터리 포인트", "icon": "currency_mastery", "cap": null }
+  ],
+  "consumables": [
+    { "id": "scroll_70", "name": "70% Scroll", "nameKr": "70% 주문서" },
+    { "id": "scroll_30", "name": "30% Scroll", "nameKr": "30% 주문서" },
+    { "id": "scroll_15", "name": "15% Scroll", "nameKr": "15% 주문서" },
+    { "id": "scroll_100", "name": "100% Scroll", "nameKr": "100% 주문서" },
+    { "id": "starforce_scroll", "name": "Starforce Scroll", "nameKr": "스타포스 주문서" },
+    { "id": "cube_normal", "name": "Normal Cube", "nameKr": "일반 큐브" },
+    { "id": "cube_additional", "name": "Additional Cube", "nameKr": "에디셔널 큐브" },
+    { "id": "cube_miracle", "name": "Miracle Cube", "nameKr": "미라클 큐브" }
+  ]
+}
