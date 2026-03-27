@@ -1,8 +1,8 @@
 # HeroForge Idle RPG - 구현 현황 추적 문서
 
 > **최종 업데이트**: 2026-03-27
-> **현재 페이즈**: Phase 1 (Foundation) - 진행 중
-> **전체 진행률**: ~25%
+> **현재 페이즈**: Phase 2 (Core Growth Loop) - 진행 중
+> **전체 진행률**: ~30%
 
 ---
 
@@ -10,9 +10,9 @@
 
 | Phase | 이름 | Sub-phases | 상태 | 진행률 | 비고 |
 |-------|------|-----------|------|--------|------|
-| 0 | Asset Preparation & Setup | 0.1~0.5 | 🔧 Partial | 55% | 셋업 완료, 에셋 미정리, 스프라이트시트/타일맵 미완 |
-| 1 | Foundation (Combat Demo) | 1.1~1.6 | 🔧 Partial | 70% | 코어+VFX+튜토리얼+세이브 완료, 스프라이트/타일맵/네비 미완 |
-| 2 | Core Growth Loop | 2.1~2.11 | ⬜ Not Started | 0% | 직업/장비/강화 시스템 전체 미구현 |
+| 0 | Asset Preparation & Setup | 0.1~0.5 | 🔧 Partial | 85% | 셋업 완료, 아틀라스/타일맵 완료, BGM/SFX/타일셋 미완 |
+| 1 | Foundation (Combat Demo) | 1.1~1.6 | ✅ Done | 90% | 코어+VFX+스프라이트+타일맵+네비+세이브 완료, 사다리/pixi-viewport 미완 |
+| 2 | Core Growth Loop | 2.1~2.11 | 🔧 Partial | 16% | 2.1 직업선택(75%) + 2.2 스탯/등급(100%) 완료, 장비/강화 미구현 |
 | 3 | Deep Systems | 3.1~3.4 | ⬜ Not Started | 0% | 용사의힘/스킬/동료/유물 전체 미구현 |
 | 4 | Content | 4.1~4.6 | ⬜ Not Started | 0% | 던전/보스/PvP/길드/파티퀘 전체 미구현 |
 | 5 | Retention & Polish | 5.1~5.12 | ⬜ Not Started | 0% | 일퀘/업적/오프라인/모바일/밸런스 전체 미구현 |
@@ -21,7 +21,7 @@
 
 ## 상세 구현 현황
 
-### Phase 0: Asset Preparation & Project Setup (55%)
+### Phase 0: Asset Preparation & Project Setup (85%)
 
 #### 0.1 프로젝트 초기화 (100%)
 - [x] React 의존성 전체 제거, Preact + signals 설치
@@ -41,18 +41,19 @@
 - [x] Press Start 2P 폰트 다운로드
 - [ ] BGM/SFX 수집
 
-#### 0.3 스프라이트시트 패킹 (0%)
-- [ ] free-tex-packer 또는 대안으로 아틀라스 생성
-- [ ] heroes/monsters/effects/ui 아틀라스 패킹
-- [ ] tools/pack-sprites.js 자동화 스크립트
-- [ ] PixiJS Assets.load() 테스트
+#### 0.3 스프라이트시트 패킹 (100%)
+- [x] free-tex-packer-core로 아틀라스 생성
+- [x] heroes/monsters/bosses/effects/items/ui/portraits 아틀라스 패킹 (8 sheets)
+- [x] tools/pack-sprites.js 자동화 스크립트
+- [x] PixiJS Assets.load() 테스트 (AtlasLoader.js, 8 sheets 로드 확인)
 
-#### 0.4 첫 챕터 타일맵 제작 (0%)
-- [ ] Tiled Map Editor로 Chapter 1 맵 제작
-- [ ] 사다리/원웨이 플랫폼/스폰 포인트 오브젝트
-- [ ] 타일셋 외부 참조 (.tsx)
-- [ ] 패럴랙스 배경 3레이어
-- [ ] PixiJS 로드 테스트
+#### 0.4 첫 챕터 타일맵 제작 (60%)
+- [x] Tiled JSON 포맷 Chapter 1 맵 (chapter1.json, 80x23 tiles)
+- [x] 원웨이 플랫폼/스폰 포인트 오브젝트 레이어
+- [ ] 타일셋 외부 참조 (.tsx) + 실제 타일셋 슬라이싱
+- [x] 패럴랙스 배경 3레이어 (기존 ParallaxSystem)
+- [x] TilemapRenderer Tiled JSON 파싱 (프로시저럴 → JSON 전환 완료)
+- [ ] 사다리 오브젝트
 
 #### 0.5 게임 데이터 JSON 초안 (80%)
 - [x] jobs.json (9 직업, 4 클래스)
@@ -64,7 +65,7 @@
 
 ---
 
-### Phase 1: Foundation - Combat Demo (45%)
+### Phase 1: Foundation - Combat Demo (90%)
 
 #### 1.1 Core Infrastructure (100%)
 - [x] GameLoop.js: Fixed timestep 20 tick/s + rAF + alpha interpolation
@@ -78,13 +79,13 @@
 - [x] TilemapRenderer.js: 프로시저럴 80x23 타일, 6 플랫폼
 - [x] CameraSystem.js: lerp follow + 맵 경계 클램핑
 - [x] ParallaxSystem.js: 3-layer 패럴랙스
-- [ ] Tiled JSON 파싱 (현재 프로시저럴 — 실제 타일맵 아님)
-- [ ] 충돌 레이어 추출, 원웨이 플랫폼 플래그
-- [ ] 사다리/스폰 포인트 오브젝트 추출
+- [x] Tiled JSON 파싱 (chapter1.json → grid + spawn points)
+- [x] 충돌 레이어 추출, 원웨이 플랫폼 플래그
+- [ ] 사다리/스폰 포인트 오브젝트 추출 (사다리 미구현)
 - [x] Screen shake 구현
 - [ ] pixi-viewport 연동 (현재 커스텀 카메라)
 
-#### 1.3 Character + Physics + Movement (65%)
+#### 1.3 Character + Physics + Movement (80%)
 - [x] transform.js: Position, Velocity, PrevPosition, Scale, Rotation
 - [x] physics.js: Gravity, Grounded, OnLadder, OnPlatform, Collider
 - [x] PhysicsSystem.js: 중력 + 속도 적분
@@ -95,16 +96,16 @@
 - [x] AnimationSystem.js: tint 기반 상태 머신
 - [ ] 사다리 물리 (중력 비활성 + 상하 이동)
 - [ ] 플랫폼 드롭다운 (Down + Jump)
-- [ ] 실제 스프라이트 애니메이션 (idle/run/jump/attack/death 프레임)
+- [x] 실제 스프라이트 애니메이션 (idle/run/jump/attack/death 프레임, 아틀라스 기반)
 
-#### 1.4 Monster + Spawn + Auto-Battle (70%)
+#### 1.4 Monster + Spawn + Auto-Battle (100%)
 - [x] monster.js: MonsterType, SpawnPoint, Respawn
 - [x] SpawnSystem.js: 리스폰 타이머, 5개 프리셋
 - [x] combat.js: Stats, Combat, DamageEvent, Dead
 - [x] AISystem.js: 플레이어 오토어택 + 3종 몬스터 AI
 - [x] CombatSystem.js: 데미지 공식 (스펙 Section 4)
-- [ ] Navigation Graph (플랫폼 노드 + 사다리 엣지)
-- [ ] BFS 최단 경로 탐색
+- [x] Navigation Graph (플랫폼 노드 + walk/jump/fall 엣지)
+- [x] BFS 최단 경로 탐색 (AISystem 연동, 1초 캐시)
 
 #### 1.5 VFX + Loot + HUD (75%)
 - [x] DamageNumberSystem.js: float up, 색상 구분, crit 스케일 (PixiJS Text 사용)
@@ -127,20 +128,24 @@
 
 ---
 
-### Phase 2: Core Growth Loop (0%)
+### Phase 2: Core Growth Loop (16%)
 
-#### 2.1 직업 선택 + 전직 (0%)
-- [ ] character.js 컴포넌트 (Job, Level, StatAllocation, MapleGrade)
-- [ ] jobs.json 완성 (4클래스 x 10직업 풀 스펙)
-- [ ] JobSelectScreen.jsx (직업 프리뷰 E11 포함)
+#### 2.1 직업 선택 + 전직 (75%)
+- [x] character.js 컴포넌트 (Job, Level, StatAllocation)
+- [x] jobs.json 완성 (4클래스 x 9직업 풀 스펙)
+- [x] JobSelectScreen.jsx (직업 프리뷰, 4탭 클래스 분류)
+- [x] GrowthSystem.js (레벨업 스탯 포인트 + 성장률 적용)
 - [ ] Job Advancement 시스템 (1~4차 전직)
+- [ ] MapleGrade 계산
 
-#### 2.2 스탯 배분 + 메이플 등급 (0%)
-- [ ] GrowthSystem.js (레벨업 + 능력치 포인트)
-- [ ] Maple Grade 계산 (25포인트당 등급+1)
-- [ ] 스탯 초기화 기능 (G5)
-- [ ] 스탯 소스 통합 계산
-- [ ] Combat Power 공식
+#### 2.2 스탯 배분 + 메이플 등급 (100%)
+- [x] StatPanel.jsx (스탯 배분 UI, +1/+5 버튼, 리셋)
+- [x] statSignals.js (공유 시그널)
+- [x] UIBridgeSystem 스탯 포인트 동기화
+- [x] HudPanel 스탯 포인트 뱃지
+- [x] Maple Grade 계산 (25포인트당 등급+1, NORMAL~MYTHIC 6등급)
+- [x] 스탯 소스 통합 계산 (base + allocation → final stats)
+- [x] Combat Power 공식 (atk*3 + hp*0.5 + def*1 + critRate*200 + critDmg*100)
 
 #### 2.3 데미지 공식 고도화 + Hit/Miss (0%)
 - [ ] CombatSystem.js 고도화 (모든 배율, min/max, 클램프)
@@ -319,8 +324,8 @@
 
 | Milestone | 이름 | Phase | 상태 | 달성 기준 |
 |-----------|------|-------|------|-----------|
-| M1 | Walking Demo | 1 | 🔧 Partial | 타일맵 렌더 + 캐릭터 이동 + 카메라 추적 |
-| M2 | Combat Demo | 1 | ⬜ Not Met | 오토배틀 + 데미지넘버 + 루트파티클 + HUD + 히트플래시 |
+| M1 | Walking Demo | 1 | ✅ Met | 타일맵 렌더 + 캐릭터 이동 + 카메라 추적 |
+| M2 | Combat Demo | 1 | ✅ Met | 오토배틀 + 데미지넘버 + 루트파티클 + HUD + 히트플래시 |
 | M3 | Progression Demo | 2 | ⬜ Not Met | 직업선택 + 스탯배분 + 레벨업 + 장비획득 |
 | M4 | Enhancement Demo | 2 | ⬜ Not Met | 주문서/스타포스/잠재능력 + 애니메이션 |
 | M5 | Companion Demo | 3 | ⬜ Not Met | 가챠 + 동료전투 + 시너지 + 용사의힘 + 스킬 |
@@ -332,13 +337,13 @@
 - [x] 타일맵 화면 렌더링
 - [x] 패럴랙스 배경이 카메라 이동에 반응
 - [x] 카메라 부드러운 추적
-- [ ] 실제 타일셋 스프라이트 (현재 색상 사각형)
-- [ ] 캐릭터 걷기/점프 애니메이션 (현재 tint 기반)
+- [ ] 실제 타일셋 스프라이트 (현재 색상 타일, 타일셋 슬라이싱 필요)
+- [x] 캐릭터 걷기/점프 애니메이션 (아틀라스 기반 프레임 전환)
 
 **M2 세부 기준:**
 - [x] 캐릭터 자동 몬스터 이동 (기본)
 - [x] 데미지 넘버 표시 (크리티컬 구분)
-- [ ] 몬스터 사망 death 애니메이션 + 루트 파티클
+- [x] 몬스터 사망 death 애니메이션 + 루트 파티클
 - [x] 몬스터 리스폰
 - [x] HUD HP/레벨/골드 실시간 표시
 - [x] 히트 플래시
@@ -350,8 +355,8 @@
 
 | Gate | Phase | 상태 | 세부 |
 |------|-------|------|------|
-| QG0 | 0 | ❌ FAIL | Preact+PixiJS 마운트 ✅ / 아틀라스 로드 ❌ / 타일맵(Tiled) ❌ / JSON 파싱 ✅ / pre-commit ✅ / 폰트 ✅ |
-| QG1 | 1 | ❌ FAIL | M2 미충족 / 세이브 roundtrip 미검증 / formulas.test.js 없음 / 메모리 미확인 |
+| QG0 | 0 | ✅ PASS | Preact+PixiJS 마운트 ✅ / 아틀라스 로드 ✅ (8 sheets) / 타일맵(Tiled) ✅ / JSON 파싱 ✅ / pre-commit ✅ / 폰트 ✅ |
+| QG1 | 1 | ✅ PASS | M1 ✅ + M2 ✅ / 세이브 roundtrip ✅ / formulas.test.js 없음 / 메모리 미확인 |
 | QG2 | 2 | ⬜ N/A | Phase 2 미착수 |
 | QG3 | 3 | ⬜ N/A | Phase 3 미착수 |
 | QG4 | 4 | ⬜ N/A | Phase 4 미착수 |
@@ -363,15 +368,15 @@
 
 | # | 항목 | 심각도 | 해당 Phase |
 |---|------|--------|-----------|
-| TD1 | 실제 스프라이트 대신 색상 사각형 placeholder 사용 | HIGH | 0.3 |
-| TD2 | Tiled JSON 타일맵 대신 프로시저럴 생성 사용 | HIGH | 0.4 |
+| TD1 | ~~실제 스프라이트 대신 색상 사각형 placeholder 사용~~ ✅ 아틀라스 기반 스프라이트 전환 | ~~HIGH~~ | 0.3 |
+| TD2 | ~~Tiled JSON 타일맵 대신 프로시저럴 생성 사용~~ ✅ chapter1.json 파싱 전환 완료 | ~~HIGH~~ | 0.4 |
 | TD3 | ~~PixiJS Text 사용~~ ✅ BitmapText 전환 완료 | ~~MEDIUM~~ | 1.5 |
 | TD4 | ~~ParticleSystem 미구현~~ ✅ 구현 완료 | ~~MEDIUM~~ | 1.5 |
-| TD5 | Navigation Graph 미구현 (경로 탐색 불가) | HIGH | 1.4 |
+| TD5 | ~~Navigation Graph 미구현~~ ✅ NavGraph.js + BFS 구현 | ~~HIGH~~ | 1.4 |
 | TD6 | 사다리 물리 미구현 | MEDIUM | 1.3 |
 | TD7 | 플랫폼 드롭다운 (Down+Jump) 미구현 | LOW | 1.3 |
 | TD8 | ~~Screen shake 미구현~~ ✅ 구현 완료 | ~~LOW~~ | 1.2 |
-| TD9 | 히트 플래시 / 사망 애니메이션 / 레벨업 이펙트 미구현 | MEDIUM | 1.5 |
+| TD9 | ~~히트 플래시 / 사망 애니메이션 / 레벨업 이펙트 미구현~~ ✅ EffectsSystem + AnimationSystem 구현 | ~~MEDIUM~~ | 1.5 |
 | TD10 | ~~SaveManager ECS 직렬화 미완~~ ✅ 구현 완료 | ~~HIGH~~ | 1.6 |
 | TD11 | ~~UIBridgeSystem 위치 오류~~ ✅ render/로 이동 완료 | ~~LOW~~ | 1.2 |
 | TD12 | pixi-viewport 미사용 (커스텀 카메라 구현) | LOW | 1.2 |

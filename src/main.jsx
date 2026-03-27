@@ -22,6 +22,7 @@ import { AISystem } from '@systems/logic/AISystem'
 import { CombatSystem } from '@systems/logic/CombatSystem'
 import { spawnMonster, SpawnSystem } from '@systems/logic/SpawnSystem'
 import { createLootSystem } from '@systems/logic/LootSystem'
+import { createGrowthSystem } from '@systems/logic/GrowthSystem'
 import { UIBridgeSystem } from '@systems/render/UIBridgeSystem'
 import { addLootPopup } from '@ui/hud/LootCounter'
 import { createDamageNumberSystem } from '@systems/render/DamageNumberSystem'
@@ -29,9 +30,11 @@ import { createEffectsSystem } from '@systems/render/EffectsSystem'
 import { createParticleSystem } from '@systems/render/ParticleSystem'
 import { Position, PrevPosition, Velocity } from '@components/transform'
 import { Gravity as GravityComp, Collider } from '@components/physics'
-import { PlayerTag, Level } from '@components/character'
+import { PlayerTag, Level, Job, StatAllocation } from '@components/character'
 import { Stats, Combat } from '@components/combat'
 import { AnimState } from '@components/sprite'
+import { loadAtlases } from '@render/AtlasLoader'
+import { buildNavGraph } from '@core/NavGraph'
 import './index.css'
 
 const SCREEN_W = 1280
@@ -61,9 +64,15 @@ async function boot() {
   const { bgContainer, worldContainer, uiContainer } = createWorldContainer(pixiApp)
   world.containers = { bg: bgContainer, world: worldContainer, ui: uiContainer }
 
+  // 4.5. Load sprite atlases
+  await loadAtlases()
+
   // 5. Generate tilemap
   const tilemap = createTilemap(worldContainer)
   world.tilemap = tilemap
+
+  // 5.5. Build navigation graph for platform-aware AI pathfinding
+  world.navGraph = buildNavGraph(tilemap.grid, tilemap.tileSize)
 
   // 6. Create systems
   const tileCollisionSystem = createTileCollisionSystem(tilemap.grid, tilemap.tileSize)
@@ -72,6 +81,9 @@ async function boot() {
   const lootSystem = createLootSystem()
   lootSystem.init(world)
   world.playerState = lootSystem.playerState
+
+  const growthSystem = createGrowthSystem()
+  growthSystem.init(world)
 
   // Bridge loot events to UI popups
   world.eventBus.on('loot:drop', (e) => {
@@ -94,6 +106,7 @@ async function boot() {
   gameLoop.addLogicSystem(CombatSystem)
   gameLoop.addLogicSystem(SpawnSystem)
   gameLoop.addLogicSystem(lootSystem.system)
+  gameLoop.addLogicSystem(growthSystem.system)
 
   // Render pipeline (display refresh rate)
   gameLoop.addRenderSystem(UIBridgeSystem)
@@ -126,18 +139,12 @@ async function boot() {
   Collider.offsetX[playerEid] = 0
   Collider.offsetY[playerEid] = 0
 
+  // Stats will be initialized by GrowthSystem.applyJob() when job is selected
   addComponent(world, playerEid, Stats)
-  Stats.hp[playerEid] = 500
-  Stats.maxHp[playerEid] = 500
-  Stats.mp[playerEid] = 100
-  Stats.maxMp[playerEid] = 100
-  Stats.atk[playerEid] = 50
-  Stats.def[playerEid] = 10
-  Stats.critRate[playerEid] = 15
-  Stats.critDmg[playerEid] = 1.5
-  Stats.atkSpeed[playerEid] = 100
-  Stats.accuracy[playerEid] = 80
-  Stats.evasion[playerEid] = 10
+
+  // Job and stat allocation — populated on job selection
+  addComponent(world, playerEid, Job)
+  addComponent(world, playerEid, StatAllocation)
 
   addComponent(world, playerEid, Combat)
   Combat.target[playerEid] = 0
@@ -155,7 +162,7 @@ async function boot() {
   AnimState.loop[playerEid] = 1
   AnimState.flipX[playerEid] = 0
 
-  createSprite(worldContainer, playerEid, 'player')
+  createSprite(worldContainer, playerEid, 'player', 0)
 
   world.playerEid = playerEid
 
@@ -171,14 +178,11 @@ async function boot() {
   // 9. Spawn monsters at tilemap spawn points
   tilemap.spawnPoints.monsters.forEach((sp, i) => {
     const mid = spawnMonster(world, sp.x, sp.y, i % 5)
-    createSprite(worldContainer, mid, 'monster')
+    createSprite(worldContainer, mid, 'monster', i % 5)
   })
 
-  // 10. Mount Preact UI
-  render(<App pixiApp={pixiApp} world={world} gameLoop={gameLoop} playerState={lootSystem.playerState} saveManager={saveManager} />, document.getElementById('ui-root'))
-
-  // 11. Start game loop
-  gameLoop.start()
+  // 10. Mount Preact UI — game loop started by App after job selection or continue
+  render(<App pixiApp={pixiApp} world={world} gameLoop={gameLoop} playerState={lootSystem.playerState} saveManager={saveManager} growthSystem={growthSystem} />, document.getElementById('ui-root'))
 }
 
 boot().catch(console.error)

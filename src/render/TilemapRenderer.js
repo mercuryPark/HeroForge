@@ -1,21 +1,133 @@
 /**
- * TilemapRenderer — procedural tilemap generator.
+ * TilemapRenderer — loads and renders a Tiled JSON tilemap.
  *
- * Generates a playable platformer level with:
- *   - Ground floor spanning full width
- *   - 6 floating one-way platforms at varying heights
- *   - Player spawn and 10 monster spawn points
+ * Data source: assets/tilemaps/chapter1.json (Tiled 1.10 format)
  *
  * Collision grid values: 0=empty, 1=solid, 2=one-way-platform
+ *
+ * Tile layer semantics (from Tiled layer names):
+ *   "ground"    → tile ID 1 → grid value 1 (solid)
+ *   "platforms" → tile ID 2 → grid value 2 (one-way)
  *
  * Map dimensions: 80×23 tiles at 32px = 2560×736 pixels
  */
 import { Sprite, Texture, Container } from 'pixi.js'
 import { PIXEL } from '@data/constants'
+import mapData from '../../assets/tilemaps/chapter1.json'
 
-const MAP_COLS = 80
-const MAP_ROWS = 23
 const TILE_PX = PIXEL.TILE_SIZE * PIXEL.TILE_SCALE // 32px
+
+/** Tiled tile ID → collision grid value */
+const TILE_ID_TO_GRID = {
+  1: 1, // solid ground
+  2: 2, // one-way platform
+}
+
+/** Collision grid value → tint color (placeholder visuals) */
+const GRID_TINT = {
+  1: 0x4a6741, // ground: dark green
+  2: 0x8b6914, // platform: brown
+}
+
+/**
+ * Build a 2D collision grid from Tiled tile layers.
+ * @param {object[]} layers - Tiled layer objects
+ * @param {number} cols
+ * @param {number} rows
+ * @returns {Uint8Array[]}
+ */
+function buildGrid(layers, cols, rows) {
+  const grid = Array.from({ length: rows }, () => new Uint8Array(cols))
+
+  for (const layer of layers) {
+    if (layer.type !== 'tilelayer') continue
+    const { data } = layer
+    for (let i = 0; i < data.length; i++) {
+      const tileId = data[i]
+      if (tileId === 0) continue
+      const gridVal = TILE_ID_TO_GRID[tileId]
+      if (gridVal === undefined) continue
+      const row = Math.floor(i / cols)
+      const col = i % cols
+      // Higher grid values take priority (solid > oneway)
+      if (gridVal > grid[row][col]) {
+        grid[row][col] = gridVal
+      }
+    }
+  }
+
+  return grid
+}
+
+/**
+ * Extract spawn points from the Tiled objects layer.
+ * @param {object[]} layers
+ * @returns {{ player: {x:number, y:number}, monsters: {x:number, y:number}[] }}
+ */
+function extractSpawnPoints(layers) {
+  const objectLayer = layers.find(l => l.type === 'objectgroup' && l.name === 'objects')
+
+  if (!objectLayer) {
+    // Fallback: derive from grid dimensions (should never happen with well-formed JSON)
+    const rows = mapData.height
+    const cols = mapData.width
+    return {
+      player: { x: 3 * TILE_PX, y: (rows - 2) * TILE_PX },
+      monsters: [],
+    }
+  }
+
+  let player = null
+  const monsters = []
+
+  for (const obj of objectLayer.objects) {
+    const objType = obj.type || obj.class || ''
+    if (objType === 'player_spawn') {
+      player = { x: obj.x, y: obj.y }
+    } else if (objType === 'monster_spawn') {
+      monsters.push({ x: obj.x, y: obj.y })
+    }
+  }
+
+  // Fallback player spawn if not defined in objects layer
+  if (!player) {
+    player = { x: 3 * TILE_PX, y: (mapData.height - 2) * TILE_PX }
+  }
+
+  return { player, monsters }
+}
+
+/**
+ * Render all non-empty tiles as colored rectangles.
+ * Renders ground layer first, then platforms on top.
+ * @param {Container} tilemapContainer
+ * @param {object[]} layers
+ * @param {number} cols
+ * @param {number} rows
+ */
+function renderTiles(tilemapContainer, layers, cols, rows) {
+  for (const layer of layers) {
+    if (layer.type !== 'tilelayer') continue
+    const { data } = layer
+    for (let i = 0; i < data.length; i++) {
+      const tileId = data[i]
+      if (tileId === 0) continue
+      const gridVal = TILE_ID_TO_GRID[tileId]
+      if (gridVal === undefined) continue
+
+      const row = Math.floor(i / cols)
+      const col = i % cols
+
+      const sprite = new Sprite(Texture.WHITE)
+      sprite.width = TILE_PX
+      sprite.height = TILE_PX
+      sprite.x = col * TILE_PX
+      sprite.y = row * TILE_PX
+      sprite.tint = GRID_TINT[gridVal] ?? 0x888888
+      tilemapContainer.addChild(sprite)
+    }
+  }
+}
 
 /**
  * @param {import('pixi.js').Container} worldContainer
@@ -25,69 +137,22 @@ export function createTilemap(worldContainer) {
   const tilemapContainer = new Container()
   worldContainer.addChild(tilemapContainer)
 
-  // Build collision grid
-  const grid = Array.from({ length: MAP_ROWS }, () => new Uint8Array(MAP_COLS))
+  const cols = mapData.width
+  const rows = mapData.height
+  const { layers } = mapData
 
-  // Ground floor (bottom row)
-  for (let x = 0; x < MAP_COLS; x++) grid[MAP_ROWS - 1][x] = 1
-
-  // One-way platforms (type 2)
-  const platforms = [
-    { row: 17, x0: 5,  x1: 15 },
-    { row: 13, x0: 20, x1: 35 },
-    { row: 9,  x0: 10, x1: 25 },
-    { row: 17, x0: 40, x1: 55 },
-    { row: 13, x0: 55, x1: 70 },
-    { row: 9,  x0: 45, x1: 60 },
-  ]
-
-  for (const p of platforms) {
-    for (let x = p.x0; x <= p.x1; x++) grid[p.row][x] = 2
-  }
-
-  // Render tiles as colored rectangles (placeholder visuals)
-  for (let row = 0; row < MAP_ROWS; row++) {
-    for (let col = 0; col < MAP_COLS; col++) {
-      const tile = grid[row][col]
-      if (tile === 0) continue
-
-      const sprite = new Sprite(Texture.WHITE)
-      sprite.width = TILE_PX
-      sprite.height = TILE_PX
-      sprite.x = col * TILE_PX
-      sprite.y = row * TILE_PX
-      sprite.tint = tile === 1 ? 0x4a6741 : 0x8b6914
-      tilemapContainer.addChild(sprite)
-    }
-  }
-
-  // Spawn points
-  const spawnPoints = {
-    player: { x: 3 * TILE_PX, y: (MAP_ROWS - 2) * TILE_PX },
-    monsters: [
-      // Ground level
-      { x: 15 * TILE_PX, y: (MAP_ROWS - 2) * TILE_PX },
-      { x: 25 * TILE_PX, y: (MAP_ROWS - 2) * TILE_PX },
-      { x: 35 * TILE_PX, y: (MAP_ROWS - 2) * TILE_PX },
-      { x: 50 * TILE_PX, y: (MAP_ROWS - 2) * TILE_PX },
-      { x: 65 * TILE_PX, y: (MAP_ROWS - 2) * TILE_PX },
-      // Platform spawns (one row above platform surface)
-      { x: 10 * TILE_PX, y: 16 * TILE_PX },
-      { x: 28 * TILE_PX, y: 12 * TILE_PX },
-      { x: 48 * TILE_PX, y: 16 * TILE_PX },
-      { x: 62 * TILE_PX, y: 12 * TILE_PX },
-      { x: 18 * TILE_PX, y: 8 * TILE_PX },
-    ],
-  }
+  const grid = buildGrid(layers, cols, rows)
+  renderTiles(tilemapContainer, layers, cols, rows)
+  const spawnPoints = extractSpawnPoints(layers)
 
   return {
     container: tilemapContainer,
     grid,
     spawnPoints,
-    width: MAP_COLS * TILE_PX,
-    height: MAP_ROWS * TILE_PX,
+    width: cols * TILE_PX,
+    height: rows * TILE_PX,
     tileSize: TILE_PX,
-    cols: MAP_COLS,
-    rows: MAP_ROWS,
+    cols,
+    rows,
   }
 }

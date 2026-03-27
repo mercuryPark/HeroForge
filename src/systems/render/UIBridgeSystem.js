@@ -8,8 +8,9 @@
  */
 import { query, hasComponent } from 'bitecs'
 import { Stats } from '@components/combat'
-import { PlayerTag, Level } from '@components/character'
+import { PlayerTag, Level, StatAllocation } from '@components/character'
 import { hudSignals } from '@ui/hud/HudPanel'
+import { availablePointsSignal } from '@ui/signals/statSignals'
 import { Input } from '@systems/logic/InputSystem'
 
 /**
@@ -33,6 +34,11 @@ export function UIBridgeSystem(world) {
       hudSignals.level.value = Level.current[eid]
       hudSignals.xp.value = Math.floor(Level.xp[eid])
       hudSignals.xpToNext.value = Math.floor(Level.xpToNext[eid])
+    }
+
+    // Sync available stat points for HUD badge
+    if (hasComponent(world, eid, StatAllocation)) {
+      availablePointsSignal.value = StatAllocation.availablePoints[eid]
     }
   }
 

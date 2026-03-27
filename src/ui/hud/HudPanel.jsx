@@ -6,6 +6,7 @@
  */
 import { signal, computed } from '@preact/signals'
 import styles from './HudPanel.module.css'
+import { availablePointsSignal } from '../signals/statSignals'
 
 /** Signals synced from ECS by UIBridgeSystem */
 export const hudSignals = {
@@ -40,7 +41,12 @@ export function HudPanel() {
     <div class={styles.hud}>
       {/* Top bar: Level + Stage + Gold */}
       <div class={styles.topBar}>
-        <span class={styles.level}>Lv.{hudSignals.level.value}</span>
+        <span class={styles.level}>
+          Lv.{hudSignals.level.value}
+          {availablePointsSignal.value > 0 && (
+            <span class={styles.statBadge}>{availablePointsSignal.value}</span>
+          )}
+        </span>
         <span class={styles.stage}>{hudSignals.stageName.value}</span>
         <span class={styles.gold}>Gold: {hudSignals.gold.value}</span>
       </div>

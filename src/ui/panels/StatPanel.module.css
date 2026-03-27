@@ -1,0 +1,213 @@
+/* StatPanel — fixed left-side stat allocation panel */
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.panel {
+  position: fixed;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  z-index: 50;
+  pointer-events: all;
+
+  background: #0d0d1a;
+  border: 2px solid #C9A84C;
+  box-shadow: 0 0 16px rgba(201, 168, 76, 0.3), inset 0 0 8px rgba(0, 0, 0, 0.6);
+  padding: 12px;
+  min-width: 220px;
+
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #fff;
+  image-rendering: pixelated;
+
+  animation: slideInLeft 0.2s ease-out;
+}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #C9A84C;
+}
+
+.title {
+  flex: 1;
+  font-size: 10px;
+  color: #FFD700;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+}
+
+.availBadge {
+  font-size: 8px;
+  color: #27AE60;
+  background: rgba(39, 174, 96, 0.15);
+  border: 1px solid #27AE60;
+  padding: 2px 4px;
+}
+
+.closeBtn {
+  pointer-events: all;
+  padding: 2px 6px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #aaa;
+  background: #1a1a2e;
+  border: 1px solid #555;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  color: #fff;
+  border-color: #888;
+}
+
+/* ---- Grade + Combat Power ---- */
+.gradeSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #333;
+}
+
+.gradeBadge {
+  font-size: 8px;
+  padding: 2px 6px;
+  border: 1px solid;
+  text-shadow: 0 0 6px currentColor;
+}
+
+.combatPower {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.cpLabel {
+  font-size: 7px;
+  color: #888;
+}
+
+.cpValue {
+  font-size: 11px;
+  color: #FFD700;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* ---- Stat Rows ---- */
+.statList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statLabel {
+  width: 30px;
+  font-size: 9px;
+  color: #C9A84C;
+}
+
+.statValue {
+  width: 36px;
+  text-align: right;
+  font-size: 10px;
+  color: #fff;
+}
+
+.btnPlus {
+  pointer-events: all;
+  padding: 3px 6px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #fff;
+  background: #27AE60;
+  border: 1px solid #2ECC71;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.1s;
+}
+
+.btnPlus:hover:not(:disabled) {
+  background: #2ECC71;
+}
+
+.btnPlus:disabled {
+  background: #1a4a2a;
+  border-color: #2a5a3a;
+  color: #555;
+  cursor: not-allowed;
+}
+
+/* ---- Reset Button ---- */
+.resetBtn {
+  pointer-events: all;
+  display: block;
+  width: 100%;
+  padding: 6px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #fff;
+  background: #c0392b;
+  border: 1px solid #e74c3c;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.resetBtn:hover {
+  background: #e74c3c;
+}
+
+/* ---- Divider ---- */
+.divider {
+  border-top: 1px solid #333;
+  margin: 8px 0;
+}
+
+/* ---- Combat Stat Summary ---- */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summaryTitle {
+  font-size: 8px;
+  color: #C9A84C;
+  margin-bottom: 4px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #aaa;
+  padding: 1px 0;
+}
+
+.summaryRow span:last-child {
+  color: #fff;
+}

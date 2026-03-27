@@ -19,7 +19,24 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.level { color: #FFD700; }
+@keyframes badgeBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+.level { color: #FFD700; position: relative; }
+
+.statBadge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 4px;
+  font-size: 7px;
+  color: #0d0d1a;
+  background: #FFD700;
+  border-radius: 2px;
+  animation: badgeBlink 1s ease-in-out infinite;
+  vertical-align: middle;
+}
 .stage { color: #AAAAAA; }
 .gold { color: #F39C12; }
 

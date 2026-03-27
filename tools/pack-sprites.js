@@ -6,24 +6,23 @@
  * Usage: node tools/pack-sprites.js
  */
 
-import { createRequire } from 'module';
-import { readdir, mkdir, writeFile, readFile } from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import sharp from 'sharp';
+import { createRequire } from 'module'
+import { readdir, mkdir, writeFile, readFile } from 'fs/promises'
+import { existsSync } from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 // free-tex-packer-core is CommonJS — use createRequire to import it
-const require = createRequire(import.meta.url);
-const texPacker = require('free-tex-packer-core');
+const cjsRequire = createRequire(import.meta.url)
+const texPacker = cjsRequire('free-tex-packer-core')
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const ROOT = path.resolve(__dirname, '..')
 
-const SPRITES_DIR = path.join(ROOT, 'assets', 'sprites');
-const OUTPUT_DIR = path.join(ROOT, 'public', 'atlases');
+const SPRITES_DIR = path.join(ROOT, 'assets', 'sprites')
+const OUTPUT_DIR = path.join(ROOT, 'public', 'atlases')
 
-const CATEGORIES = ['heroes', 'monsters', 'bosses', 'effects', 'items', 'ui', 'portraits'];
+const CATEGORIES = ['heroes', 'monsters', 'bosses', 'effects', 'items', 'ui', 'portraits']
 
 const PACKER_OPTIONS = {
   textureName: '',          // overridden per category
@@ -38,21 +37,33 @@ const PACKER_OPTIONS = {
   removeFileExtension: true,
   prependFolderName: false,
   powerOfTwo: true,
-};
+}
+
+/**
+ * Read PNG dimensions from the IHDR chunk (bytes 16-23).
+ * Returns {w, h} or null on failure.
+ */
+function readPngSize(buffer) {
+  // PNG signature: 137 80 78 71 13 10 26 10
+  if (buffer.length < 24) return null
+  if (buffer[0] !== 0x89 || buffer[1] !== 0x50 || buffer[2] !== 0x4e || buffer[3] !== 0x47) {
+    return null
+  }
+  const w = buffer.readUInt32BE(16)
+  const h = buffer.readUInt32BE(20)
+  return { w, h }
+}
 
 /**
  * Wraps free-tex-packer-core's callback API in a Promise.
- * @param {Array<{path: string, contents: Buffer}>} images
- * @param {object} options
- * @returns {Promise<Array<{name: string, buffer: Buffer}>>}
  */
 function packImages(images, options) {
   return new Promise((resolve, reject) => {
     texPacker(images, options, (files, error) => {
-      if (error) return reject(error);
-      resolve(files);
-    });
-  });
+      if (error) return reject(error)
+      resolve(files)
+    })
+  })
 }
 
 /**
@@ -60,61 +71,53 @@ function packImages(images, options) {
  * Skips files whose names contain "spritesheet" (they are already packed).
  */
 async function readCategoryImages(categoryDir) {
-  let entries;
+  let entries
   try {
-    entries = await readdir(categoryDir);
+    entries = await readdir(categoryDir)
   } catch {
-    // Directory doesn't exist — skip silently
-    return [];
+    return []
   }
 
   const pngFiles = entries.filter(
     (f) => f.toLowerCase().endsWith('.png') && !f.toLowerCase().includes('spritesheet')
-  );
+  )
 
-  const images = [];
+  const images = []
   for (const file of pngFiles) {
-    const filePath = path.join(categoryDir, file);
+    const filePath = path.join(categoryDir, file)
     try {
-      const contents = await readFile(filePath);
-      // Validate the image is readable by sharp (catches corrupt files)
-      await sharp(contents).metadata();
-      images.push({ path: file, contents });
+      const contents = await readFile(filePath)
+      const size = readPngSize(contents)
+      if (!size) {
+        console.warn(`  [WARN] Skipping ${file}: not a valid PNG`)
+        continue
+      }
+      images.push({ path: file, contents })
     } catch (err) {
-      console.warn(`  [WARN] Skipping ${file}: ${err.message}`);
+      console.warn(`  [WARN] Skipping ${file}: ${err.message}`)
     }
   }
-  return images;
+  return images
 }
 
 /**
- * Convert the raw Pixi-format JSON that free-tex-packer-core emits into
- * a guaranteed PixiJS v8 Spritesheet JSON hash format.
- *
- * The packer already outputs a compatible structure; this step normalises it
- * and injects the required meta fields in case they are missing.
+ * Normalise the Pixi-format JSON into guaranteed PixiJS v8 Spritesheet format.
  */
 function normalisePixiJson(rawJson, atlasImageName, atlasWidth, atlasHeight) {
-  let parsed;
-  try {
-    parsed = typeof rawJson === 'string' ? JSON.parse(rawJson) : rawJson;
-  } catch (err) {
-    throw new Error(`Failed to parse packer JSON output: ${err.message}`);
-  }
+  const parsed = typeof rawJson === 'string' ? JSON.parse(rawJson) : rawJson
 
-  // Ensure every frame has the required PixiJS v8 fields
-  const frames = {};
+  const frames = {}
   for (const [name, data] of Object.entries(parsed.frames ?? {})) {
-    const f = data.frame ?? data;
-    const sw = data.sourceSize?.w ?? f.w;
-    const sh = data.sourceSize?.h ?? f.h;
+    const f = data.frame ?? data
+    const sw = data.sourceSize?.w ?? f.w
+    const sh = data.sourceSize?.h ?? f.h
     frames[name] = {
       frame: { x: f.x, y: f.y, w: f.w, h: f.h },
       rotated: data.rotated ?? false,
       trimmed: data.trimmed ?? false,
       spriteSourceSize: data.spriteSourceSize ?? { x: 0, y: 0, w: sw, h: sh },
       sourceSize: { w: sw, h: sh },
-    };
+    }
   }
 
   return {
@@ -125,113 +128,73 @@ function normalisePixiJson(rawJson, atlasImageName, atlasWidth, atlasHeight) {
       size: { w: atlasWidth, h: atlasHeight },
       scale: 1,
     },
-  };
-}
-
-/**
- * Get actual PNG dimensions from a buffer using sharp.
- */
-async function getPngSize(buffer) {
-  const meta = await sharp(buffer).metadata();
-  return { w: meta.width, h: meta.height };
+  }
 }
 
 async function packCategory(category) {
-  const categoryDir = path.join(SPRITES_DIR, category);
-  console.log(`\n[${category}] Reading sprites from ${categoryDir}`);
+  const categoryDir = path.join(SPRITES_DIR, category)
+  console.log(`\n[${category}] Reading sprites from ${categoryDir}`)
 
-  const images = await readCategoryImages(categoryDir);
+  const images = await readCategoryImages(categoryDir)
   if (images.length === 0) {
-    console.log(`[${category}] No eligible PNGs found — skipping.`);
-    return;
+    console.log(`[${category}] No eligible PNGs found — skipping.`)
+    return
   }
-  console.log(`[${category}] Found ${images.length} sprite(s).`);
+  console.log(`[${category}] Found ${images.length} sprite(s).`)
 
-  const options = {
-    ...PACKER_OPTIONS,
-    textureName: category,
-  };
+  const options = { ...PACKER_OPTIONS, textureName: category }
 
-  let files;
+  let files
   try {
-    files = await packImages(images, options);
+    files = await packImages(images, options)
   } catch (err) {
-    console.error(`[${category}] Packing failed: ${err.message}`);
-    return;
+    console.error(`[${category}] Packing failed: ${err.message}`)
+    return
   }
 
-  // free-tex-packer-core returns an array of {name, buffer} objects.
-  // Typically one .png and one .json per atlas (may be multiple sheets if
-  // images exceed maxSize — handled by iterating all files).
   for (const file of files) {
-    const destPath = path.join(OUTPUT_DIR, file.name);
+    const destPath = path.join(OUTPUT_DIR, file.name)
 
     if (file.name.endsWith('.png')) {
-      await writeFile(destPath, file.buffer);
-      console.log(`[${category}] Written atlas PNG → ${destPath}`);
+      await writeFile(destPath, file.buffer)
+      const size = readPngSize(file.buffer)
+      console.log(`[${category}] Written atlas PNG (${size?.w}x${size?.h}) → ${destPath}`)
     } else if (file.name.endsWith('.json')) {
-      // Parse, normalise, and re-serialise the JSON
-      const pngName = file.name.replace('.json', '.png');
-      let atlasW = 0;
-      let atlasH = 0;
+      const pngName = file.name.replace('.json', '.png')
+      const pngFile = files.find((f) => f.name === pngName)
+      const size = pngFile ? readPngSize(pngFile.buffer) : null
 
-      // Find the matching PNG buffer to read actual dimensions
-      const pngFile = files.find((f) => f.name === pngName);
-      if (pngFile) {
-        try {
-          const size = await getPngSize(pngFile.buffer);
-          atlasW = size.w;
-          atlasH = size.h;
-        } catch {
-          // If sharp fails, fall back to values in the JSON meta
-        }
-      }
+      const raw = file.buffer.toString('utf8')
+      const rawParsed = JSON.parse(raw)
+      const atlasW = size?.w ?? rawParsed.meta?.size?.w ?? PACKER_OPTIONS.width
+      const atlasH = size?.h ?? rawParsed.meta?.size?.h ?? PACKER_OPTIONS.height
 
-      let normalised;
-      try {
-        const raw = file.buffer.toString('utf8');
-        const rawParsed = JSON.parse(raw);
-        // If dimensions not obtained from PNG, pull from packer meta
-        if (!atlasW) {
-          atlasW = rawParsed.meta?.size?.w ?? PACKER_OPTIONS.width;
-          atlasH = rawParsed.meta?.size?.h ?? PACKER_OPTIONS.height;
-        }
-        normalised = normalisePixiJson(rawParsed, pngName, atlasW, atlasH);
-      } catch (err) {
-        console.error(`[${category}] JSON normalisation failed: ${err.message}`);
-        // Write raw output as fallback
-        await writeFile(destPath, file.buffer);
-        console.log(`[${category}] Written atlas JSON (raw fallback) → ${destPath}`);
-        continue;
-      }
-
-      await writeFile(destPath, JSON.stringify(normalised, null, 2));
-      console.log(`[${category}] Written atlas JSON → ${destPath}`);
+      const normalised = normalisePixiJson(rawParsed, pngName, atlasW, atlasH)
+      await writeFile(destPath, JSON.stringify(normalised, null, 2))
+      console.log(`[${category}] Written atlas JSON (${Object.keys(normalised.frames).length} frames) → ${destPath}`)
     } else {
-      // Unknown file type — write as-is
-      await writeFile(destPath, file.buffer);
-      console.log(`[${category}] Written ${file.name} → ${destPath}`);
+      await writeFile(destPath, file.buffer)
+      console.log(`[${category}] Written ${file.name} → ${destPath}`)
     }
   }
 }
 
 async function main() {
-  console.log('=== HeroForge Sprite Atlas Packer ===');
+  console.log('=== HeroForge Sprite Atlas Packer ===')
 
-  // Ensure output directory exists
   if (!existsSync(OUTPUT_DIR)) {
-    await mkdir(OUTPUT_DIR, { recursive: true });
-    console.log(`Created output directory: ${OUTPUT_DIR}`);
+    await mkdir(OUTPUT_DIR, { recursive: true })
+    console.log(`Created output directory: ${OUTPUT_DIR}`)
   }
 
   for (const category of CATEGORIES) {
-    await packCategory(category);
+    await packCategory(category)
   }
 
-  console.log('\n=== Done ===');
+  console.log('\n=== Done ===')
 }
 
 main().catch((err) => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+  console.error('Fatal error:', err)
+  process.exit(1)
+})

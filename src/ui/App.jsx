@@ -1,20 +1,26 @@
 import { signal } from '@preact/signals'
 import { useEffect, useRef } from 'preact/hooks'
+import { addComponent } from 'bitecs'
 import styles from './App.module.css'
 import { HudPanel } from './hud/HudPanel'
 import { LootCounter } from './hud/LootCounter'
 import { SettingsPanel, settingsSignals } from './panels/SettingsPanel'
+import { StatPanel, statPanelOpen } from './panels/StatPanel'
 import { LoadingScreen } from './screens/LoadingScreen'
 import { TitleScreen } from './screens/TitleScreen'
+import { JobSelectScreen } from './screens/JobSelectScreen'
 import { TutorialOverlay, startTutorial, isTutorialDone } from './screens/TutorialOverlay'
+import { Job, StatAllocation } from '@components/character'
+import { Stats } from '@components/combat'
 
-/** 'loading' | 'title' | 'game' */
+/** 'loading' | 'title' | 'jobSelect' | 'game' */
 const screenSignal = signal('loading')
 const loadProgressSignal = signal(0)
 
 const hasSaveSignal = signal(false)
 
-export function App({ gameLoop, saveManager, world, playerState }) {
+export function App({ gameLoop, saveManager, world, playerState, growthSystem }) {
+  // world ref needed in game screen for StatPanel
   const loadTimerRef = useRef(null)
 
   // Simulate loading progress when on loading screen
@@ -57,6 +63,18 @@ export function App({ gameLoop, saveManager, world, playerState }) {
 
   const handleNewGame = () => {
     saveManager?.deleteSave?.('main').catch(() => {})
+    // Go to job selection before starting the game
+    screenSignal.value = 'jobSelect'
+  }
+
+  const handleJobSelected = (jobId) => {
+    if (world && growthSystem) {
+      const eid = world.playerEid
+      // Ensure Job and StatAllocation components are added
+      try { addComponent(world, eid, Job) } catch (_) { /* already added */ }
+      try { addComponent(world, eid, StatAllocation) } catch (_) { /* already added */ }
+      growthSystem.applyJob(world, eid, jobId)
+    }
     gameLoop?.start()
     screenSignal.value = 'game'
     // Start tutorial for new players
@@ -102,17 +120,30 @@ export function App({ gameLoop, saveManager, world, playerState }) {
     )
   }
 
+  if (screenSignal.value === 'jobSelect') {
+    return (
+      <JobSelectScreen onSelectJob={handleJobSelected} />
+    )
+  }
+
   // 'game' screen
   return (
     <div class={styles.uiOverlay}>
       <HudPanel />
       <LootCounter />
       <button
+        class={styles.statBtn}
+        onClick={() => { statPanelOpen.value = !statPanelOpen.value }}
+      >
+        스탯
+      </button>
+      <button
         class={styles.settingsBtn}
         onClick={() => { settingsSignals.isOpen.value = true }}
       >
         설정
       </button>
+      <StatPanel world={world} />
       <SettingsPanel saveManager={saveManager} />
       <TutorialOverlay />
     </div>

@@ -1,0 +1,133 @@
+{
+  "frames": {
+    "tinyswords-blue-Warrior-Warrior_Run": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 1152,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1152,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 1152,
+        "h": 192
+      }
+    },
+    "cemetery-hero-death": {
+      "frame": {
+        "x": 1158,
+        "y": 2,
+        "w": 1120,
+        "h": 90
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1120,
+        "h": 90
+      },
+      "sourceSize": {
+        "w": 1120,
+        "h": 90
+      }
+    },
+    "church-player-player": {
+      "frame": {
+        "x": 2282,
+        "y": 2,
+        "w": 1106,
+        "h": 180
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1106,
+        "h": 180
+      },
+      "sourceSize": {
+        "w": 1106,
+        "h": 180
+      }
+    },
+    "cemetery-hero-hero-idle": {
+      "frame": {
+        "x": 3392,
+        "y": 2,
+        "w": 640,
+        "h": 90
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 90
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 90
+      }
+    },
+    "cemetery-hero-hero-jump": {
+      "frame": {
+        "x": 3392,
+        "y": 96,
+        "w": 640,
+        "h": 90
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 90
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 90
+      }
+    },
+    "tinyswords-blue-Pawn-Pawn_Interact Hammer": {
+      "frame": {
+        "x": 1158,
+        "y": 96,
+        "w": 576,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 576,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 576,
+        "h": 192
+      }
+    }
+  },
+  "meta": {
+    "image": "heroes-1.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 4096,
+      "h": 512
+    },
+    "scale": 1
+  }
+}

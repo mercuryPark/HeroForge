@@ -1,0 +1,3073 @@
+{
+  "frames": {
+    "tinyswords-fx-Explosion_02": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 1920,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1920,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 1920,
+        "h": 192
+      }
+    },
+    "tinyswords-effect-Explosion-Explosions": {
+      "frame": {
+        "x": 1926,
+        "y": 2,
+        "w": 1728,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1728,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 1728,
+        "h": 192
+      }
+    },
+    "grotto-fx-energy-shield": {
+      "frame": {
+        "x": 3658,
+        "y": 2,
+        "w": 408,
+        "h": 47
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 408,
+        "h": 47
+      },
+      "sourceSize": {
+        "w": 408,
+        "h": 47
+      }
+    },
+    "sewers-misc-enemy-bullet": {
+      "frame": {
+        "x": 4070,
+        "y": 2,
+        "w": 20,
+        "h": 10
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 20,
+        "h": 10
+      },
+      "sourceSize": {
+        "w": 20,
+        "h": 10
+      }
+    },
+    "enemyprojectile-frame1": {
+      "frame": {
+        "x": 4070,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      }
+    },
+    "enemyprojectile-frame2": {
+      "frame": {
+        "x": 4070,
+        "y": 36,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      }
+    },
+    "explosions-pack-Sprites": {
+      "frame": {
+        "x": 3658,
+        "y": 53,
+        "w": 384,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 384,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 384,
+        "h": 48
+      }
+    },
+    "sewers-misc-water-splash1": {
+      "frame": {
+        "x": 4046,
+        "y": 56,
+        "w": 48,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 100
+      }
+    },
+    "sewers-misc-water-splash2": {
+      "frame": {
+        "x": 4046,
+        "y": 160,
+        "w": 48,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 100
+      }
+    },
+    "sewers-misc-water-splash3": {
+      "frame": {
+        "x": 4046,
+        "y": 264,
+        "w": 48,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 100
+      }
+    },
+    "grotto-fx-slash-horizontal": {
+      "frame": {
+        "x": 3658,
+        "y": 105,
+        "w": 325,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 325,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 325,
+        "h": 40
+      }
+    },
+    "sewers-misc-water-splash4": {
+      "frame": {
+        "x": 3987,
+        "y": 105,
+        "w": 48,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 100
+      }
+    },
+    "grotto-fx-slash-circular": {
+      "frame": {
+        "x": 3658,
+        "y": 149,
+        "w": 312,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 312,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 312,
+        "h": 48
+      }
+    },
+    "sewers-misc-bullet": {
+      "frame": {
+        "x": 3974,
+        "y": 149,
+        "w": 8,
+        "h": 4
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 8,
+        "h": 4
+      },
+      "sourceSize": {
+        "w": 8,
+        "h": 4
+      }
+    },
+    "sewers-misc-bomb": {
+      "frame": {
+        "x": 3974,
+        "y": 157,
+        "w": 7,
+        "h": 9
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 7,
+        "h": 9
+      },
+      "sourceSize": {
+        "w": 7,
+        "h": 9
+      }
+    },
+    "tinyswords-fx-Water Splash": {
+      "frame": {
+        "x": 2,
+        "y": 198,
+        "w": 1728,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1728,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 1728,
+        "h": 192
+      }
+    },
+    "tinyswords-fx-Explosion_01": {
+      "frame": {
+        "x": 1734,
+        "y": 198,
+        "w": 1536,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1536,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 1536,
+        "h": 192
+      }
+    },
+    "tinyswords-fx-Fire_03": {
+      "frame": {
+        "x": 3274,
+        "y": 209,
+        "w": 768,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 768,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 768,
+        "h": 64
+      }
+    },
+    "swamp-fire-fire1": {
+      "frame": {
+        "x": 3274,
+        "y": 198,
+        "w": 25,
+        "h": 6
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 6
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 6
+      }
+    },
+    "swamp-fire-fire2": {
+      "frame": {
+        "x": 3303,
+        "y": 198,
+        "w": 25,
+        "h": 6
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 25,
+        "h": 6
+      },
+      "sourceSize": {
+        "w": 25,
+        "h": 6
+      }
+    },
+    "church-fx-enemy-death": {
+      "frame": {
+        "x": 3274,
+        "y": 277,
+        "w": 729,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 729,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 729,
+        "h": 66
+      }
+    },
+    "explosions-pack-explosion-1": {
+      "frame": {
+        "x": 4007,
+        "y": 277,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-2": {
+      "frame": {
+        "x": 4007,
+        "y": 313,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "tinyswords-fx-Dust_02": {
+      "frame": {
+        "x": 3274,
+        "y": 347,
+        "w": 640,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 64
+      }
+    },
+    "church-fx-enemy-death1": {
+      "frame": {
+        "x": 3918,
+        "y": 347,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "swamp-enemy-death-Enemy-Death1": {
+      "frame": {
+        "x": 4003,
+        "y": 349,
+        "w": 39,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 49
+      }
+    },
+    "sewers-misc-water-splash5": {
+      "frame": {
+        "x": 4046,
+        "y": 368,
+        "w": 48,
+        "h": 100
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 100
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 100
+      }
+    },
+    "swamp-enemy-death-Enemy-Death2": {
+      "frame": {
+        "x": 4003,
+        "y": 402,
+        "w": 39,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 49
+      }
+    },
+    "explosions-pack-spritsheet": {
+      "frame": {
+        "x": 2,
+        "y": 394,
+        "w": 1536,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1536,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 1536,
+        "h": 128
+      }
+    },
+    "grotto-fx-electro-shock": {
+      "frame": {
+        "x": 1542,
+        "y": 394,
+        "w": 1152,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1152,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 1152,
+        "h": 96
+      }
+    },
+    "tinyswords-fx-Dust_01": {
+      "frame": {
+        "x": 2698,
+        "y": 394,
+        "w": 512,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 512,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 64
+      }
+    },
+    "enemydeath-enemy-death1": {
+      "frame": {
+        "x": 3214,
+        "y": 394,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "tinyswords-fx-Fire_02": {
+      "frame": {
+        "x": 3266,
+        "y": 415,
+        "w": 640,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 640,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 640,
+        "h": 64
+      }
+    },
+    "enemydeath-enemy-death2": {
+      "frame": {
+        "x": 3214,
+        "y": 455,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "tinyswords-fx-Fire_01": {
+      "frame": {
+        "x": 2698,
+        "y": 483,
+        "w": 512,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 512,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 64
+      }
+    },
+    "sewers-misc-muzzle-flash": {
+      "frame": {
+        "x": 2698,
+        "y": 462,
+        "w": 32,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 16
+      }
+    },
+    "explosions-pack-explosion-d1": {
+      "frame": {
+        "x": 3910,
+        "y": 455,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-3": {
+      "frame": {
+        "x": 3910,
+        "y": 417,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-4": {
+      "frame": {
+        "x": 3946,
+        "y": 417,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "enemydeath-enemy-death3": {
+      "frame": {
+        "x": 4042,
+        "y": 472,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "enemydeath-enemy-death4": {
+      "frame": {
+        "x": 4042,
+        "y": 524,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "enemydeath-enemy-death5": {
+      "frame": {
+        "x": 4042,
+        "y": 576,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "grotto-fx-energy-smack": {
+      "frame": {
+        "x": 1542,
+        "y": 494,
+        "w": 1024,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 96
+      }
+    },
+    "explosion-explosion-animation1": {
+      "frame": {
+        "x": 2570,
+        "y": 494,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "grotto-fx-enemy-death": {
+      "frame": {
+        "x": 3266,
+        "y": 483,
+        "w": 448,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 448,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 448,
+        "h": 64
+      }
+    },
+    "enemydeath-enemy-death6": {
+      "frame": {
+        "x": 3214,
+        "y": 507,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "grotto-fx-fire-ball": {
+      "frame": {
+        "x": 3718,
+        "y": 483,
+        "w": 156,
+        "h": 29
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 156,
+        "h": 29
+      },
+      "sourceSize": {
+        "w": 156,
+        "h": 29
+      }
+    },
+    "water-splash-frame1": {
+      "frame": {
+        "x": 3878,
+        "y": 483,
+        "w": 26,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-d10": {
+      "frame": {
+        "x": 3718,
+        "y": 516,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "enemydeath-enemy-death7": {
+      "frame": {
+        "x": 3850,
+        "y": 519,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "enemydeath-enemy-death8": {
+      "frame": {
+        "x": 3850,
+        "y": 571,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-d11": {
+      "frame": {
+        "x": 3902,
+        "y": 587,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-f1": {
+      "frame": {
+        "x": 3850,
+        "y": 623,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-d12": {
+      "frame": {
+        "x": 3902,
+        "y": 719,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-f2": {
+      "frame": {
+        "x": 4034,
+        "y": 628,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-f3": {
+      "frame": {
+        "x": 4034,
+        "y": 680,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-f4": {
+      "frame": {
+        "x": 4034,
+        "y": 732,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-f5": {
+      "frame": {
+        "x": 4034,
+        "y": 784,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-f6": {
+      "frame": {
+        "x": 4034,
+        "y": 836,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosion-explosion-animation": {
+      "frame": {
+        "x": 2686,
+        "y": 559,
+        "w": 1008,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1008,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 1008,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-e1": {
+      "frame": {
+        "x": 3698,
+        "y": 675,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-d2": {
+      "frame": {
+        "x": 3894,
+        "y": 851,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-1-b-1": {
+      "frame": {
+        "x": 4026,
+        "y": 888,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-1-b-2": {
+      "frame": {
+        "x": 4026,
+        "y": 956,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "tinyswords-effect-Fire-Fire": {
+      "frame": {
+        "x": 2,
+        "y": 526,
+        "w": 896,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 896,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 896,
+        "h": 128
+      }
+    },
+    "grotto-fx-slash-upward": {
+      "frame": {
+        "x": 902,
+        "y": 526,
+        "w": 260,
+        "h": 56
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 260,
+        "h": 56
+      },
+      "sourceSize": {
+        "w": 260,
+        "h": 56
+      }
+    },
+    "explosions-pack-explosion-e10": {
+      "frame": {
+        "x": 1166,
+        "y": 526,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-d3": {
+      "frame": {
+        "x": 1362,
+        "y": 526,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "swamp-enemy-death-Enemy-Death3": {
+      "frame": {
+        "x": 1494,
+        "y": 526,
+        "w": 39,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 49
+      }
+    },
+    "swamp-enemy-death-Enemy-Death4": {
+      "frame": {
+        "x": 1494,
+        "y": 579,
+        "w": 39,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 49
+      }
+    },
+    "explosions-pack-explosion-e11": {
+      "frame": {
+        "x": 902,
+        "y": 586,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-1-b-3": {
+      "frame": {
+        "x": 1098,
+        "y": 586,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-1-b-4": {
+      "frame": {
+        "x": 1098,
+        "y": 654,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-e12": {
+      "frame": {
+        "x": 2,
+        "y": 658,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e13": {
+      "frame": {
+        "x": 198,
+        "y": 658,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e14": {
+      "frame": {
+        "x": 394,
+        "y": 658,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e15": {
+      "frame": {
+        "x": 590,
+        "y": 658,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosion-explosion-animation2": {
+      "frame": {
+        "x": 786,
+        "y": 658,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-e16": {
+      "frame": {
+        "x": 1537,
+        "y": 594,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "swamp-enemy-death-Enemy-Death5": {
+      "frame": {
+        "x": 1494,
+        "y": 632,
+        "w": 39,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 49
+      }
+    },
+    "explosions-pack-explosion-d4": {
+      "frame": {
+        "x": 1362,
+        "y": 658,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "swamp-enemy-death-Enemy-Death6": {
+      "frame": {
+        "x": 1494,
+        "y": 722,
+        "w": 39,
+        "h": 49
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 39,
+        "h": 49
+      },
+      "sourceSize": {
+        "w": 39,
+        "h": 49
+      }
+    },
+    "explosions-pack-explosion-5": {
+      "frame": {
+        "x": 1494,
+        "y": 685,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-6": {
+      "frame": {
+        "x": 1494,
+        "y": 775,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-e17": {
+      "frame": {
+        "x": 1098,
+        "y": 722,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e18": {
+      "frame": {
+        "x": 902,
+        "y": 782,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosion-explosion-animation3": {
+      "frame": {
+        "x": 786,
+        "y": 790,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-1-b-5": {
+      "frame": {
+        "x": 1294,
+        "y": 722,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-e19": {
+      "frame": {
+        "x": 1294,
+        "y": 790,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e2": {
+      "frame": {
+        "x": 1098,
+        "y": 918,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e20": {
+      "frame": {
+        "x": 2,
+        "y": 854,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e21": {
+      "frame": {
+        "x": 198,
+        "y": 854,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e22": {
+      "frame": {
+        "x": 394,
+        "y": 854,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e3": {
+      "frame": {
+        "x": 590,
+        "y": 854,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosion-explosion-animation4": {
+      "frame": {
+        "x": 786,
+        "y": 922,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-e4": {
+      "frame": {
+        "x": 902,
+        "y": 978,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e5": {
+      "frame": {
+        "x": 2,
+        "y": 1050,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e6": {
+      "frame": {
+        "x": 198,
+        "y": 1050,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e7": {
+      "frame": {
+        "x": 394,
+        "y": 1050,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-e8": {
+      "frame": {
+        "x": 590,
+        "y": 1050,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosion-explosion-animation5": {
+      "frame": {
+        "x": 786,
+        "y": 1054,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-e9": {
+      "frame": {
+        "x": 1733,
+        "y": 594,
+        "w": 192,
+        "h": 192
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 192,
+        "h": 192
+      },
+      "sourceSize": {
+        "w": 192,
+        "h": 192
+      }
+    },
+    "explosions-pack-explosion-d5": {
+      "frame": {
+        "x": 1929,
+        "y": 594,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-d6": {
+      "frame": {
+        "x": 2061,
+        "y": 594,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-d7": {
+      "frame": {
+        "x": 2193,
+        "y": 594,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "explosions-pack-explosion-d8": {
+      "frame": {
+        "x": 2325,
+        "y": 594,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "hit-hit": {
+      "frame": {
+        "x": 2457,
+        "y": 594,
+        "w": 93,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 93,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 93,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-d9": {
+      "frame": {
+        "x": 2554,
+        "y": 626,
+        "w": 128,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      }
+    },
+    "church-fx-enemy-death2": {
+      "frame": {
+        "x": 2457,
+        "y": 691,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "explosions-pack-explosion-f7": {
+      "frame": {
+        "x": 2457,
+        "y": 630,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-explosion-7": {
+      "frame": {
+        "x": 2509,
+        "y": 630,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-c1": {
+      "frame": {
+        "x": 1929,
+        "y": 726,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c10": {
+      "frame": {
+        "x": 2061,
+        "y": 726,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c2": {
+      "frame": {
+        "x": 2193,
+        "y": 726,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c3": {
+      "frame": {
+        "x": 2325,
+        "y": 726,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c4": {
+      "frame": {
+        "x": 1530,
+        "y": 790,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-8": {
+      "frame": {
+        "x": 1490,
+        "y": 811,
+        "w": 32,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 32
+      }
+    },
+    "hit-hit1": {
+      "frame": {
+        "x": 1490,
+        "y": 847,
+        "w": 31,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 31,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 31,
+        "h": 32
+      }
+    },
+    "explosions-pack-explosion-c5": {
+      "frame": {
+        "x": 1662,
+        "y": 790,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c6": {
+      "frame": {
+        "x": 1794,
+        "y": 790,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c7": {
+      "frame": {
+        "x": 2686,
+        "y": 691,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosions-pack-explosion-c8": {
+      "frame": {
+        "x": 2542,
+        "y": 758,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "church-fx-enemy-death3": {
+      "frame": {
+        "x": 2457,
+        "y": 761,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "explosions-pack-explosion-c9": {
+      "frame": {
+        "x": 1926,
+        "y": 810,
+        "w": 128,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 80
+      }
+    },
+    "explosion-explosion-animation6": {
+      "frame": {
+        "x": 2058,
+        "y": 810,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "explosion-explosion-animation7": {
+      "frame": {
+        "x": 2174,
+        "y": 810,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "explosion-explosion-animation8": {
+      "frame": {
+        "x": 2290,
+        "y": 810,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "hit-hit2": {
+      "frame": {
+        "x": 2406,
+        "y": 810,
+        "w": 31,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 31,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 31,
+        "h": 32
+      }
+    },
+    "church-fx-enemy-death4": {
+      "frame": {
+        "x": 2441,
+        "y": 831,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "hit-hit3": {
+      "frame": {
+        "x": 2406,
+        "y": 846,
+        "w": 31,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 31,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 31,
+        "h": 32
+      }
+    },
+    "water-splash-frame2": {
+      "frame": {
+        "x": 2406,
+        "y": 882,
+        "w": 26,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 32
+      }
+    },
+    "explosion-explosion-animation9": {
+      "frame": {
+        "x": 1525,
+        "y": 874,
+        "w": 112,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 112,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 112,
+        "h": 128
+      }
+    },
+    "water-splash-frame3": {
+      "frame": {
+        "x": 1490,
+        "y": 983,
+        "w": 26,
+        "h": 32
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 32
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 32
+      }
+    },
+    "church-fx-fireball1": {
+      "frame": {
+        "x": 1490,
+        "y": 883,
+        "w": 26,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 26
+      }
+    },
+    "church-fx-fireball2": {
+      "frame": {
+        "x": 1490,
+        "y": 913,
+        "w": 26,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 26
+      }
+    },
+    "church-fx-fireball3": {
+      "frame": {
+        "x": 1490,
+        "y": 943,
+        "w": 26,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 26,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 26,
+        "h": 26
+      }
+    },
+    "church-fx-enemy-death5": {
+      "frame": {
+        "x": 1294,
+        "y": 986,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "church-fx-enemy-death6": {
+      "frame": {
+        "x": 1379,
+        "y": 986,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "church-fx-enemy-death7": {
+      "frame": {
+        "x": 1641,
+        "y": 874,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "church-fx-enemy-death8": {
+      "frame": {
+        "x": 1726,
+        "y": 874,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "church-fx-enemy-death9": {
+      "frame": {
+        "x": 1811,
+        "y": 874,
+        "w": 81,
+        "h": 66
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 81,
+        "h": 66
+      },
+      "sourceSize": {
+        "w": 81,
+        "h": 66
+      }
+    },
+    "church-fx-fireball": {
+      "frame": {
+        "x": 1896,
+        "y": 894,
+        "w": 78,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 78,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 78,
+        "h": 26
+      }
+    },
+    "explosions-pack-explosion-1-b-6": {
+      "frame": {
+        "x": 1978,
+        "y": 894,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-1-b-7": {
+      "frame": {
+        "x": 1896,
+        "y": 942,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-1-b-8": {
+      "frame": {
+        "x": 1641,
+        "y": 983,
+        "w": 64,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 64
+      }
+    },
+    "explosions-pack-explosion-f8": {
+      "frame": {
+        "x": 1520,
+        "y": 1006,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame1": {
+      "frame": {
+        "x": 1464,
+        "y": 1019,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame2": {
+      "frame": {
+        "x": 1572,
+        "y": 1006,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame3": {
+      "frame": {
+        "x": 1294,
+        "y": 1056,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame4": {
+      "frame": {
+        "x": 1346,
+        "y": 1056,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame5": {
+      "frame": {
+        "x": 1398,
+        "y": 1056,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame6": {
+      "frame": {
+        "x": 1709,
+        "y": 944,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    },
+    "explosions-pack-frame7": {
+      "frame": {
+        "x": 1761,
+        "y": 944,
+        "w": 48,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 48
+      }
+    }
+  },
+  "meta": {
+    "image": "effects.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 4096,
+      "h": 2048
+    },
+    "scale": 1
+  }
+}
