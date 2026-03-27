@@ -1,0 +1,16 @@
+{
+  "permissions": {},
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q '\"file_path\".*\\.\\(js\\|jsx\\|css\\)\"' && ! echo \"$CLAUDE_TOOL_INPUT\" | grep -qE '(\\.omc/|\\.claude/|CLAUDE\\.md|AGENTS\\.md|docs/)'; then echo '⚠️ 소스 코드 수정 감지. docs/COVERAGE.md 작업 프로토콜을 준수하고 있는지 확인하세요. 현재 Phase 미완료 항목 먼저 완료 후 다음 Phase 진행.'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
