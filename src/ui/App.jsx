@@ -14,6 +14,7 @@ import { EnhancementPanel, enhancePanelOpen } from './panels/EnhancementPanel'
 import { WarriorPanel, warriorPanelOpen } from './panels/WarriorPanel'
 import { NotificationContainer } from './shared/NotificationToast'
 import { MobileControls } from './shared/MobileControls'
+import { DebugPanel, debugPanelOpen } from './panels/DebugPanel'
 import { generateEliteDrop, recalcEquipStats, ELITE_SUMMON_COST } from '@systems/meta/EquipmentSystem'
 import { assignInitialWeapon } from '@systems/meta/WeaponSystem'
 import { initSkills } from '@systems/meta/SkillSystem'
@@ -225,11 +226,18 @@ export function App({ gameLoop, saveManager, world, playerState, growthSystem })
       >
         용사
       </button>
+      <button
+        class={styles.debugBtn}
+        onClick={() => { debugPanelOpen.value = !debugPanelOpen.value }}
+      >
+        DEBUG
+      </button>
       <StatPanel world={world} />
       <AdvancementPanel onAdvance={handleAdvance} />
       <EquipmentPanel world={world} onEquipChange={handleEquipChange} onEliteSummon={handleEliteSummon} />
       <EnhancementPanel />
       <WarriorPanel playerEid={world?.playerEid} />
+      <DebugPanel world={world} />
       <SettingsPanel saveManager={saveManager} />
       <AdvancementNotification />
       <NotificationContainer />
