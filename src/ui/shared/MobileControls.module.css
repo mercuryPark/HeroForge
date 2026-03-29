@@ -1,0 +1,90 @@
+.controls {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.dpad {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.dpadRow {
+  display: flex;
+  gap: 2px;
+}
+
+.dpadBtn {
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.dpadBtn:active {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.actions {
+  pointer-events: all;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.actionBtn {
+  width: 56px;
+  height: 56px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  border-radius: 50%;
+  border: 2px solid;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.jumpBtn {
+  background: rgba(91, 155, 213, 0.3);
+  border-color: #5B9BD5;
+}
+
+.jumpBtn:active {
+  background: rgba(91, 155, 213, 0.6);
+}
+
+.attackBtn {
+  background: rgba(231, 76, 60, 0.3);
+  border-color: #E74C3C;
+}
+
+.attackBtn:active {
+  background: rgba(231, 76, 60, 0.6);
+}
+
+/* Responsive: hide on desktop */
+@media (hover: hover) and (pointer: fine) {
+  .controls { display: none; }
+}

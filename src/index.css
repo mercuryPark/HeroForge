@@ -45,3 +45,24 @@ html, body {
 #ui-root * {
   pointer-events: auto;
 }
+
+/* Responsive scaling for mobile */
+@media (max-width: 768px) {
+  #game-canvas canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+}
+
+/* Prevent pull-to-refresh and bounce on mobile */
+html {
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+/* Safe area for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  #ui-root {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

@@ -11,7 +11,8 @@
  */
 import { query, hasComponent, addComponent, removeComponent } from 'bitecs'
 import { Position, Velocity } from '@components/transform'
-import { Collider, Grounded, OnPlatform } from '@components/physics'
+import { Collider, Grounded, OnPlatform, OnLadder } from '@components/physics'
+import { Input } from './InputSystem'
 
 /**
  * Read a tile from the collision grid with bounds checking.
@@ -114,6 +115,31 @@ export function createTileCollisionSystem(collisionGrid, tileSize) {
             break
           }
         }
+      }
+
+      // --- Ladder detection (grid value 3) ---
+      const centerX = Math.floor((Position.x[eid] + ox + cw / 2) / tileSize)
+      const centerY = Math.floor((Position.y[eid] + oy + ch / 2) / tileSize)
+      const onLadderTile = getTile(collisionGrid, centerY, centerX) === 3
+
+      if (onLadderTile && (Input.up || Input.down)) {
+        if (!hasComponent(world, eid, OnLadder)) addComponent(world, eid, OnLadder)
+        // Disable gravity, allow vertical movement
+        Velocity.y[eid] = Input.up ? -120 : Input.down ? 120 : 0
+        Velocity.x[eid] = 0
+        grounded = false
+      } else if (hasComponent(world, eid, OnLadder) && !onLadderTile) {
+        removeComponent(world, eid, OnLadder)
+      }
+
+      // --- Platform dropdown (Down + Jump on one-way platform) ---
+      if (Input.down && Input.jump && hasComponent(world, eid, OnPlatform)) {
+        // Drop through: push entity below platform
+        Position.y[eid] += 2
+        Velocity.y[eid] = 50
+        grounded = false
+        removeComponent(world, eid, OnPlatform)
+        if (hasComponent(world, eid, Grounded)) removeComponent(world, eid, Grounded)
       }
 
       // --- Update Grounded tag ---

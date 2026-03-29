@@ -2,7 +2,7 @@
 
 > **최종 업데이트**: 2026-03-28
 > **현재 페이즈**: Phase 2 (Core Growth Loop) - 진행 중
-> **전체 진행률**: ~90%
+> **전체 진행률**: ~93%
 
 ---
 
@@ -11,7 +11,7 @@
 | Phase | 이름 | Sub-phases | 상태 | 진행률 | 비고 |
 |-------|------|-----------|------|--------|------|
 | 0 | Asset Preparation & Setup | 0.1~0.5 | 🔧 Partial | 85% | 셋업 완료, 아틀라스/타일맵 완료, BGM/SFX/타일셋 미완 |
-| 1 | Foundation (Combat Demo) | 1.1~1.6 | ✅ Done | 90% | 코어+VFX+스프라이트+타일맵+네비+세이브 완료, 사다리/pixi-viewport 미완 |
+| 1 | Foundation (Combat Demo) | 1.1~1.6 | ✅ Done | 95% | 사다리+드롭다운 구현 완료, pixi-viewport 잔여 |
 | 2 | Core Growth Loop | 2.1~2.11 | ✅ Done | 100% | 전체 완료 (직업/스탯/데미지/장비/인벤/무기/강화/재화) |
 | 3 | Deep Systems | 3.1~3.4 | ✅ Done | 95% | 3.1~3.4 완료 (용사의힘/스킬/동료/유물) |
 | 4 | Content | 4.1~4.6 | ✅ Done | 90% | 챕터10개/던전5종/보스/PvP/길드/파티퀘 시스템+데이터 완료 |
@@ -292,8 +292,9 @@
 #### 5.7 이벤트 프레임워크 (100%)
 - [x] events.json (3종 이벤트 템플릿: 출시/2배EXP/확률업)
 
-#### 5.8 모바일 터치 (0%)
-- [ ] 반응형 스케일링, 가상 조이스틱 (실기기 테스트 필요)
+#### 5.8 모바일 터치 (100%)
+- [x] MobileControls.jsx (가상 D-패드 + 점프/공격 버튼)
+- [x] 반응형 스케일링 (CSS media query, safe-area, overscroll 방지)
 
 #### 5.9 오디오 통합 (100%)
 - [x] AudioManager.js (Howler.js wrapper, BGM/SFX 볼륨/뮤트)

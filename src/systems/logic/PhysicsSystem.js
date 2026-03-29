@@ -4,7 +4,7 @@
  */
 import { query, hasComponent } from 'bitecs'
 import { Position, PrevPosition, Velocity } from '@components/transform'
-import { Gravity, Grounded, Collider } from '@components/physics'
+import { Gravity, Grounded, Collider, OnLadder } from '@components/physics'
 import { GRAVITY, TERMINAL_VELOCITY } from '@data/constants'
 
 /**
@@ -24,8 +24,8 @@ export function PhysicsSystem(world) {
       PrevPosition.y[eid] = Position.y[eid]
     }
 
-    // Apply gravity when airborne
-    if (hasComponent(world, eid, Gravity) && !hasComponent(world, eid, Grounded)) {
+    // Apply gravity when airborne (skip on ladder)
+    if (hasComponent(world, eid, Gravity) && !hasComponent(world, eid, Grounded) && !hasComponent(world, eid, OnLadder)) {
       Velocity.y[eid] += Gravity.value[eid] * dt
 
       // Clamp to terminal velocity

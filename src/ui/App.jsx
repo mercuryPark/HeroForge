@@ -13,6 +13,7 @@ import { CurrencyBar } from './hud/CurrencyBar'
 import { EnhancementPanel, enhancePanelOpen } from './panels/EnhancementPanel'
 import { WarriorPanel, warriorPanelOpen } from './panels/WarriorPanel'
 import { NotificationContainer } from './shared/NotificationToast'
+import { MobileControls } from './shared/MobileControls'
 import { generateEliteDrop, recalcEquipStats, ELITE_SUMMON_COST } from '@systems/meta/EquipmentSystem'
 import { assignInitialWeapon } from '@systems/meta/WeaponSystem'
 import { initSkills } from '@systems/meta/SkillSystem'
@@ -232,6 +233,7 @@ export function App({ gameLoop, saveManager, world, playerState, growthSystem })
       <SettingsPanel saveManager={saveManager} />
       <AdvancementNotification />
       <NotificationContainer />
+      <MobileControls />
       <TutorialOverlay />
     </div>
   )
