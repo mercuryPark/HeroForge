@@ -306,10 +306,11 @@
 #### 5.11 전투력 히스토리 (100%)
 - [x] CombatPowerHistory.js (7일 기록, 시그널 기반)
 
-#### 5.12 최종 테스트 + 최적화 (50%)
-- [ ] 60fps 검증, 메모리 누수, 번들 최적화 (수동 QA 필요)
-- [ ] Cross-browser 테스트 (수동 QA 필요)
+#### 5.12 최종 테스트 + 최적화 (75%)
+- [x] 번들 최적화 (vite build 성공, 메인 JS 468KB/gzip 150KB)
 - [x] save-migration.test.js (세이브 구조 검증, 구버전 마이그레이션 테스트)
+- [ ] 60fps 검증, 메모리 누수 (수동 QA 필요)
+- [ ] Cross-browser 테스트 (수동 QA 필요)
 
 ---
 
