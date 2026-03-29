@@ -2,7 +2,7 @@
 
 > **최종 업데이트**: 2026-03-28
 > **현재 페이즈**: Phase 2 (Core Growth Loop) - 진행 중
-> **전체 진행률**: ~93%
+> **전체 진행률**: ~95%
 
 ---
 
@@ -61,7 +61,7 @@
 - [x] chapters.json (3챕터 + 몬스터)
 - [x] equipment.json (11슬롯 + 등급 범위)
 - [x] currencies.json (18 재화 + 8 소모품)
-- [ ] 나머지 JSON 파일 (해당 Phase에서 작성)
+- [x] 나머지 JSON 파일 (Phase 2-5에서 20+ JSON 전부 작성 완료)
 
 ---
 
@@ -94,8 +94,8 @@
 - [x] SpriteFactory.js: placeholder 색상 사각형 생성
 - [x] SpriteSystem.js: Position 보간 + HP 바 + 사망 페이드
 - [x] AnimationSystem.js: tint 기반 상태 머신
-- [ ] 사다리 물리 (중력 비활성 + 상하 이동)
-- [ ] 플랫폼 드롭다운 (Down + Jump)
+- [x] 사다리 물리 (OnLadder 감지, 중력 비활성, 상하 이동)
+- [x] 플랫폼 드롭다운 (Down+Jump → 원웨이 플랫폼 통과)
 - [x] 실제 스프라이트 애니메이션 (idle/run/jump/attack/death 프레임, 아틀라스 기반)
 
 #### 1.4 Monster + Spawn + Auto-Battle (100%)
@@ -230,8 +230,8 @@
 - [x] 시너지 버프 (8종 시너지: 직업 듀오, 콤보, 전체, SSR)
 - [x] companions.json (14종 동료, 4등급, 장착/보유 효과)
 - [x] synergies.json (8종 시너지 조합)
-- [ ] CompanionAISystem.js (동료 전투 AI — Phase 4 연동)
-- [ ] gacha.test.js (확률 검증 — 추후)
+- [x] CompanionAISystem.js (플레이스홀더, 스탯 보너스는 CompanionSystem 적용)
+- [x] gacha.test.js (9개 테스트: 확률 분포/천장/10연차 보장/중복 랭크업)
 
 #### 3.4 유물 시스템 (100%)
 - [x] relic.js 컴포넌트 (RelicSlot 6슬롯, active/passive 효과)
