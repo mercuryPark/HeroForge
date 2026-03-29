@@ -1,0 +1,453 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1774685105265,
+  "projectRoot": "/Users/hoyeon/Documents/workspace/HeroForge",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "preact",
+        "version": "10.29.0",
+        "category": "frontend"
+      },
+      {
+        "name": "@playwright/test",
+        "version": "1.58.2",
+        "category": "testing"
+      },
+      {
+        "name": "vite",
+        "version": "5.4.1",
+        "category": "build"
+      },
+      {
+        "name": "vitest",
+        "version": "4.1.2",
+        "category": "testing"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test",
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "lint": "eslint .",
+      "test": "vitest run",
+      "test:watch": "vitest",
+      "test:damage": "vitest run tests/formulas.test.js",
+      "test:gacha": "vitest run tests/gacha.test.js",
+      "test:offline": "vitest run tests/offline.test.js",
+      "test:enhancement": "vitest run tests/enhancement.test.js",
+      "pack-sprites": "node tools/pack-sprites.js"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "assets",
+      "docs",
+      "public",
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "develop",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "assets": {
+      "path": "assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1774685105255,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 3,
+      "lastAccessed": 1774685105256,
+      "keyFiles": [
+        "COVERAGE.md",
+        "IDLE_RPG_PROJECT.md",
+        "OPENSPEC_EXECUTION_PLAN.md"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 0,
+      "lastAccessed": 1774685105259,
+      "keyFiles": []
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 2,
+      "lastAccessed": 1774685105259,
+      "keyFiles": [
+        "index.css",
+        "main.jsx"
+      ]
+    },
+    "tools": {
+      "path": "tools",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1774685105260,
+      "keyFiles": [
+        "pack-sprites.js",
+        "screenshot.mjs"
+      ]
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 8,
+      "lastAccessed": 1774685105262,
+      "keyFiles": [
+        "character.js",
+        "combat.js",
+        "index.js"
+      ]
+    },
+    "src/data": {
+      "path": "src/data",
+      "purpose": "Data files",
+      "fileCount": 7,
+      "lastAccessed": 1774685105262,
+      "keyFiles": [
+        "balance.json",
+        "chapters.json",
+        "constants.js"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "docs/COVERAGE.md",
+      "accessCount": 42,
+      "lastAccessed": 1774690070834,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/App.jsx",
+      "accessCount": 25,
+      "lastAccessed": 1774689815257,
+      "type": "file"
+    },
+    {
+      "path": "docs/OPENSPEC_EXECUTION_PLAN.md",
+      "accessCount": 14,
+      "lastAccessed": 1774690176405,
+      "type": "file"
+    },
+    {
+      "path": "tools/autodev-loop.sh",
+      "accessCount": 13,
+      "lastAccessed": 1774690094377,
+      "type": "file"
+    },
+    {
+      "path": "src/core/SaveManager.js",
+      "accessCount": 12,
+      "lastAccessed": 1774687618129,
+      "type": "directory"
+    },
+    {
+      "path": "src/main.jsx",
+      "accessCount": 10,
+      "lastAccessed": 1774689803345,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/logic/CombatSystem.js",
+      "accessCount": 8,
+      "lastAccessed": 1774686210352,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/render/EffectsSystem.js",
+      "accessCount": 6,
+      "lastAccessed": 1774686271157,
+      "type": "file"
+    },
+    {
+      "path": "tools/combat-test.mjs",
+      "accessCount": 6,
+      "lastAccessed": 1774688070078,
+      "type": "file"
+    },
+    {
+      "path": "src/data/balance.json",
+      "accessCount": 5,
+      "lastAccessed": 1774685999137,
+      "type": "file"
+    },
+    {
+      "path": "src/components/combat.js",
+      "accessCount": 5,
+      "lastAccessed": 1774686277667,
+      "type": "file"
+    },
+    {
+      "path": "tests/formulas.test.js",
+      "accessCount": 5,
+      "lastAccessed": 1774686303083,
+      "type": "file"
+    },
+    {
+      "path": "tools/screenshot-part1-combat.png",
+      "accessCount": 5,
+      "lastAccessed": 1774686363664,
+      "type": "file"
+    },
+    {
+      "path": "docs/IDLE_RPG_PROJECT.md",
+      "accessCount": 5,
+      "lastAccessed": 1774687396843,
+      "type": "directory"
+    },
+    {
+      "path": "src/ui/App.module.css",
+      "accessCount": 5,
+      "lastAccessed": 1774689560781,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/render/SpriteSystem.js",
+      "accessCount": 4,
+      "lastAccessed": 1774686247155,
+      "type": "file"
+    },
+    {
+      "path": ".claude/settings.json",
+      "accessCount": 4,
+      "lastAccessed": 1774686931735,
+      "type": "file"
+    },
+    {
+      "path": "vite.config.js",
+      "accessCount": 3,
+      "lastAccessed": 1774685682296,
+      "type": "directory"
+    },
+    {
+      "path": ".claude/commands/autodev.md",
+      "accessCount": 3,
+      "lastAccessed": 1774687051613,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/logic/GrowthSystem.js",
+      "accessCount": 3,
+      "lastAccessed": 1774687483686,
+      "type": "file"
+    },
+    {
+      "path": "src/ui",
+      "accessCount": 3,
+      "lastAccessed": 1774687489690,
+      "type": "directory"
+    },
+    {
+      "path": "src/systems/render/UIBridgeSystem.js",
+      "accessCount": 3,
+      "lastAccessed": 1774687556393,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/render/DamageNumberSystem.js",
+      "accessCount": 2,
+      "lastAccessed": 1774686007410,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/render",
+      "accessCount": 2,
+      "lastAccessed": 1774686029818,
+      "type": "directory"
+    },
+    {
+      "path": "src/ui/hud/HudPanel.jsx",
+      "accessCount": 2,
+      "lastAccessed": 1774686147414,
+      "type": "file"
+    },
+    {
+      "path": "src/components/sprite.js",
+      "accessCount": 2,
+      "lastAccessed": 1774686221549,
+      "type": "file"
+    },
+    {
+      "path": "src/components/character.js",
+      "accessCount": 2,
+      "lastAccessed": 1774687445273,
+      "type": "file"
+    },
+    {
+      "path": "src/data/constants.js",
+      "accessCount": 2,
+      "lastAccessed": 1774688049388,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/logic/SpawnSystem.js",
+      "accessCount": 1,
+      "lastAccessed": 1774685236968,
+      "type": "file"
+    },
+    {
+      "path": "src/systems/logic/AISystem.js",
+      "accessCount": 1,
+      "lastAccessed": 1774685237211,
+      "type": "file"
+    },
+    {
+      "path": "src/core/World.js",
+      "accessCount": 1,
+      "lastAccessed": 1774685244035,
+      "type": "file"
+    },
+    {
+      "path": "src/components/monster.js",
+      "accessCount": 1,
+      "lastAccessed": 1774685245305,
+      "type": "file"
+    },
+    {
+      "path": "tools/screenshot.mjs",
+      "accessCount": 1,
+      "lastAccessed": 1774685256874,
+      "type": "file"
+    },
+    {
+      "path": "src/components/index.js",
+      "accessCount": 1,
+      "lastAccessed": 1774685335462,
+      "type": "file"
+    },
+    {
+      "path": "tools/screenshot-part1.png",
+      "accessCount": 1,
+      "lastAccessed": 1774685436409,
+      "type": "file"
+    },
+    {
+      "path": "tools/screenshot-part1-job.png",
+      "accessCount": 1,
+      "lastAccessed": 1774685469624,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/screens/JobSelectScreen.jsx",
+      "accessCount": 1,
+      "lastAccessed": 1774685545497,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/screens/JobSelectScreen.module.css",
+      "accessCount": 1,
+      "lastAccessed": 1774685581938,
+      "type": "file"
+    },
+    {
+      "path": "src/components/transform.js",
+      "accessCount": 1,
+      "lastAccessed": 1774686009470,
+      "type": "file"
+    },
+    {
+      "path": "src",
+      "accessCount": 1,
+      "lastAccessed": 1774686015014,
+      "type": "directory"
+    },
+    {
+      "path": "docs",
+      "accessCount": 1,
+      "lastAccessed": 1774686018239,
+      "type": "directory"
+    },
+    {
+      "path": ".claude/commands/next.md",
+      "accessCount": 1,
+      "lastAccessed": 1774686497555,
+      "type": "file"
+    },
+    {
+      "path": ".claude/commands/status.md",
+      "accessCount": 1,
+      "lastAccessed": 1774686498450,
+      "type": "file"
+    },
+    {
+      "path": ".claude/commands/verify.md",
+      "accessCount": 1,
+      "lastAccessed": 1774686498550,
+      "type": "file"
+    },
+    {
+      "path": "src/data/jobs.json",
+      "accessCount": 1,
+      "lastAccessed": 1774687404853,
+      "type": "file"
+    },
+    {
+      "path": "src/data/advancement_quests.json",
+      "accessCount": 1,
+      "lastAccessed": 1774687435021,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/signals/advancementSignals.js",
+      "accessCount": 1,
+      "lastAccessed": 1774687505204,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/panels/AdvancementPanel.jsx",
+      "accessCount": 1,
+      "lastAccessed": 1774687522229,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/panels/AdvancementPanel.module.css",
+      "accessCount": 1,
+      "lastAccessed": 1774687540180,
+      "type": "file"
+    },
+    {
+      "path": "tools/screenshot-advancement.png",
+      "accessCount": 1,
+      "lastAccessed": 1774687676372,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

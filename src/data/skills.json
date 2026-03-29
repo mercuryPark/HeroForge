@@ -1,0 +1,77 @@
+{
+  "skills": {
+    "hero": [
+      { "id": "hero_normal",   "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "rect", "aoeRange": 60,  "levelMultBonus": 0.05 },
+      { "id": "hero_slash",    "slot": 1, "nameKr": "레이징 블로우", "cooldown": 5,  "baseMultiplier": 3.0, "aoeType": "rect", "aoeRange": 120, "levelMultBonus": 0.15 },
+      { "id": "hero_rage",     "slot": 2, "nameKr": "인레이지",     "cooldown": 10, "baseMultiplier": 5.0, "aoeType": "rect", "aoeRange": 150, "levelMultBonus": 0.20 },
+      { "id": "hero_guardian", "slot": 3, "nameKr": "가디언 슬래시","cooldown": 15, "baseMultiplier": 7.0, "aoeType": "rect", "aoeRange": 180, "levelMultBonus": 0.25 },
+      { "id": "hero_enrage",   "slot": 4, "nameKr": "오버드라이브", "cooldown": 50, "baseMultiplier": 15.0,"aoeType": "rect", "aoeRange": 250, "levelMultBonus": 0.50 }
+    ],
+    "dark_knight": [
+      { "id": "dk_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "rect", "aoeRange": 60,  "levelMultBonus": 0.05 },
+      { "id": "dk_spear",   "slot": 1, "nameKr": "건터 스트라이크","cooldown": 5,  "baseMultiplier": 3.2, "aoeType": "rect", "aoeRange": 130, "levelMultBonus": 0.15 },
+      { "id": "dk_dark",    "slot": 2, "nameKr": "다크 임팔",     "cooldown": 10, "baseMultiplier": 5.5, "aoeType": "rect", "aoeRange": 160, "levelMultBonus": 0.20 },
+      { "id": "dk_beholder","slot": 3, "nameKr": "비홀더 충격",   "cooldown": 15, "baseMultiplier": 7.5, "aoeType": "circle","aoeRange": 140, "levelMultBonus": 0.25 },
+      { "id": "dk_ultimate","slot": 4, "nameKr": "다크 체인",     "cooldown": 45, "baseMultiplier": 14.0,"aoeType": "rect", "aoeRange": 260, "levelMultBonus": 0.50 }
+    ],
+    "paladin": [
+      { "id": "pal_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "rect", "aoeRange": 60,  "levelMultBonus": 0.05 },
+      { "id": "pal_blast",   "slot": 1, "nameKr": "블래스트",  "cooldown": 6,  "baseMultiplier": 2.8, "aoeType": "rect", "aoeRange": 110, "levelMultBonus": 0.12 },
+      { "id": "pal_divine",  "slot": 2, "nameKr": "디바인 차지","cooldown": 12, "baseMultiplier": 4.5, "aoeType": "rect", "aoeRange": 140, "levelMultBonus": 0.18 },
+      { "id": "pal_heaven",  "slot": 3, "nameKr": "헤븐즈 해머","cooldown": 16, "baseMultiplier": 6.5, "aoeType": "circle","aoeRange": 160, "levelMultBonus": 0.22 },
+      { "id": "pal_ultimate","slot": 4, "nameKr": "그랜드 크로스","cooldown": 55, "baseMultiplier": 16.0,"aoeType": "circle","aoeRange": 200, "levelMultBonus": 0.50 }
+    ],
+    "archmage_il": [
+      { "id": "il_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "circle","aoeRange": 50,  "levelMultBonus": 0.05 },
+      { "id": "il_chain",   "slot": 1, "nameKr": "체인 라이트닝","cooldown": 4,"baseMultiplier": 3.5, "aoeType": "rect",  "aoeRange": 200, "levelMultBonus": 0.18 },
+      { "id": "il_blizzard","slot": 2, "nameKr": "블리자드",  "cooldown": 12, "baseMultiplier": 6.0, "aoeType": "circle","aoeRange": 180, "levelMultBonus": 0.22 },
+      { "id": "il_frozen",  "slot": 3, "nameKr": "프로즌 오브","cooldown": 14, "baseMultiplier": 7.0, "aoeType": "circle","aoeRange": 150, "levelMultBonus": 0.25 },
+      { "id": "il_ultimate","slot": 4, "nameKr": "아이스 에이지","cooldown": 60,"baseMultiplier": 18.0,"aoeType": "circle","aoeRange": 300, "levelMultBonus": 0.55 }
+    ],
+    "archmage_fp": [
+      { "id": "fp_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "circle","aoeRange": 50,  "levelMultBonus": 0.05 },
+      { "id": "fp_mist",    "slot": 1, "nameKr": "미스트 이럽션","cooldown": 5,"baseMultiplier": 3.8, "aoeType": "circle","aoeRange": 140, "levelMultBonus": 0.18 },
+      { "id": "fp_meteor",  "slot": 2, "nameKr": "메테오",    "cooldown": 15, "baseMultiplier": 8.0, "aoeType": "circle","aoeRange": 200, "levelMultBonus": 0.25 },
+      { "id": "fp_dot",     "slot": 3, "nameKr": "포이즌 노바","cooldown": 10, "baseMultiplier": 4.5, "aoeType": "circle","aoeRange": 160, "levelMultBonus": 0.20 },
+      { "id": "fp_ultimate","slot": 4, "nameKr": "인페르노",  "cooldown": 55, "baseMultiplier": 17.0,"aoeType": "circle","aoeRange": 280, "levelMultBonus": 0.55 }
+    ],
+    "bowmaster": [
+      { "id": "bm_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "cone", "aoeRange": 80,  "levelMultBonus": 0.05 },
+      { "id": "bm_hurricane","slot": 1,"nameKr": "허리케인",  "cooldown": 4,  "baseMultiplier": 2.5, "aoeType": "cone", "aoeRange": 250, "levelMultBonus": 0.12 },
+      { "id": "bm_arrow",   "slot": 2, "nameKr": "애로우 플래터","cooldown": 8,"baseMultiplier": 4.0, "aoeType": "cone", "aoeRange": 200, "levelMultBonus": 0.18 },
+      { "id": "bm_phoenix", "slot": 3, "nameKr": "피닉스",    "cooldown": 18, "baseMultiplier": 7.0, "aoeType": "rect", "aoeRange": 220, "levelMultBonus": 0.25 },
+      { "id": "bm_ultimate","slot": 4, "nameKr": "애로우 레인","cooldown": 50, "baseMultiplier": 14.0,"aoeType": "cone", "aoeRange": 350, "levelMultBonus": 0.50 }
+    ],
+    "marksman": [
+      { "id": "mm_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.2, "aoeType": "cone", "aoeRange": 80,  "levelMultBonus": 0.05 },
+      { "id": "mm_snipe",   "slot": 1, "nameKr": "스나이핑",  "cooldown": 6,  "baseMultiplier": 5.0, "aoeType": "rect", "aoeRange": 300, "levelMultBonus": 0.20 },
+      { "id": "mm_pierce",  "slot": 2, "nameKr": "피어싱",    "cooldown": 10, "baseMultiplier": 4.5, "aoeType": "rect", "aoeRange": 280, "levelMultBonus": 0.18 },
+      { "id": "mm_split",   "slot": 3, "nameKr": "스플릿 샷", "cooldown": 14, "baseMultiplier": 6.0, "aoeType": "cone", "aoeRange": 240, "levelMultBonus": 0.22 },
+      { "id": "mm_ultimate","slot": 4, "nameKr": "트루 스나이핑","cooldown": 55,"baseMultiplier": 20.0,"aoeType": "rect", "aoeRange": 400, "levelMultBonus": 0.60 }
+    ],
+    "night_lord": [
+      { "id": "nl_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "cone", "aoeRange": 70,  "levelMultBonus": 0.05 },
+      { "id": "nl_quad",    "slot": 1, "nameKr": "쿼드 스로우","cooldown": 3,  "baseMultiplier": 2.8, "aoeType": "cone", "aoeRange": 180, "levelMultBonus": 0.15 },
+      { "id": "nl_mark",    "slot": 2, "nameKr": "마크 오브 어쌔신","cooldown": 8,"baseMultiplier": 4.5,"aoeType": "rect","aoeRange": 160, "levelMultBonus": 0.20 },
+      { "id": "nl_dark",    "slot": 3, "nameKr": "다크 플레어","cooldown": 15, "baseMultiplier": 6.5, "aoeType": "circle","aoeRange": 150, "levelMultBonus": 0.22 },
+      { "id": "nl_ultimate","slot": 4, "nameKr": "스프레드 스로우","cooldown": 45,"baseMultiplier": 13.0,"aoeType": "cone","aoeRange": 300, "levelMultBonus": 0.48 }
+    ],
+    "shadower": [
+      { "id": "sh_normal",  "slot": 0, "nameKr": "기본 공격", "cooldown": 0,  "baseMultiplier": 1.0, "aoeType": "rect", "aoeRange": 50,  "levelMultBonus": 0.05 },
+      { "id": "sh_assault", "slot": 1, "nameKr": "어쌜네이트","cooldown": 4,  "baseMultiplier": 3.5, "aoeType": "rect", "aoeRange": 100, "levelMultBonus": 0.18 },
+      { "id": "sh_bomb",    "slot": 2, "nameKr": "메소 익스플로전","cooldown": 10,"baseMultiplier": 5.5,"aoeType": "circle","aoeRange": 130, "levelMultBonus": 0.20 },
+      { "id": "sh_smoke",   "slot": 3, "nameKr": "스모크 스크린","cooldown": 18,"baseMultiplier": 4.0,"aoeType": "circle","aoeRange": 120, "levelMultBonus": 0.15 },
+      { "id": "sh_ultimate","slot": 4, "nameKr": "어쌜네이션","cooldown": 50, "baseMultiplier": 16.0,"aoeType": "rect", "aoeRange": 200, "levelMultBonus": 0.55 }
+    ]
+  },
+  "enhancement": {
+    "materialCostBase": 5,
+    "materialCostPerLevel": 3,
+    "maxLevel": 30
+  },
+  "aoeTypes": {
+    "rect": { "id": 0, "nameKr": "직사각형" },
+    "circle": { "id": 1, "nameKr": "원형" },
+    "cone": { "id": 2, "nameKr": "부채꼴" }
+  }
+}

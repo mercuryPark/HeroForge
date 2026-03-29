@@ -332,6 +332,847 @@
       "drops": {
         "monsterPointsPerKill": { "min": 8, "max": 18 }
       }
+    },
+    {
+      "id": "chapter_4",
+      "name": "Flame Valley",
+      "nameKr": "화염 계곡",
+      "requiredLevel": 65,
+      "monsters": [
+        {
+          "id": "fire_lizard",
+          "name": "Fire Lizard",
+          "nameKr": "화염 도마뱀",
+          "hp": 4500,
+          "atk": 480,
+          "def": 220,
+          "exp": 1100,
+          "gold": 420,
+          "respawnTime": 4
+        },
+        {
+          "id": "lava_slime",
+          "name": "Lava Slime",
+          "nameKr": "용암 슬라임",
+          "hp": 3800,
+          "atk": 420,
+          "def": 180,
+          "exp": 950,
+          "gold": 370,
+          "respawnTime": 3
+        },
+        {
+          "id": "flame_hawk",
+          "name": "Flame Hawk",
+          "nameKr": "불꽃 매",
+          "hp": 3200,
+          "atk": 560,
+          "def": 150,
+          "exp": 1000,
+          "gold": 390,
+          "respawnTime": 3
+        },
+        {
+          "id": "magma_golem",
+          "name": "Magma Golem",
+          "nameKr": "마그마 골렘",
+          "hp": 6500,
+          "atk": 510,
+          "def": 300,
+          "exp": 1450,
+          "gold": 560,
+          "respawnTime": 7
+        },
+        {
+          "id": "fire_salamander",
+          "name": "Fire Salamander",
+          "nameKr": "화염 도롱뇽",
+          "hp": 5200,
+          "atk": 540,
+          "def": 260,
+          "exp": 1300,
+          "gold": 500,
+          "respawnTime": 5
+        }
+      ],
+      "boss": {
+        "id": "inferno_dragon",
+        "name": "Inferno Dragon",
+        "nameKr": "인페르노 드래곤",
+        "hp": 480000,
+        "atk": 3200,
+        "def": 1100,
+        "exp": 150000,
+        "gold": 38000,
+        "timeLimit": 300,
+        "patterns": [
+          {
+            "id": "flame_breath",
+            "name": "Flame Breath",
+            "trigger": "always",
+            "cooldown": 4,
+            "damage": 2.2,
+            "description": "Exhales a torrent of searing flames in a wide cone"
+          },
+          {
+            "id": "lava_bomb",
+            "name": "Lava Bomb",
+            "trigger": "always",
+            "cooldown": 7,
+            "damage": 2.8,
+            "description": "Launches a molten projectile that explodes on impact"
+          },
+          {
+            "id": "magma_eruption",
+            "name": "Magma Eruption",
+            "trigger": "hp_below_65",
+            "cooldown": 20,
+            "damage": 3.5,
+            "description": "Causes the ground to erupt with pillars of magma"
+          },
+          {
+            "id": "inferno_wing",
+            "name": "Inferno Wing",
+            "trigger": "hp_below_35",
+            "cooldown": 16,
+            "damage": 3.0,
+            "description": "Beats wings to send a shockwave of fire across the arena"
+          },
+          {
+            "id": "dragon_inferno",
+            "name": "Dragon Inferno",
+            "trigger": "hp_below_15",
+            "cooldown": 28,
+            "damage": 5.0,
+            "description": "Summons a full-body inferno engulfing the entire battlefield"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 18, "max": 38 }
+      }
+    },
+    {
+      "id": "chapter_5",
+      "name": "Frozen Lake",
+      "nameKr": "빙결의 호수",
+      "requiredLevel": 85,
+      "monsters": [
+        {
+          "id": "ice_wolf",
+          "name": "Ice Wolf",
+          "nameKr": "얼음 늑대",
+          "hp": 10000,
+          "atk": 1050,
+          "def": 480,
+          "exp": 2600,
+          "gold": 1000,
+          "respawnTime": 4
+        },
+        {
+          "id": "frost_sprite",
+          "name": "Frost Sprite",
+          "nameKr": "서리 요정",
+          "hp": 7500,
+          "atk": 1200,
+          "def": 350,
+          "exp": 2400,
+          "gold": 920,
+          "respawnTime": 3
+        },
+        {
+          "id": "glacier_crab",
+          "name": "Glacier Crab",
+          "nameKr": "빙하 게",
+          "hp": 14000,
+          "atk": 980,
+          "def": 650,
+          "exp": 3000,
+          "gold": 1150,
+          "respawnTime": 6
+        },
+        {
+          "id": "blizzard_hawk",
+          "name": "Blizzard Hawk",
+          "nameKr": "눈보라 매",
+          "hp": 8500,
+          "atk": 1350,
+          "def": 380,
+          "exp": 2700,
+          "gold": 1050,
+          "respawnTime": 3
+        },
+        {
+          "id": "ice_golem",
+          "name": "Ice Golem",
+          "nameKr": "얼음 골렘",
+          "hp": 16000,
+          "atk": 1100,
+          "def": 720,
+          "exp": 3500,
+          "gold": 1350,
+          "respawnTime": 8
+        }
+      ],
+      "boss": {
+        "id": "frost_wyrm",
+        "name": "Frost Wyrm",
+        "nameKr": "서리 와이번",
+        "hp": 1200000,
+        "atk": 7500,
+        "def": 2600,
+        "exp": 380000,
+        "gold": 95000,
+        "timeLimit": 330,
+        "patterns": [
+          {
+            "id": "ice_breath",
+            "name": "Ice Breath",
+            "trigger": "always",
+            "cooldown": 4,
+            "damage": 2.4,
+            "description": "Unleashes a freezing blizzard that slows all enemies"
+          },
+          {
+            "id": "blizzard_call",
+            "name": "Blizzard Call",
+            "trigger": "always",
+            "cooldown": 9,
+            "damage": 2.0,
+            "description": "Calls down a storm of ice shards over a wide area"
+          },
+          {
+            "id": "frozen_ground",
+            "name": "Frozen Ground",
+            "trigger": "hp_below_70",
+            "cooldown": 18,
+            "damage": 1.5,
+            "description": "Flash-freezes the arena floor, creating damaging ice patches"
+          },
+          {
+            "id": "cryo_lance",
+            "name": "Cryo Lance",
+            "trigger": "hp_below_40",
+            "cooldown": 14,
+            "damage": 4.0,
+            "description": "Fires a piercing spear of ice through all targets in a line"
+          },
+          {
+            "id": "absolute_zero",
+            "name": "Absolute Zero",
+            "trigger": "hp_below_15",
+            "cooldown": 35,
+            "damage": 5.5,
+            "description": "Drops temperature to absolute zero, dealing massive area damage and freezing survivors"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 38, "max": 75 }
+      }
+    },
+    {
+      "id": "chapter_6",
+      "name": "Ancient Temple",
+      "nameKr": "고대 사원",
+      "requiredLevel": 105,
+      "monsters": [
+        {
+          "id": "stone_sentinel",
+          "name": "Stone Sentinel",
+          "nameKr": "석상 파수꾼",
+          "hp": 28000,
+          "atk": 2300,
+          "def": 1050,
+          "exp": 6500,
+          "gold": 2500,
+          "respawnTime": 6
+        },
+        {
+          "id": "ancient_archer",
+          "name": "Ancient Archer",
+          "nameKr": "고대 궁수",
+          "hp": 20000,
+          "atk": 2800,
+          "def": 780,
+          "exp": 6000,
+          "gold": 2300,
+          "respawnTime": 4
+        },
+        {
+          "id": "rune_guardian",
+          "name": "Rune Guardian",
+          "nameKr": "룬 수호자",
+          "hp": 35000,
+          "atk": 2100,
+          "def": 1400,
+          "exp": 7500,
+          "gold": 2900,
+          "respawnTime": 7
+        },
+        {
+          "id": "cursed_idol",
+          "name": "Cursed Idol",
+          "nameKr": "저주받은 신상",
+          "hp": 22000,
+          "atk": 3100,
+          "def": 900,
+          "exp": 7000,
+          "gold": 2700,
+          "respawnTime": 5
+        },
+        {
+          "id": "temple_spirit",
+          "name": "Temple Spirit",
+          "nameKr": "사원의 정령",
+          "hp": 18000,
+          "atk": 3400,
+          "def": 650,
+          "exp": 6800,
+          "gold": 2600,
+          "respawnTime": 4
+        }
+      ],
+      "boss": {
+        "id": "ancient_guardian",
+        "name": "Ancient Guardian",
+        "nameKr": "고대 수호신",
+        "hp": 3000000,
+        "atk": 17500,
+        "def": 6000,
+        "exp": 950000,
+        "gold": 240000,
+        "timeLimit": 360,
+        "patterns": [
+          {
+            "id": "rune_strike",
+            "name": "Rune Strike",
+            "trigger": "always",
+            "cooldown": 4,
+            "damage": 2.5,
+            "description": "Channels ancient rune energy into a powerful melee strike"
+          },
+          {
+            "id": "stone_barrage",
+            "name": "Stone Barrage",
+            "trigger": "always",
+            "cooldown": 8,
+            "damage": 2.2,
+            "description": "Fires a volley of enchanted stone projectiles"
+          },
+          {
+            "id": "ancient_curse",
+            "name": "Ancient Curse",
+            "trigger": "hp_below_75",
+            "cooldown": 22,
+            "damage": 1.8,
+            "description": "Places an ancient curse that reduces healing received by 50%"
+          },
+          {
+            "id": "divine_shield",
+            "name": "Divine Shield",
+            "trigger": "hp_below_50",
+            "cooldown": 30,
+            "damage": 0,
+            "description": "Erects an impenetrable barrier for 5 seconds while regenerating HP"
+          },
+          {
+            "id": "temple_collapse",
+            "name": "Temple Collapse",
+            "trigger": "hp_below_20",
+            "cooldown": 32,
+            "damage": 5.0,
+            "description": "Causes the temple ceiling to collapse, raining massive debris on all targets"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 75, "max": 140 }
+      }
+    },
+    {
+      "id": "chapter_7",
+      "name": "Demon Castle Outskirts",
+      "nameKr": "마왕성 외곽",
+      "requiredLevel": 125,
+      "monsters": [
+        {
+          "id": "demon_grunt",
+          "name": "Demon Grunt",
+          "nameKr": "악마 병사",
+          "hp": 70000,
+          "atk": 5200,
+          "def": 2300,
+          "exp": 16000,
+          "gold": 6200,
+          "respawnTime": 5
+        },
+        {
+          "id": "dark_knight",
+          "name": "Dark Knight",
+          "nameKr": "암흑 기사",
+          "hp": 90000,
+          "atk": 6000,
+          "def": 3100,
+          "exp": 19000,
+          "gold": 7400,
+          "respawnTime": 6
+        },
+        {
+          "id": "shadow_assassin",
+          "name": "Shadow Assassin",
+          "nameKr": "그림자 암살자",
+          "hp": 55000,
+          "atk": 7500,
+          "def": 1800,
+          "exp": 17500,
+          "gold": 6800,
+          "respawnTime": 4
+        },
+        {
+          "id": "hellhound",
+          "name": "Hellhound",
+          "nameKr": "지옥의 사냥개",
+          "hp": 62000,
+          "atk": 6800,
+          "def": 2000,
+          "exp": 16500,
+          "gold": 6400,
+          "respawnTime": 4
+        },
+        {
+          "id": "demon_mage",
+          "name": "Demon Mage",
+          "nameKr": "악마 마법사",
+          "hp": 48000,
+          "atk": 8500,
+          "def": 1500,
+          "exp": 18000,
+          "gold": 7000,
+          "respawnTime": 4
+        }
+      ],
+      "boss": {
+        "id": "demon_gate_warden",
+        "name": "Demon Gate Warden",
+        "nameKr": "마왕성 문지기",
+        "hp": 7500000,
+        "atk": 42000,
+        "def": 14000,
+        "exp": 2400000,
+        "gold": 600000,
+        "timeLimit": 360,
+        "patterns": [
+          {
+            "id": "hellfire_slash",
+            "name": "Hellfire Slash",
+            "trigger": "always",
+            "cooldown": 4,
+            "damage": 2.8,
+            "description": "Unleashes a sweeping blade strike wreathed in hellfire"
+          },
+          {
+            "id": "dark_chain",
+            "name": "Dark Chain",
+            "trigger": "always",
+            "cooldown": 9,
+            "damage": 2.0,
+            "description": "Launches chains of darkness that bind and deal damage"
+          },
+          {
+            "id": "summon_demons",
+            "name": "Summon Demons",
+            "trigger": "hp_below_70",
+            "cooldown": 25,
+            "damage": 0.8,
+            "description": "Tears open a rift to summon 3 demon grunts"
+          },
+          {
+            "id": "dark_barrier",
+            "name": "Dark Barrier",
+            "trigger": "hp_below_45",
+            "cooldown": 28,
+            "damage": 0,
+            "description": "Erects a dark barrier absorbing the next 3 hits and reflecting 50% damage"
+          },
+          {
+            "id": "gate_of_hell",
+            "name": "Gate of Hell",
+            "trigger": "hp_below_20",
+            "cooldown": 35,
+            "damage": 5.5,
+            "description": "Opens a massive portal unleashing a wave of hellfire across the battlefield"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 140, "max": 260 }
+      }
+    },
+    {
+      "id": "chapter_8",
+      "name": "Demon Castle Interior",
+      "nameKr": "마왕성 내부",
+      "requiredLevel": 145,
+      "monsters": [
+        {
+          "id": "elite_demon_guard",
+          "name": "Elite Demon Guard",
+          "nameKr": "정예 악마 경비",
+          "hp": 180000,
+          "atk": 12000,
+          "def": 5200,
+          "exp": 40000,
+          "gold": 15500,
+          "respawnTime": 6
+        },
+        {
+          "id": "demon_sorcerer",
+          "name": "Demon Sorcerer",
+          "nameKr": "악마 마술사",
+          "hp": 130000,
+          "atk": 16500,
+          "def": 3800,
+          "exp": 38000,
+          "gold": 14800,
+          "respawnTime": 5
+        },
+        {
+          "id": "blood_knight",
+          "name": "Blood Knight",
+          "nameKr": "피의 기사",
+          "hp": 220000,
+          "atk": 13500,
+          "def": 7000,
+          "exp": 46000,
+          "gold": 17800,
+          "respawnTime": 7
+        },
+        {
+          "id": "shadow_fiend",
+          "name": "Shadow Fiend",
+          "nameKr": "그림자 마귀",
+          "hp": 155000,
+          "atk": 18000,
+          "def": 4200,
+          "exp": 43000,
+          "gold": 16500,
+          "respawnTime": 5
+        },
+        {
+          "id": "corrupted_titan",
+          "name": "Corrupted Titan",
+          "nameKr": "타락한 거인",
+          "hp": 280000,
+          "atk": 14500,
+          "def": 8500,
+          "exp": 55000,
+          "gold": 21000,
+          "respawnTime": 9
+        }
+      ],
+      "boss": {
+        "id": "demon_lord",
+        "name": "Demon Lord",
+        "nameKr": "마왕",
+        "hp": 20000000,
+        "atk": 100000,
+        "def": 34000,
+        "exp": 6500000,
+        "gold": 1600000,
+        "timeLimit": 390,
+        "patterns": [
+          {
+            "id": "dark_smash",
+            "name": "Dark Smash",
+            "trigger": "always",
+            "cooldown": 3,
+            "damage": 3.0,
+            "description": "Channels demonic power into a devastating ground smash"
+          },
+          {
+            "id": "shadow_volley",
+            "name": "Shadow Volley",
+            "trigger": "always",
+            "cooldown": 7,
+            "damage": 2.5,
+            "description": "Fires a barrage of shadow bolts in all directions"
+          },
+          {
+            "id": "demon_aura",
+            "name": "Demon Aura",
+            "trigger": "hp_below_75",
+            "cooldown": 22,
+            "damage": 1.5,
+            "description": "Emanates a pulsing aura of dark energy that damages nearby targets each second"
+          },
+          {
+            "id": "blood_sacrifice",
+            "name": "Blood Sacrifice",
+            "trigger": "hp_below_50",
+            "cooldown": 30,
+            "damage": 4.0,
+            "description": "Sacrifices nearby minions to restore HP and deal massive area damage"
+          },
+          {
+            "id": "true_demon_form",
+            "name": "True Demon Form",
+            "trigger": "hp_below_25",
+            "cooldown": 40,
+            "damage": 6.0,
+            "description": "Transforms into true demonic form, massively boosting all stats and unleashing apocalyptic damage"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 260, "max": 480 }
+      }
+    },
+    {
+      "id": "chapter_9",
+      "name": "Temple of Time",
+      "nameKr": "시간의 신전",
+      "requiredLevel": 170,
+      "monsters": [
+        {
+          "id": "time_golem",
+          "name": "Time Golem",
+          "nameKr": "시간 골렘",
+          "hp": 550000,
+          "atk": 32000,
+          "def": 13500,
+          "exp": 110000,
+          "gold": 42000,
+          "respawnTime": 7
+        },
+        {
+          "id": "chrono_knight",
+          "name": "Chrono Knight",
+          "nameKr": "시간 기사",
+          "hp": 420000,
+          "atk": 40000,
+          "def": 10000,
+          "exp": 105000,
+          "gold": 40000,
+          "respawnTime": 5
+        },
+        {
+          "id": "temporal_wraith",
+          "name": "Temporal Wraith",
+          "nameKr": "시간의 망령",
+          "hp": 360000,
+          "atk": 50000,
+          "def": 8000,
+          "exp": 100000,
+          "gold": 38000,
+          "respawnTime": 4
+        },
+        {
+          "id": "paradox_beast",
+          "name": "Paradox Beast",
+          "nameKr": "역설의 짐승",
+          "hp": 680000,
+          "atk": 36000,
+          "def": 16000,
+          "exp": 125000,
+          "gold": 48000,
+          "respawnTime": 8
+        },
+        {
+          "id": "time_warden",
+          "name": "Time Warden",
+          "nameKr": "시간의 감시자",
+          "hp": 500000,
+          "atk": 45000,
+          "def": 12000,
+          "exp": 115000,
+          "gold": 44000,
+          "respawnTime": 6
+        }
+      ],
+      "boss": {
+        "id": "chronos_arbiter",
+        "name": "Chronos Arbiter",
+        "nameKr": "크로노스 심판관",
+        "hp": 55000000,
+        "atk": 260000,
+        "def": 88000,
+        "exp": 18000000,
+        "gold": 4500000,
+        "timeLimit": 420,
+        "patterns": [
+          {
+            "id": "time_slash",
+            "name": "Time Slash",
+            "trigger": "always",
+            "cooldown": 3,
+            "damage": 3.2,
+            "description": "Slices through time and space with a blade of pure temporal energy"
+          },
+          {
+            "id": "rewind",
+            "name": "Rewind",
+            "trigger": "always",
+            "cooldown": 12,
+            "damage": 0,
+            "description": "Rewinds its own time to restore 10% of max HP"
+          },
+          {
+            "id": "time_stop",
+            "name": "Time Stop",
+            "trigger": "hp_below_80",
+            "cooldown": 25,
+            "damage": 2.8,
+            "description": "Stops time for all targets, then deals damage while they are frozen"
+          },
+          {
+            "id": "temporal_rift",
+            "name": "Temporal Rift",
+            "trigger": "hp_below_50",
+            "cooldown": 20,
+            "damage": 4.5,
+            "description": "Opens fractures in time that deal repeating damage over 8 seconds"
+          },
+          {
+            "id": "age_of_ruin",
+            "name": "Age of Ruin",
+            "trigger": "hp_below_20",
+            "cooldown": 38,
+            "damage": 7.0,
+            "description": "Accelerates time to its end, dealing catastrophic damage across the entire arena"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 480, "max": 880 }
+      }
+    },
+    {
+      "id": "chapter_10",
+      "name": "Dimensional Rift",
+      "nameKr": "차원의 균열",
+      "requiredLevel": 195,
+      "monsters": [
+        {
+          "id": "void_stalker",
+          "name": "Void Stalker",
+          "nameKr": "공허 추적자",
+          "hp": 1400000,
+          "atk": 85000,
+          "def": 35000,
+          "exp": 290000,
+          "gold": 110000,
+          "respawnTime": 6
+        },
+        {
+          "id": "rift_horror",
+          "name": "Rift Horror",
+          "nameKr": "균열 공포체",
+          "hp": 1800000,
+          "atk": 95000,
+          "def": 42000,
+          "exp": 330000,
+          "gold": 125000,
+          "respawnTime": 8
+        },
+        {
+          "id": "dimensional_wraith",
+          "name": "Dimensional Wraith",
+          "nameKr": "차원의 망령",
+          "hp": 1100000,
+          "atk": 115000,
+          "def": 28000,
+          "exp": 310000,
+          "gold": 118000,
+          "respawnTime": 5
+        },
+        {
+          "id": "chaos_titan",
+          "name": "Chaos Titan",
+          "nameKr": "혼돈의 거인",
+          "hp": 2400000,
+          "atk": 100000,
+          "def": 55000,
+          "exp": 380000,
+          "gold": 145000,
+          "respawnTime": 10
+        },
+        {
+          "id": "void_sovereign",
+          "name": "Void Sovereign",
+          "nameKr": "공허의 군주",
+          "hp": 1900000,
+          "atk": 110000,
+          "def": 48000,
+          "exp": 360000,
+          "gold": 138000,
+          "respawnTime": 8
+        }
+      ],
+      "boss": {
+        "id": "dimensional_overlord",
+        "name": "Dimensional Overlord",
+        "nameKr": "차원의 지배자",
+        "hp": 140000000,
+        "atk": 680000,
+        "def": 230000,
+        "exp": 48000000,
+        "gold": 12000000,
+        "timeLimit": 480,
+        "patterns": [
+          {
+            "id": "void_strike",
+            "name": "Void Strike",
+            "trigger": "always",
+            "cooldown": 3,
+            "damage": 3.5,
+            "description": "Channels the power of the void into an annihilating melee strike"
+          },
+          {
+            "id": "dimensional_blast",
+            "name": "Dimensional Blast",
+            "trigger": "always",
+            "cooldown": 7,
+            "damage": 3.0,
+            "description": "Fires a beam of concentrated dimensional energy through all enemies"
+          },
+          {
+            "id": "rift_summon",
+            "name": "Rift Summon",
+            "trigger": "hp_below_80",
+            "cooldown": 22,
+            "damage": 1.0,
+            "description": "Tears open dimensional rifts to summon void stalkers from another plane"
+          },
+          {
+            "id": "reality_shatter",
+            "name": "Reality Shatter",
+            "trigger": "hp_below_55",
+            "cooldown": 25,
+            "damage": 5.0,
+            "description": "Fractures reality itself, dealing massive damage and reducing all resistances by 30%"
+          },
+          {
+            "id": "void_collapse",
+            "name": "Void Collapse",
+            "trigger": "hp_below_30",
+            "cooldown": 30,
+            "damage": 6.5,
+            "description": "Collapses the local dimension, pulling all targets to center and dealing catastrophic burst damage"
+          },
+          {
+            "id": "end_of_all",
+            "name": "End of All",
+            "trigger": "hp_below_10",
+            "cooldown": 45,
+            "damage": 9.0,
+            "description": "The final desperate attack — obliterates existence itself in a last stand of absolute destruction"
+          }
+        ]
+      },
+      "drops": {
+        "monsterPointsPerKill": { "min": 880, "max": 1600 }
+      }
     }
   ]
 }

@@ -8,9 +8,10 @@
  */
 import { query, hasComponent } from 'bitecs'
 import { Stats } from '@components/combat'
-import { PlayerTag, Level, StatAllocation } from '@components/character'
+import { PlayerTag, Job, Level, StatAllocation, AdvancementQuest } from '@components/character'
 import { hudSignals } from '@ui/hud/HudPanel'
 import { availablePointsSignal } from '@ui/signals/statSignals'
+import { advancementSignals } from '@ui/signals/advancementSignals'
 import { Input } from '@systems/logic/InputSystem'
 
 /**
@@ -39,6 +40,18 @@ export function UIBridgeSystem(world) {
     // Sync available stat points for HUD badge
     if (hasComponent(world, eid, StatAllocation)) {
       availablePointsSignal.value = StatAllocation.availablePoints[eid]
+    }
+
+    // Sync advancement data
+    if (hasComponent(world, eid, Job)) {
+      advancementSignals.currentTier.value = Job.advancement[eid]
+    }
+    if (hasComponent(world, eid, AdvancementQuest)) {
+      advancementSignals.questActive.value = AdvancementQuest.questActive[eid] === 1
+      advancementSignals.questTier.value = AdvancementQuest.questTier[eid]
+      advancementSignals.killCount.value = AdvancementQuest.killCount[eid]
+      advancementSignals.killTarget.value = AdvancementQuest.killTarget[eid]
+      advancementSignals.questComplete.value = AdvancementQuest.questComplete[eid] === 1
     }
   }
 

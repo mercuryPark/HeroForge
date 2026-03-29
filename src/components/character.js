@@ -38,3 +38,19 @@ export const StatAllocation = {
   luk: new Uint16Array(MAX),
   availablePoints: new Uint16Array(MAX),
 }
+
+/**
+ * Advancement quest tracking.
+ *   questActive:    0=no active quest, 1=quest in progress
+ *   questTier:      which advancement tier this quest is for (1-4)
+ *   killCount:      current kills toward the quest target
+ *   killTarget:     total kills needed to complete
+ *   questComplete:  0=incomplete, 1=ready to advance
+ */
+export const AdvancementQuest = {
+  questActive: new Uint8Array(MAX),
+  questTier: new Uint8Array(MAX),
+  killCount: new Uint16Array(MAX),
+  killTarget: new Uint16Array(MAX),
+  questComplete: new Uint8Array(MAX),
+}

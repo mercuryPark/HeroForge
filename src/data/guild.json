@@ -1,0 +1,24 @@
+{
+  "guild": {
+    "maxMembers": 30,
+    "createCost": 10000,
+    "skills": [
+      { "id": "guild_atk", "nameKr": "길드 공격력", "maxLevel": 10, "bonusPct": 2 },
+      { "id": "guild_def", "nameKr": "길드 방어력", "maxLevel": 10, "bonusPct": 2 },
+      { "id": "guild_exp", "nameKr": "길드 경험치", "maxLevel": 10, "bonusPct": 3 },
+      { "id": "guild_gold","nameKr": "길드 골드",   "maxLevel": 10, "bonusPct": 3 }
+    ],
+    "skillUpgradeCost": { "base": 1000, "perLevel": 500 },
+    "shop": [
+      { "id": "scroll_70", "cost": 50, "limit": 3 },
+      { "id": "cube_normal", "cost": 80, "limit": 2 },
+      { "id": "armor_stones", "cost": 30, "amount": 10, "limit": 5 }
+    ],
+    "guildBoss": {
+      "nameKr": "길드 보스",
+      "hp": 10000000,
+      "dailyAttempts": 1,
+      "rewards": { "guildCoins": 50, "gold": 5000 }
+    }
+  }
+}

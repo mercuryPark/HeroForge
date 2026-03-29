@@ -1,0 +1,20 @@
+{
+  "summonCost": 100,
+  "upgradeCostPerLevel": 50,
+  "maxSummonLevel": 5,
+  "dropTable": [
+    { "level": 1, "normal": 60, "rare": 30, "epic": 8,  "unique": 2,  "legendary": 0  },
+    { "level": 2, "normal": 45, "rare": 35, "epic": 15, "unique": 4,  "legendary": 1  },
+    { "level": 3, "normal": 30, "rare": 35, "epic": 22, "unique": 10, "legendary": 3  },
+    { "level": 4, "normal": 15, "rare": 30, "epic": 30, "unique": 18, "legendary": 7  },
+    { "level": 5, "normal": 5,  "rare": 20, "epic": 35, "unique": 28, "legendary": 12 }
+  ],
+  "eliteMonster": {
+    "name": "Elite Guardian",
+    "nameKr": "엘리트 가디언",
+    "hpMultiplier": 3.0,
+    "atkMultiplier": 1.5,
+    "defMultiplier": 2.0,
+    "expMultiplier": 2.0
+  }
+}

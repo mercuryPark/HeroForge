@@ -6,12 +6,22 @@ import { HudPanel } from './hud/HudPanel'
 import { LootCounter } from './hud/LootCounter'
 import { SettingsPanel, settingsSignals } from './panels/SettingsPanel'
 import { StatPanel, statPanelOpen } from './panels/StatPanel'
+import { AdvancementPanel, AdvancementNotification, advancementPanelOpen } from './panels/AdvancementPanel'
+import { advancementSignals } from './signals/advancementSignals'
+import { EquipmentPanel, equipPanelOpen } from './panels/EquipmentPanel'
+import { CurrencyBar } from './hud/CurrencyBar'
+import { EnhancementPanel, enhancePanelOpen } from './panels/EnhancementPanel'
+import { WarriorPanel, warriorPanelOpen } from './panels/WarriorPanel'
+import { NotificationContainer } from './shared/NotificationToast'
+import { generateEliteDrop, recalcEquipStats, ELITE_SUMMON_COST } from '@systems/meta/EquipmentSystem'
+import { assignInitialWeapon } from '@systems/meta/WeaponSystem'
+import { initSkills } from '@systems/meta/SkillSystem'
+import { addToBag } from '@core/Inventory'
 import { LoadingScreen } from './screens/LoadingScreen'
 import { TitleScreen } from './screens/TitleScreen'
 import { JobSelectScreen } from './screens/JobSelectScreen'
 import { TutorialOverlay, startTutorial, isTutorialDone } from './screens/TutorialOverlay'
-import { Job, StatAllocation } from '@components/character'
-import { Stats } from '@components/combat'
+import { Job, StatAllocation, Level } from '@components/character'
 
 /** 'loading' | 'title' | 'jobSelect' | 'game' */
 const screenSignal = signal('loading')
@@ -74,12 +84,57 @@ export function App({ gameLoop, saveManager, world, playerState, growthSystem })
       try { addComponent(world, eid, Job) } catch (_) { /* already added */ }
       try { addComponent(world, eid, StatAllocation) } catch (_) { /* already added */ }
       growthSystem.applyJob(world, eid, jobId)
+      assignInitialWeapon(eid, jobId)
+      initSkills(eid, jobId)
     }
     gameLoop?.start()
     screenSignal.value = 'game'
     // Start tutorial for new players
     if (!isTutorialDone()) {
       setTimeout(() => startTutorial(), 500)
+    }
+
+    // Wire up advancement notifications
+    if (world?.eventBus) {
+      world.eventBus.on('advancement:questStart', (e) => {
+        advancementSignals.showNotification.value = true
+        advancementSignals.notificationMessage.value = `${e.tier}차 전직 시련 시작! ${e.description}`
+        setTimeout(() => { advancementSignals.showNotification.value = false }, 3000)
+      })
+      world.eventBus.on('advancement:questComplete', (e) => {
+        advancementSignals.showNotification.value = true
+        advancementSignals.notificationMessage.value = `${e.tier}차 전직 시련 완료! 전직 패널을 확인하세요.`
+        setTimeout(() => { advancementSignals.showNotification.value = false }, 3000)
+      })
+      world.eventBus.on('advancement:complete', (e) => {
+        advancementSignals.showNotification.value = true
+        advancementSignals.notificationMessage.value = `${e.tier}차 전직 완료!`
+        setTimeout(() => { advancementSignals.showNotification.value = false }, 3000)
+      })
+    }
+  }
+
+  const handleAdvance = () => {
+    if (world && growthSystem) {
+      growthSystem.applyAdvancement(world, world.playerEid)
+    }
+  }
+
+  const handleEquipChange = () => {
+    if (world) {
+      recalcEquipStats(world.playerEid)
+    }
+  }
+
+  const handleEliteSummon = () => {
+    if (!world || !playerState) return
+    if ((playerState.monsterPoints?.value ?? 0) < ELITE_SUMMON_COST) return
+    playerState.monsterPoints.value -= ELITE_SUMMON_COST
+    const playerLevel = Level.current[world.playerEid] || 1
+    const item = generateEliteDrop(playerLevel)
+    if (item) {
+      addToBag(item)
+      world.eventBus?.emit('elite:drop', { item })
     }
   }
 
@@ -130,6 +185,7 @@ export function App({ gameLoop, saveManager, world, playerState, growthSystem })
   return (
     <div class={styles.uiOverlay}>
       <HudPanel />
+      <CurrencyBar />
       <LootCounter />
       <button
         class={styles.statBtn}
@@ -143,8 +199,39 @@ export function App({ gameLoop, saveManager, world, playerState, growthSystem })
       >
         설정
       </button>
+      <button
+        class={styles.advBtn}
+        onClick={() => { advancementPanelOpen.value = !advancementPanelOpen.value }}
+      >
+        전직
+        {advancementSignals.questComplete.value && <span class={styles.advBadge}>!</span>}
+      </button>
+      <button
+        class={styles.equipBtn}
+        onClick={() => { equipPanelOpen.value = !equipPanelOpen.value }}
+      >
+        장비
+      </button>
+      <button
+        class={styles.enhanceBtn}
+        onClick={() => { enhancePanelOpen.value = !enhancePanelOpen.value }}
+      >
+        강화
+      </button>
+      <button
+        class={styles.warriorBtn}
+        onClick={() => { warriorPanelOpen.value = !warriorPanelOpen.value }}
+      >
+        용사
+      </button>
       <StatPanel world={world} />
+      <AdvancementPanel onAdvance={handleAdvance} />
+      <EquipmentPanel world={world} onEquipChange={handleEquipChange} onEliteSummon={handleEliteSummon} />
+      <EnhancementPanel />
+      <WarriorPanel playerEid={world?.playerEid} />
       <SettingsPanel saveManager={saveManager} />
+      <AdvancementNotification />
+      <NotificationContainer />
       <TutorialOverlay />
     </div>
   )

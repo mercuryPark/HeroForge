@@ -1,0 +1,78 @@
+{
+  "dungeons": [
+    {
+      "id": "weapon_dungeon",
+      "nameKr": "무기 던전",
+      "type": "wave_survival",
+      "timeLimitSec": 60,
+      "dailyEntries": 3,
+      "reward": "weapon_materials",
+      "tiers": 10,
+      "baseReward": 20,
+      "rewardPerTier": 15,
+      "baseMonsterHp": 500,
+      "hpPerTier": 1.8,
+      "wavesPerTier": 3
+    },
+    {
+      "id": "exp_dungeon",
+      "nameKr": "경험치 던전",
+      "type": "infinite_spawn",
+      "timeLimitSec": 90,
+      "dailyEntries": 3,
+      "reward": "exp",
+      "tiers": 10,
+      "baseReward": 500,
+      "rewardPerTier": 400,
+      "baseMonsterHp": 300,
+      "hpPerTier": 1.6,
+      "wavesPerTier": 0
+    },
+    {
+      "id": "equip_dungeon",
+      "nameKr": "장비 던전",
+      "type": "boss_fight",
+      "timeLimitSec": 120,
+      "dailyEntries": 3,
+      "reward": "monster_points",
+      "tiers": 10,
+      "baseReward": 50,
+      "rewardPerTier": 40,
+      "baseMonsterHp": 5000,
+      "hpPerTier": 2.5,
+      "wavesPerTier": 1
+    },
+    {
+      "id": "warrior_dungeon",
+      "nameKr": "용사의 수련",
+      "type": "escalating_waves",
+      "timeLimitSec": 90,
+      "dailyEntries": 3,
+      "reward": "warrior_tokens",
+      "tiers": 10,
+      "baseReward": 10,
+      "rewardPerTier": 8,
+      "baseMonsterHp": 400,
+      "hpPerTier": 1.7,
+      "wavesPerTier": 5
+    },
+    {
+      "id": "enhance_dungeon",
+      "nameKr": "강화 던전",
+      "type": "mini_stage",
+      "timeLimitSec": 60,
+      "dailyEntries": 2,
+      "reward": "mixed",
+      "tiers": 10,
+      "baseReward": 5,
+      "rewardPerTier": 3,
+      "baseMonsterHp": 600,
+      "hpPerTier": 1.8,
+      "wavesPerTier": 2,
+      "mixedRewards": ["scroll_70", "scroll_30", "cube_normal", "starforce_scroll"]
+    }
+  ],
+  "extraEntryCost": [2000, 3000, 5000],
+  "sweepEnabled": true,
+  "resetHour": 0
+}

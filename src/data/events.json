@@ -1,0 +1,32 @@
+{
+  "events": [
+    {
+      "id": "launch_event",
+      "nameKr": "출시 기념 이벤트",
+      "type": "login_bonus",
+      "durationDays": 14,
+      "rewards": [
+        { "day": 1, "reward": { "gems": 200 } },
+        { "day": 3, "reward": { "cube_normal": 3 } },
+        { "day": 5, "reward": { "gems": 500 } },
+        { "day": 7, "reward": { "cube_miracle": 1 } },
+        { "day": 10, "reward": { "starforce_scroll": 5 } },
+        { "day": 14, "reward": { "gems": 2000, "cube_miracle": 3 } }
+      ]
+    },
+    {
+      "id": "double_exp",
+      "nameKr": "경험치 2배 이벤트",
+      "type": "buff",
+      "durationDays": 3,
+      "buff": { "exp_multiplier": 2.0 }
+    },
+    {
+      "id": "gacha_rate_up",
+      "nameKr": "확률 업 이벤트",
+      "type": "gacha_boost",
+      "durationDays": 7,
+      "boost": { "ssr_rate_bonus": 2.0 }
+    }
+  ]
+}

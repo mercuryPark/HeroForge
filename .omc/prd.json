@@ -1,0 +1,45 @@
+{
+  "title": "HeroForge Autodev Hook Infrastructure",
+  "description": "Create a Claude Code hook system that automates the game development loop: implement → screenshot → review → next phase, until all phases complete.",
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "autodev-loop.sh status checker script",
+      "priority": 1,
+      "passes": true,
+      "acceptanceCriteria": [
+        "tools/autodev-loop.sh exists and is executable",
+        "With .omc/autodev-active present, script exits 0 and outputs NEXT_PHASE/NEXT_SUBPHASE/NEXT_TASK",
+        "Without .omc/autodev-active, script exits 1 and outputs AUTODEV_INACTIVE",
+        "Script correctly identifies Phase 2 (highest partial phase) as the current focus, not Phase 0",
+        "Script finds the correct sub-phase header for the next unchecked item"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "/autodev slash command",
+      "priority": 2,
+      "passes": true,
+      "acceptanceCriteria": [
+        ".claude/commands/autodev.md exists",
+        "Command describes the 3-step loop: implement → verify (screenshot + review) → next",
+        "Command instructs to create .omc/autodev-active state file on start",
+        "Command instructs to delete .omc/autodev-active when all phases complete",
+        "Command references COVERAGE.md and OPENSPEC_EXECUTION_PLAN.md for task discovery"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Hook configuration in settings.json",
+      "priority": 3,
+      "passes": true,
+      "acceptanceCriteria": [
+        ".claude/settings.json contains PostToolUse hook on TaskUpdate matcher",
+        "PostToolUse hook runs autodev-loop.sh and injects continuation context when autodev is active",
+        "PostToolUseFailure hook on Bash provides error recovery guidance when autodev is active",
+        "Existing PreToolUse hook for Edit|Write is preserved",
+        "settings.json is valid JSON"
+      ]
+    }
+  ]
+}

@@ -30,7 +30,11 @@ import { createEffectsSystem } from '@systems/render/EffectsSystem'
 import { createParticleSystem } from '@systems/render/ParticleSystem'
 import { Position, PrevPosition, Velocity } from '@components/transform'
 import { Gravity as GravityComp, Collider } from '@components/physics'
-import { PlayerTag, Level, Job, StatAllocation } from '@components/character'
+import { PlayerTag, Level, Job, StatAllocation, AdvancementQuest } from '@components/character'
+import { WeaponSlot } from '@components/weapon'
+import { WarriorPower, AbilityOption } from '@components/warrior'
+import { SkillSlot, MasteryProgress } from '@components/skill'
+import { SkillCooldownSystem } from '@systems/meta/SkillSystem'
 import { Stats, Combat } from '@components/combat'
 import { AnimState } from '@components/sprite'
 import { loadAtlases } from '@render/AtlasLoader'
@@ -107,6 +111,7 @@ async function boot() {
   gameLoop.addLogicSystem(SpawnSystem)
   gameLoop.addLogicSystem(lootSystem.system)
   gameLoop.addLogicSystem(growthSystem.system)
+  gameLoop.addLogicSystem(SkillCooldownSystem)
 
   // Render pipeline (display refresh rate)
   gameLoop.addRenderSystem(UIBridgeSystem)
@@ -142,9 +147,15 @@ async function boot() {
   // Stats will be initialized by GrowthSystem.applyJob() when job is selected
   addComponent(world, playerEid, Stats)
 
-  // Job and stat allocation — populated on job selection
+  // Job, stat allocation, and advancement quest — populated on job selection
   addComponent(world, playerEid, Job)
   addComponent(world, playerEid, StatAllocation)
+  addComponent(world, playerEid, AdvancementQuest)
+  addComponent(world, playerEid, WeaponSlot)
+  addComponent(world, playerEid, WarriorPower)
+  addComponent(world, playerEid, AbilityOption)
+  addComponent(world, playerEid, SkillSlot)
+  addComponent(world, playerEid, MasteryProgress)
 
   addComponent(world, playerEid, Combat)
   Combat.target[playerEid] = 0

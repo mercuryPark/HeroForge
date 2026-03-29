@@ -1,0 +1,25 @@
+{
+  "advancementLevels": [10, 30, 60, 100],
+  "quests": {
+    "1": {
+      "description": "전직 시련: 몬스터 20마리 처치",
+      "descriptionKr": "1차 전직 시련",
+      "killTarget": 20
+    },
+    "2": {
+      "description": "전직 시련: 몬스터 50마리 처치",
+      "descriptionKr": "2차 전직 시련",
+      "killTarget": 50
+    },
+    "3": {
+      "description": "전직 시련: 몬스터 100마리 처치",
+      "descriptionKr": "3차 전직 시련",
+      "killTarget": 100
+    },
+    "4": {
+      "description": "전직 시련: 몬스터 200마리 처치",
+      "descriptionKr": "4차 전직 시련",
+      "killTarget": 200
+    }
+  }
+}

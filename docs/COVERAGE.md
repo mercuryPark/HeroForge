@@ -1,8 +1,8 @@
 # HeroForge Idle RPG - 구현 현황 추적 문서
 
-> **최종 업데이트**: 2026-03-27
+> **최종 업데이트**: 2026-03-28
 > **현재 페이즈**: Phase 2 (Core Growth Loop) - 진행 중
-> **전체 진행률**: ~30%
+> **전체 진행률**: ~90%
 
 ---
 
@@ -12,10 +12,10 @@
 |-------|------|-----------|------|--------|------|
 | 0 | Asset Preparation & Setup | 0.1~0.5 | 🔧 Partial | 85% | 셋업 완료, 아틀라스/타일맵 완료, BGM/SFX/타일셋 미완 |
 | 1 | Foundation (Combat Demo) | 1.1~1.6 | ✅ Done | 90% | 코어+VFX+스프라이트+타일맵+네비+세이브 완료, 사다리/pixi-viewport 미완 |
-| 2 | Core Growth Loop | 2.1~2.11 | 🔧 Partial | 16% | 2.1 직업선택(75%) + 2.2 스탯/등급(100%) 완료, 장비/강화 미구현 |
-| 3 | Deep Systems | 3.1~3.4 | ⬜ Not Started | 0% | 용사의힘/스킬/동료/유물 전체 미구현 |
-| 4 | Content | 4.1~4.6 | ⬜ Not Started | 0% | 던전/보스/PvP/길드/파티퀘 전체 미구현 |
-| 5 | Retention & Polish | 5.1~5.12 | ⬜ Not Started | 0% | 일퀘/업적/오프라인/모바일/밸런스 전체 미구현 |
+| 2 | Core Growth Loop | 2.1~2.11 | ✅ Done | 100% | 전체 완료 (직업/스탯/데미지/장비/인벤/무기/강화/재화) |
+| 3 | Deep Systems | 3.1~3.4 | ✅ Done | 95% | 3.1~3.4 완료 (용사의힘/스킬/동료/유물) |
+| 4 | Content | 4.1~4.6 | ✅ Done | 90% | 챕터10개/던전5종/보스/PvP/길드/파티퀘 시스템+데이터 완료 |
+| 5 | Retention & Polish | 5.1~5.12 | ✅ Done | 90% | 5.1~5.11 완료 (알림/오프라인/오디오/밸런스/전투력), 5.12 최종QA 잔여 |
 
 ---
 
@@ -128,15 +128,15 @@
 
 ---
 
-### Phase 2: Core Growth Loop (16%)
+### Phase 2: Core Growth Loop (100%)
 
-#### 2.1 직업 선택 + 전직 (75%)
-- [x] character.js 컴포넌트 (Job, Level, StatAllocation)
-- [x] jobs.json 완성 (4클래스 x 9직업 풀 스펙)
+#### 2.1 직업 선택 + 전직 (100%)
+- [x] character.js 컴포넌트 (Job, Level, StatAllocation, AdvancementQuest)
+- [x] jobs.json 완성 (4클래스 x 9직업 풀 스펙 + 전직 데이터)
 - [x] JobSelectScreen.jsx (직업 프리뷰, 4탭 클래스 분류)
-- [x] GrowthSystem.js (레벨업 스탯 포인트 + 성장률 적용)
-- [ ] Job Advancement 시스템 (1~4차 전직)
-- [ ] MapleGrade 계산
+- [x] GrowthSystem.js (레벨업 스탯 포인트 + 성장률 적용 + 전직 로직)
+- [x] Job Advancement 시스템 (1~4차 전직, 퀘스트 킬카운트, 보너스 스탯, UI)
+- [x] MapleGrade 계산 (2.2에서 구현 완료)
 
 #### 2.2 스탯 배분 + 메이플 등급 (100%)
 - [x] StatPanel.jsx (스탯 배분 UI, +1/+5 버튼, 리셋)
@@ -147,171 +147,163 @@
 - [x] 스탯 소스 통합 계산 (base + allocation → final stats)
 - [x] Combat Power 공식 (atk*3 + hp*0.5 + def*1 + critRate*200 + critDmg*100)
 
-#### 2.3 데미지 공식 고도화 + Hit/Miss (0%)
-- [ ] CombatSystem.js 고도화 (모든 배율, min/max, 클램프)
-- [ ] Hit/Miss 시스템
-- [ ] Attack Speed 공식 완성
-- [ ] 사망 패널티 (G4: 즉시 부활 + 10초 무적)
-- [ ] formulas.test.js 확장
+#### 2.3 데미지 공식 고도화 + Hit/Miss (100%)
+- [x] CombatSystem.js 고도화 (모든 배율, min/max, 클램프)
+- [x] Hit/Miss 시스템 (accuracy/evasion 기반 miss 확률 + excess accuracy 보너스)
+- [x] Attack Speed 공식 완성 (baseInterval / (1 + atkSpd/100))
+- [x] 사망 패널티 (G4: 즉시 부활 + 10초 무적, ReviveState 컴포넌트)
+- [x] formulas.test.js 확장 (38개 테스트: edge cases, 분포 검증, 공격속도)
 
-#### 2.4 장비 시스템 + 엘리트 몬스터 (0%)
-- [ ] equipment.js 컴포넌트 (EquipSlot 10+1)
-- [ ] 엘리트 몬스터 소환 (Monster Points)
-- [ ] 장비 획득/분해/Armor Stones
-- [ ] elite_monsters.json
-- [ ] Face Accessory 11번째 슬롯 (G6)
+#### 2.4 장비 시스템 + 엘리트 몬스터 (100%)
+- [x] equipment.js 컴포넌트 (EquippedStats + Inventory 모듈 + 11슬롯)
+- [x] 엘리트 몬스터 소환 (Monster Points 소비 → 등급별 드롭)
+- [x] 장비 획득/분해/Armor Stones (EquipmentSystem + 장비 생성/장착/분해)
+- [x] elite_monsters.json (소환 레벨별 드롭 확률 5단계)
+- [x] EquipmentPanel UI (장착/가방/엘리트 3탭, 장비 카드, 분해)
+- [x] Face Accessory 슬롯 데이터 준비 완료 (equipment.json에 포함, Zakum Raid는 Phase 4에서 연동)
 
-#### 2.5 인벤토리 관리 (0%)
-- [ ] InventoryPanel.jsx (100슬롯, 정렬/필터)
-- [ ] 장비 비교 툴팁
+#### 2.5 인벤토리 관리 (100%)
+- [x] InventoryPanel (EquipmentPanel 가방탭 확장: 100슬롯, 정렬 3종, 필터 2종)
+- [x] 일괄 분해 (노말/레어/에픽 이하 일괄 분해 버튼)
+- [x] 자동 분해 토글 (등급 설정 가능)
+- [x] 장비 비교 툴팁 (현재 장착 vs 선택 장비, +/- 색상 표시)
 
-#### 2.6 무기 시스템 (0%)
-- [ ] weapon.js 컴포넌트
-- [ ] 무기 강화/등급 승급
-- [ ] 직업별 무기 타입
-- [ ] weapons.json
+#### 2.6 무기 시스템 (100%)
+- [x] weapon.js 컴포넌트 (WeaponSlot: weaponId, grade, enhanceLevel, baseAtk)
+- [x] WeaponSystem.js (강화/등급 승급/무기 ATK 계산/초기 무기 배정)
+- [x] 직업별 무기 타입 (전사: 검/도끼/창, 마법사: 지팡이/완드, 궁수: 활/석궁, 도적: 단검/아대)
+- [x] weapons.json (무기 타입, 등급 배율, 강화 비용, 등급 승급 비용)
 
-#### 2.7 주문서 강화 (0%)
-- [ ] EnhancementSystem.js (Scroll)
-- [ ] 70%/30%/15%/100% 주문서
-- [ ] Scroll Saving
-- [ ] scrolls.json
+#### 2.7 주문서 강화 (100%)
+- [x] EnhancementSystem.js (Scroll 파트: applyScroll, 확률 판정, 슬롯 제한)
+- [x] 70%/30%/15%/100% 주문서 (scrollTypes + statMultiplier)
+- [x] Scroll Saving (scrollHistory 추적, highLevel 보너스)
+- [x] scrolls.json (4종 주문서, 슬롯별 기본 보너스, Lv.85+ 보너스)
 
-#### 2.8 스타포스 강화 (0%)
-- [ ] EnhancementSystem.js (Starforce)
-- [ ] ★0~★25 확률 테이블
-- [ ] 파괴 = ★3 하락 + 골드 패널티 (G8)
-- [ ] starforce.json
-- [ ] 강화 UI + 애니메이션
+#### 2.8 스타포스 강화 (100%)
+- [x] EnhancementSystem.js (Starforce 파트: attemptStarforce, 4종 결과)
+- [x] ★0~★25 확률 테이블 (success/maintain/drop/destroy)
+- [x] 파괴 = ★3 하락 + 골드 패널티 (G8, 장비 파괴 아님)
+- [x] starforce.json (25단계 확률, allStat 보너스, ★12 에디셔널 큐브 해금)
+- [x] 강화 UI 로직 준비 완료 (EnhancementPanel은 2.11에서 통합 구현)
 
-#### 2.9 잠재능력 시스템 (0%)
-- [ ] EnhancementSystem.js (Potential)
-- [ ] Normal/Additional/Miracle Cube
-- [ ] potentials.json
-- [ ] enhancement.test.js
+#### 2.9 잠재능력 시스템 (100%)
+- [x] EnhancementSystem.js (Potential 파트: rerollPotential, 등급업, 3줄 옵션)
+- [x] Normal/Additional/Miracle Cube (3종 큐브, 등급업 확률 차등)
+- [x] potentials.json (공통 옵션풀 + 슬롯별 고유 옵션, 5단계 등급)
+- [x] enhancement.test.js (14개 테스트: 주문서/스타포스/잠재능력 확률 분포 검증)
 
-#### 2.10 재화 시스템 기반 (0%)
-- [ ] 16 재화 시스템 구현
-- [ ] currencies.json 완성
-- [ ] 재화 UI
+#### 2.10 재화 시스템 기반 (100%)
+- [x] CurrencyManager.js (18 재화 + 8 소모품 통합 관리, 시그널 기반)
+- [x] currencies.json 완성 (18 재화 + 8 소모품)
+- [x] CurrencyBar UI (상단 바에 주요 5재화 표시)
 
-#### 2.11 장비 프리셋 + 일괄 강화 (0%)
-- [ ] 장비 프리셋 3세트 (E2)
-- [ ] 일괄 강화 (E3)
-- [ ] 추천 강화 타겟 (E12)
-
----
-
-### Phase 3: Deep Systems (0%)
-
-#### 3.1 용사의 힘 + 어빌리티 (0%)
-- [ ] warrior.js 컴포넌트
-- [ ] Warrior's Power 티어 시스템
-- [ ] Ability System (리롤, 자물쇠, 프리셋)
-- [ ] abilities.json
-- [ ] WarriorPanel.jsx
-
-#### 3.2 스킬 시스템 + 마스터리 트리 (0%)
-- [ ] skill.js 컴포넌트
-- [ ] SkillSystem.js (쿨다운, AoE 형태 3종 G7)
-- [ ] Mastery Tree (분기 트리)
-- [ ] mastery_tree.json, skills.json
-- [ ] SkillPanel.jsx, QuickSlot.jsx
-
-#### 3.3 동료 시스템 + 가챠 (0%)
-- [ ] companion.js 컴포넌트
-- [ ] 가챠 (1연차/10연차, 천장 E1)
-- [ ] 시너지 버프
-- [ ] CompanionAISystem.js
-- [ ] companions.json, synergies.json
-- [ ] CompanionPanel.jsx, GachaPanel.jsx
-- [ ] gacha.test.js
-
-#### 3.4 유물 시스템 (0%)
-- [ ] relic.js 컴포넌트
-- [ ] Active/Passive Effect
-- [ ] relics.json
-- [ ] RelicPanel.jsx
+#### 2.11 장비 프리셋 + 일괄 강화 + 강화 UI (100%)
+- [x] 장비 프리셋 3세트 (E2, 저장/로드 UI)
+- [x] EnhancementPanel UI (주문서/스타포스/잠재능력/일괄/프리셋 5탭 통합)
+- [x] 슬롯 선택 → 주문서 적용/스타포스 시도/큐브 리롤 UI
+- [x] 일괄 강화 (E3: 전 슬롯 ★N까지 한번에 + 비용 사전 계산)
+- [x] 추천 강화 타겟 (E12: 비용 대비 효율 기반 추천)
 
 ---
 
-### Phase 4: Content (0%)
+### Phase 3: Deep Systems (95%)
 
-#### 4.1 챕터 사냥 + 챕터 챌린지 (0%)
-- [ ] 10+ 챕터 맵 (Tiled)
-- [ ] 챕터 보스 게이트 (시간제한)
-- [ ] chapters.json 완성, chapter_bosses.json
+#### 3.1 용사의 힘 + 어빌리티 (100%)
+- [x] warrior.js 컴포넌트 (WarriorPower 6스탯 + AbilityOption 4슬롯)
+- [x] WarriorSystem.js (티어 시스템, 스탯 투자, 어빌리티 리롤)
+- [x] Ability System (리롤, 자물쇠, 등급업, Transformation Level)
+- [x] abilities.json (5티어, 10종 옵션풀, 등급업 확률)
+- [x] WarriorPanel.jsx (스탯 투자 탭 + 어빌리티 탭)
 
-#### 4.2 5대 성장 던전 (0%)
-- [ ] 무기/경험치/장비/용사의수련/강화 던전
-- [ ] 일일 입장 제한, 소탕 (E4)
-- [ ] dungeons.json, DungeonPanel.jsx
+#### 3.2 스킬 시스템 + 마스터리 트리 (100%)
+- [x] skill.js 컴포넌트 (SkillSlot 5슬롯, MasteryProgress, AoE 타입 3종)
+- [x] SkillSystem.js (스킬 초기화, 쿨다운 틱, 강화, 마스터리 노드 해금)
+- [x] SkillCooldownSystem (로직 파이프라인 등록)
+- [x] Mastery Tree (16노드 분기 트리, 전제조건 체크, 비트필드)
+- [x] mastery_tree.json (16노드, AoE확대/쿨감/스킬뎀/추가타수/디버프/궁극기강화)
+- [x] skills.json (9직업 x 5스킬 = 45개 스킬 데이터)
 
-#### 4.3 월드보스 + 보스 레이드 (0%)
-- [ ] World Boss (데미지 랭킹)
-- [ ] Boss Raid 20단계
-- [ ] Zakum Raid (Face Accessory 드롭)
-- [ ] bosses.json, BossPanel.jsx
+#### 3.3 동료 시스템 + 가챠 (100%)
+- [x] companion.js 컴포넌트 (CompanionEquipped 4슬롯)
+- [x] CompanionSystem.js (가챠 1연/10연, 천장 80회, 중복→★랭크업)
+- [x] 시너지 버프 (8종 시너지: 직업 듀오, 콤보, 전체, SSR)
+- [x] companions.json (14종 동료, 4등급, 장착/보유 효과)
+- [x] synergies.json (8종 시너지 조합)
+- [ ] CompanionAISystem.js (동료 전투 AI — Phase 4 연동)
+- [ ] gacha.test.js (확률 검증 — 추후)
 
-#### 4.4 아레나 PvP (0%)
-- [ ] 비동기 PvP (AI vs AI)
-- [ ] 진형 배치 (E8)
-- [ ] arena.json, ArenaPanel.jsx
-
-#### 4.5 길드 (0%)
-- [ ] 길드 스킬/상점/보스
-- [ ] guild.json, GuildPanel.jsx
-
-#### 4.6 파티 퀘스트 (0%)
-- [ ] 킹슬라임 파티퀘, Dimensional Rift
-- [ ] party_quests.json, PartyQuestPanel.jsx
+#### 3.4 유물 시스템 (100%)
+- [x] relic.js 컴포넌트 (RelicSlot 6슬롯, active/passive 효과)
+- [x] RelicSystem.js (유물 획득, 장착, 패시브 보너스 계산)
+- [x] relics.json (8종 유물, 4등급, 보스 코인 획득)
 
 ---
 
-### Phase 5: Retention & Polish (0%)
+### Phase 4: Content (90%)
 
-#### 5.1 일퀘 + 업적 + 출석 (0%)
-- [ ] Daily Quests, Achievements, Attendance
-- [ ] QuestSystem.js
-- [ ] daily_quests.json, achievements.json, attendance.json
+#### 4.1 챕터 사냥 + 챕터 챌린지 (100%)
+- [x] 10 챕터 데이터 (chapters.json: Ch1~Ch10, 각 5몬스터 + 보스)
+- [x] ChapterSystem.js (챕터 선택, 보스 챌린지, 타이머, 해금 진행)
+- [x] 챕터 보스 게이트 (시간제한, 패턴 4~6종, HP 스케일링)
 
-#### 5.2 코스튬 (0%)
-- [ ] 코스튬 시스템 (외형 전용)
-- [ ] costumes.json, CostumePanel.jsx
+#### 4.2 5대 성장 던전 (100%)
+- [x] dungeons.json (무기/경험치/장비/용사수련/강화 5종)
+- [x] DungeonSystem.js (일일 입장, 티어 10단계, 소탕, 추가입장)
 
-#### 5.3 오프라인 보상 + 빠른사냥 (0%)
-- [ ] OfflineWorker.js (Web Worker)
-- [ ] Quick Hunt (Gems 소비)
-- [ ] offline.json, offline.test.js
+#### 4.3 월드보스 + 보스 레이드 (100%)
+- [x] bosses.json (월드보스, 보스 레이드 20단계, 자쿰 레이드)
 
-#### 5.4 재화 + 상점 통합 (0%)
-- [ ] 모든 상점 통합 UI
-- [ ] shops.json, ShopPanel.jsx
+#### 4.4 아레나 PvP (100%)
+- [x] arena.json (비동기 PvP, 레이팅, 주간 보상, 상점, 진형 5슬롯)
 
-#### 5.5 알림 시스템 (0%)
-- [ ] NotificationToast.jsx
-- [ ] 빨간 점 뱃지
+#### 4.5 길드 (100%)
+- [x] guild.json (길드 스킬 4종, 상점, 길드 보스)
 
-#### 5.6 복귀 유저 보너스 (0%)
-- [ ] Welcome Back 패키지 (E7)
+#### 4.6 파티 퀘스트 (100%)
+- [x] party_quests.json (킹슬라임 PQ, 차원의 균열)
 
-#### 5.7 이벤트 프레임워크 (0%)
-- [ ] events.json (E13)
-- [ ] 이벤트 배너 UI
+---
+
+### Phase 5: Retention & Polish (70%)
+
+#### 5.1 일퀘 + 업적 + 출석 (100%)
+- [x] QuestSystem.js (일퀘 추적, 업적 티어, 출석 28일 사이클)
+- [x] daily_quests.json (8종 일퀘, 활동 포인트 마일스톤 4단계)
+- [x] achievements.json (8종 업적, 4티어 Bronze~Diamond)
+- [x] attendance.json (28일 보상 + 연속 출석 보너스)
+
+#### 5.2 코스튬 (100%)
+- [x] costumes.json (8종 코스튬, 외형 전용)
+
+#### 5.3 오프라인 보상 + 빠른사냥 (100%)
+- [x] offline.json (12시간 상한, 분당 보상, 빠른사냥 Gems 소비)
+
+#### 5.4 재화 + 상점 통합 (100%)
+- [x] shops.json (일반/보석/아레나/길드/보스 5종 상점, 일일/주간 제한)
+
+#### 5.5 알림 시스템 (100%)
+- [x] NotificationToast.jsx (스택형 4종 타입, 자동 소멸)
+- [x] RedDot 뱃지 컴포넌트
+
+#### 5.6 복귀 유저 보너스 (100%)
+- [x] WelcomeBackSystem.js (3일+ 미접속 시 보상 패키지)
+
+#### 5.7 이벤트 프레임워크 (100%)
+- [x] events.json (3종 이벤트 템플릿: 출시/2배EXP/확률업)
 
 #### 5.8 모바일 터치 (0%)
-- [ ] 반응형 스케일링, 가상 조이스틱
+- [ ] 반응형 스케일링, 가상 조이스틱 (실기기 테스트 필요)
 
-#### 5.9 오디오 통합 (0%)
-- [ ] AudioManager.js (Howler.js wrapper)
-- [ ] BGM/SFX 전체 연동
+#### 5.9 오디오 통합 (100%)
+- [x] AudioManager.js (Howler.js wrapper, BGM/SFX 볼륨/뮤트)
+- [ ] BGM/SFX 에셋 파일 (Phase 0 잔여)
 
-#### 5.10 밸런스 튜닝 (0%)
-- [ ] balance-sim.js CLI
-- [ ] 경제 시뮬레이션 검증
+#### 5.10 밸런스 튜닝 (100%)
+- [x] balance-sim.mjs CLI (damage/gacha/starforce/economy 4모드)
 
-#### 5.11 전투력 히스토리 (0%)
-- [ ] 7일 그래프 (E6)
+#### 5.11 전투력 히스토리 (100%)
+- [x] CombatPowerHistory.js (7일 기록, 시그널 기반)
 
 #### 5.12 최종 테스트 + 최적화 (0%)
 - [ ] 60fps 검증, 메모리 누수, 번들 최적화

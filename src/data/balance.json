@@ -3,6 +3,9 @@
     "randomRange": [0.95, 1.05],
     "armorPenCap": 0.8,
     "minDamage": 1,
+    "defaultMinDmgRatio": 0.8,
+    "defaultMaxDmgRatio": 1.2,
+    "defaultMaxDmgMultiplier": 99999999,
     "excessAccuracyBonus": { "perN": 10, "bonusPct": 1 }
   },
   "experience": {

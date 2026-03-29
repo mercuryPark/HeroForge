@@ -1,0 +1,37 @@
+{
+  "warriorPower": {
+    "maxTier": 5,
+    "tierCaps": [50, 100, 200, 400, 800],
+    "statPerPoint": {
+      "accuracy": 2,
+      "damage": 1,
+      "mainStat": 1,
+      "atk": 0.5,
+      "hp": 10,
+      "def": 1
+    },
+    "tokenCostPerPoint": 1,
+    "priority": ["accuracy", "damage", "mainStat", "atk", "hp", "def"]
+  },
+  "ability": {
+    "maxSlots": 4,
+    "slotsPerTier": [1, 2, 2, 3, 4],
+    "rerollCostBase": 10,
+    "lockCostMultiplier": 2,
+    "grades": ["rare", "epic", "unique", "legendary", "mythic"],
+    "gradeUpBaseChance": [0, 5, 3, 1, 0],
+    "transformLevelBonus": 0.1,
+    "optionPool": [
+      { "id": "armor_pen",    "nameKr": "방어 관통%",   "range": { "rare": [1,3], "epic": [3,5], "unique": [5,8], "legendary": [8,12], "mythic": [12,16] } },
+      { "id": "damage_pct",   "nameKr": "데미지%",      "range": { "rare": [1,3], "epic": [3,6], "unique": [6,10], "legendary": [10,15], "mythic": [15,20] } },
+      { "id": "main_stat",    "nameKr": "주스탯",       "range": { "rare": [5,10], "epic": [10,20], "unique": [20,35], "legendary": [35,55], "mythic": [55,80] } },
+      { "id": "atk_flat",     "nameKr": "ATK",          "range": { "rare": [3,6], "epic": [6,12], "unique": [12,20], "legendary": [20,32], "mythic": [32,48] } },
+      { "id": "crit_dmg_pct", "nameKr": "크리 데미지%", "range": { "rare": [1,2], "epic": [2,4], "unique": [4,7], "legendary": [7,11], "mythic": [11,15] } },
+      { "id": "atk_speed",    "nameKr": "공격속도",     "range": { "rare": [1,2], "epic": [2,3], "unique": [3,5], "legendary": [5,7], "mythic": [7,10] } },
+      { "id": "exp_bonus",    "nameKr": "경험치%",      "range": { "rare": [1,3], "epic": [3,5], "unique": [5,8], "legendary": [8,12], "mythic": [12,16] } },
+      { "id": "hp_flat",      "nameKr": "HP",           "range": { "rare": [50,100], "epic": [100,200], "unique": [200,400], "legendary": [400,700], "mythic": [700,1100] } },
+      { "id": "def_flat",     "nameKr": "DEF",          "range": { "rare": [5,10], "epic": [10,20], "unique": [20,35], "legendary": [35,55], "mythic": [55,80] } },
+      { "id": "boss_dmg_pct", "nameKr": "보스 데미지%", "range": { "rare": [1,3], "epic": [3,6], "unique": [6,10], "legendary": [10,15], "mythic": [15,20] } }
+    ]
+  }
+}

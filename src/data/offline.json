@@ -1,0 +1,14 @@
+{
+  "offlineReward": {
+    "maxHours": 12,
+    "expPerMinute": 10,
+    "goldPerMinute": 5,
+    "monsterPointsPerMinute": 1,
+    "efficiencyRate": 0.5
+  },
+  "quickHunt": {
+    "gemsCost": 100,
+    "durationMinutes": 60,
+    "efficiencyRate": 1.0
+  }
+}

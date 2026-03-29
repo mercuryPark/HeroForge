@@ -1,0 +1,19 @@
+{
+  "quests": [
+    { "id": "kill_100",      "nameKr": "몬스터 100마리 처치",  "type": "kill",      "target": 100, "reward": { "gold": 1000, "activityPoints": 20 } },
+    { "id": "kill_500",      "nameKr": "몬스터 500마리 처치",  "type": "kill",      "target": 500, "reward": { "gold": 5000, "activityPoints": 40 } },
+    { "id": "dungeon_1",     "nameKr": "던전 1회 클리어",      "type": "dungeon",   "target": 1,   "reward": { "gems": 50,   "activityPoints": 30 } },
+    { "id": "dungeon_3",     "nameKr": "던전 3회 클리어",      "type": "dungeon",   "target": 3,   "reward": { "gems": 150,  "activityPoints": 50 } },
+    { "id": "enhance_1",     "nameKr": "장비 강화 1회",        "type": "enhance",   "target": 1,   "reward": { "gold": 2000, "activityPoints": 15 } },
+    { "id": "elite_1",       "nameKr": "엘리트 몬스터 1회 소환","type": "elite",    "target": 1,   "reward": { "armor_stones": 5, "activityPoints": 25 } },
+    { "id": "boss_1",        "nameKr": "보스 도전 1회",        "type": "boss",      "target": 1,   "reward": { "gold": 3000, "activityPoints": 35 } },
+    { "id": "gacha_1",       "nameKr": "가챠 1회 뽑기",        "type": "gacha",     "target": 1,   "reward": { "gems": 30,   "activityPoints": 10 } }
+  ],
+  "activityMilestones": [
+    { "points": 50,  "reward": { "gold": 3000 } },
+    { "points": 100, "reward": { "gems": 100 } },
+    { "points": 150, "reward": { "scroll_70": 2 } },
+    { "points": 200, "reward": { "cube_normal": 1, "gold": 10000 } }
+  ],
+  "resetHour": 0
+}

@@ -1,0 +1,12 @@
+{
+  "synergies": [
+    { "id": "warrior_duo",    "nameKr": "전사의 결속",   "condition": { "jobClass": "warrior", "count": 2 }, "bonus": { "stat": "def", "valuePct": 10 } },
+    { "id": "mage_duo",       "nameKr": "마법의 공명",   "condition": { "jobClass": "mage",    "count": 2 }, "bonus": { "stat": "atk", "valuePct": 8 } },
+    { "id": "archer_duo",     "nameKr": "사격의 호흡",   "condition": { "jobClass": "archer",  "count": 2 }, "bonus": { "stat": "critRate", "valueFlat": 10 } },
+    { "id": "thief_duo",      "nameKr": "그림자 연합",   "condition": { "jobClass": "thief",   "count": 2 }, "bonus": { "stat": "atkSpeed", "valueFlat": 5 } },
+    { "id": "mage_archer",    "nameKr": "마궁 시너지",   "condition": { "combo": ["mage", "archer"] },       "bonus": { "stat": "skillDmgPercent", "valueFlat": 5 } },
+    { "id": "warrior_thief",  "nameKr": "공수 협공",     "condition": { "combo": ["warrior", "thief"] },     "bonus": { "stat": "critDmg", "valueFlat": 10 } },
+    { "id": "all_classes",    "nameKr": "완전한 파티",   "condition": { "allClasses": true },                 "bonus": { "stat": "finalDmgPercent", "valueFlat": 5 } },
+    { "id": "ssr_trio",       "nameKr": "전설의 팀",     "condition": { "rarity": 2, "count": 3 },           "bonus": { "stat": "atk", "valuePct": 15 } }
+  ]
+}

@@ -18,9 +18,23 @@ export const Stats = {
   atkSpeed: new Float32Array(MAX),
   accuracy: new Float32Array(MAX),
   evasion: new Float32Array(MAX),
+  armorPen: new Float32Array(MAX),
   dmgPercent: new Float32Array(MAX),
   bossDmgPercent: new Float32Array(MAX),
+  normalMonsterDmgPercent: new Float32Array(MAX),
+  skillDmgPercent: new Float32Array(MAX),
   finalDmgPercent: new Float32Array(MAX),
+  maxDmgMultiplier: new Float32Array(MAX),
+  minDmgRatio: new Float32Array(MAX),
+  maxDmgRatio: new Float32Array(MAX),
+}
+
+/** Tag: marks entity as a boss (applied by SpawnSystem for boss encounters in Phase 4+) */
+export const BossTag = {}
+
+/** Death/revive state */
+export const ReviveState = {
+  invincibleTimer: new Float32Array(MAX),
 }
 
 /** Active combat state */

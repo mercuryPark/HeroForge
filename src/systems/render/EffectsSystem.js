@@ -70,6 +70,16 @@ export function createEffectsSystem(worldContainer, eventBus) {
     return gfx
   }, 5)
 
+  // ─── Revive Burst Pool ────────────────────────────────────────────────────
+  const reviveBurstPool = new ObjectPool(() => {
+    const gfx = new Graphics()
+    gfx.circle(0, 0, 20)
+    gfx.fill({ color: 0x44ccff, alpha: 0.8 })
+    gfx.visible = false
+    worldContainer.addChild(gfx)
+    return gfx
+  }, 3)
+
   // ─── Spawn Pop Pool ────────────────────────────────────────────────────────
   const spawnPopPool = new ObjectPool(() => {
     const gfx = new Graphics()
@@ -152,6 +162,22 @@ export function createEffectsSystem(worldContainer, eventBus) {
     })
   }
 
+  function spawnReviveBurst(x, y) {
+    const gfx = reviveBurstPool.acquire()
+    gfx.x = x
+    gfx.y = y
+    gfx.scale.set(0.5)
+    gfx.alpha = 1
+    gfx.visible = true
+    activeEffects.push({
+      type: 'reviveBurst',
+      gfx,
+      pool: reviveBurstPool,
+      lifetime: 0,
+      maxLife: 0.6,
+    })
+  }
+
   function spawnSpawnPop(x, y) {
     const gfx = spawnPopPool.acquire()
     gfx.x = x
@@ -185,6 +211,12 @@ export function createEffectsSystem(worldContainer, eventBus) {
   eventBus.on('player:levelup', (e) => {
     if (e.x != null && e.y != null) {
       spawnLevelUp(e.x, e.y)
+    }
+  })
+
+  eventBus.on('combat:playerRevive', (e) => {
+    if (e.x != null && e.y != null) {
+      spawnReviveBurst(e.x, e.y)
     }
   })
 
@@ -232,6 +264,11 @@ export function createEffectsSystem(worldContainer, eventBus) {
         entry.gfx.scale.y = 1 + t * 0.4   // expand height slightly
         // Fade starts at 50% of lifetime for dramatic hold
         entry.gfx.alpha = t < 0.5 ? 1 : 1 - ((t - 0.5) / 0.5)
+
+      } else if (entry.type === 'reviveBurst') {
+        // Expanding cyan ring, fades out
+        entry.gfx.scale.set(0.5 + t * 2.5)
+        entry.gfx.alpha = 1 - t * t
 
       } else if (entry.type === 'spawnPop') {
         // Scale bounce: 0 → 1.2 → 1.0

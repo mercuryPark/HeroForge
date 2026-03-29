@@ -1,0 +1,40 @@
+{
+  "weaponTypes": {
+    "warrior": [
+      { "id": "sword", "name": "Sword", "nameKr": "검", "baseAtk": [20, 35] },
+      { "id": "axe", "name": "Axe", "nameKr": "도끼", "baseAtk": [25, 40] },
+      { "id": "spear", "name": "Spear", "nameKr": "창", "baseAtk": [22, 38] }
+    ],
+    "mage": [
+      { "id": "staff", "name": "Staff", "nameKr": "지팡이", "baseAtk": [15, 28] },
+      { "id": "wand", "name": "Wand", "nameKr": "완드", "baseAtk": [12, 25] }
+    ],
+    "archer": [
+      { "id": "bow", "name": "Bow", "nameKr": "활", "baseAtk": [18, 32] },
+      { "id": "crossbow", "name": "Crossbow", "nameKr": "석궁", "baseAtk": [22, 36] }
+    ],
+    "thief": [
+      { "id": "dagger", "name": "Dagger", "nameKr": "단검", "baseAtk": [16, 30] },
+      { "id": "claw", "name": "Claw", "nameKr": "아대", "baseAtk": [14, 28] }
+    ]
+  },
+  "gradeAtkMultiplier": {
+    "normal": 1.0,
+    "rare": 1.3,
+    "epic": 1.7,
+    "unique": 2.2,
+    "legendary": 3.0
+  },
+  "enhancement": {
+    "atkPerLevel": 5,
+    "materialCostBase": 10,
+    "materialCostPerLevel": 5,
+    "maxEnhanceLevel": 30,
+    "gradeUpCost": {
+      "normal_to_rare": { "materials": 50, "gold": 5000 },
+      "rare_to_epic": { "materials": 150, "gold": 20000 },
+      "epic_to_unique": { "materials": 400, "gold": 80000 },
+      "unique_to_legendary": { "materials": 1000, "gold": 300000 }
+    }
+  }
+}

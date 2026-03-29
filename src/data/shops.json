@@ -1,0 +1,45 @@
+{
+  "shops": {
+    "general": {
+      "nameKr": "일반 상점",
+      "items": [
+        { "id": "scroll_100", "cost": { "gold": 5000 }, "dailyLimit": 10 },
+        { "id": "scroll_70",  "cost": { "gold": 15000 }, "dailyLimit": 5 },
+        { "id": "cube_normal","cost": { "gold": 50000 }, "dailyLimit": 3 }
+      ]
+    },
+    "gem": {
+      "nameKr": "보석 상점",
+      "items": [
+        { "id": "scroll_30",       "cost": { "gems": 100 }, "dailyLimit": 3 },
+        { "id": "cube_miracle",    "cost": { "gems": 300 }, "dailyLimit": 1 },
+        { "id": "starforce_scroll","cost": { "gems": 150 }, "dailyLimit": 5 },
+        { "id": "gold_pack_10k",   "cost": { "gems": 50 },  "dailyLimit": 10, "gives": { "gold": 10000 } }
+      ]
+    },
+    "arena": {
+      "nameKr": "아레나 상점",
+      "items": [
+        { "id": "starforce_scroll","cost": { "arena_points": 100 }, "weeklyLimit": 5 },
+        { "id": "cube_normal",     "cost": { "arena_points": 50 },  "weeklyLimit": 10 },
+        { "id": "scroll_30",       "cost": { "arena_points": 80 },  "weeklyLimit": 5 }
+      ]
+    },
+    "guild": {
+      "nameKr": "길드 상점",
+      "items": [
+        { "id": "scroll_70",   "cost": { "guild_coins": 50 },  "weeklyLimit": 3 },
+        { "id": "cube_normal", "cost": { "guild_coins": 80 },  "weeklyLimit": 2 },
+        { "id": "armor_stones","cost": { "guild_coins": 30 },  "amount": 10, "weeklyLimit": 5 }
+      ]
+    },
+    "boss": {
+      "nameKr": "보스 상점",
+      "items": [
+        { "id": "cube_miracle",    "cost": { "boss_coins": 200 }, "weeklyLimit": 1 },
+        { "id": "scroll_15",       "cost": { "boss_coins": 100 }, "weeklyLimit": 3 },
+        { "id": "starforce_scroll","cost": { "boss_coins": 80 },  "weeklyLimit": 5 }
+      ]
+    }
+  }
+}

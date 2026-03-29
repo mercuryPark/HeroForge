@@ -13,5 +13,9 @@ export default defineConfig({
       '@render': '/src/render',
       '@ui': '/src/ui',
     }
+  },
+  test: {
+    globals: true,
+    environment: 'node',
   }
 })

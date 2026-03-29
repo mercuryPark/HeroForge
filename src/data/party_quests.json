@@ -1,0 +1,38 @@
+{
+  "partyQuests": [
+    {
+      "id": "king_slime_pq",
+      "nameKr": "킹슬라임 파티퀘스트",
+      "requiredLevel": 30,
+      "minPartySize": 1,
+      "maxPartySize": 4,
+      "timeLimitSec": 300,
+      "stages": 3,
+      "bossHp": 500000,
+      "rewards": {
+        "exp": 10000,
+        "gold": 3000,
+        "ringDropRate": 0.15,
+        "monsterPoints": 50
+      }
+    },
+    {
+      "id": "dimensional_rift",
+      "nameKr": "차원의 균열",
+      "requiredLevel": 80,
+      "minPartySize": 1,
+      "maxPartySize": 4,
+      "timeLimitSec": 600,
+      "stages": 5,
+      "bossHp": 5000000,
+      "rewards": {
+        "exp": 50000,
+        "gold": 15000,
+        "relicDropRate": 0.10,
+        "monsterPoints": 200
+      }
+    }
+  ],
+  "dailyEntries": 2,
+  "resetHour": 0
+}

@@ -1,0 +1,13 @@
+{
+  "costumes": [
+    { "id": "default",     "nameKr": "기본",       "source": "default",   "cost": 0 },
+    { "id": "knight",      "nameKr": "기사 갑옷",  "source": "shop",      "cost": { "gems": 500 } },
+    { "id": "dark_armor",  "nameKr": "암흑 갑옷",  "source": "shop",      "cost": { "gems": 800 } },
+    { "id": "royal_robe",  "nameKr": "왕실 로브",  "source": "shop",      "cost": { "gems": 1000 } },
+    { "id": "phoenix_suit","nameKr": "불사조 세트", "source": "achievement","cost": 0 },
+    { "id": "dragon_armor","nameKr": "드래곤 아머", "source": "event",     "cost": 0 },
+    { "id": "shadow_cloak","nameKr": "그림자 망토", "source": "arena",     "cost": { "arena_points": 500 } },
+    { "id": "golden_set",  "nameKr": "황금 세트",  "source": "shop",      "cost": { "gems": 2000 } }
+  ],
+  "note": "Costumes are visual only — no stat bonuses"
+}

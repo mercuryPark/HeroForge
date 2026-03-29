@@ -11,7 +11,7 @@
  */
 import { query, hasComponent } from 'bitecs'
 import { Position, PrevPosition } from '@components/transform'
-import { Stats, Dead } from '@components/combat'
+import { Stats, Dead, ReviveState } from '@components/combat'
 import { AnimState } from '@components/sprite'
 import { getSprite, updateHpBar } from '@render/SpriteFactory'
 
@@ -56,8 +56,16 @@ export function SpriteSystem(world) {
       updateHpBar(eid, ratio)
     }
 
-    // --- Death fade ---
-    sprite.container.alpha = hasComponent(world, eid, Dead) ? 0.3 : 1.0
+    // --- Death fade / Invincibility flash ---
+    if (hasComponent(world, eid, Dead)) {
+      sprite.container.alpha = 0.3
+    } else if (hasComponent(world, eid, ReviveState) && ReviveState.invincibleTimer[eid] > 0) {
+      // Flash: oscillate alpha between 0.3 and 1.0 at ~8Hz using world elapsed time
+      const elapsed = world.time.elapsed || 0
+      sprite.container.alpha = 0.3 + 0.7 * (Math.sin(elapsed * 16) * 0.5 + 0.5)
+    } else {
+      sprite.container.alpha = 1.0
+    }
   }
 
   return world

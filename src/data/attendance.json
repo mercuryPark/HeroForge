@@ -1,0 +1,40 @@
+{
+  "cycleDays": 28,
+  "dailyRewards": [
+    { "day": 1,  "reward": { "gold": 5000 } },
+    { "day": 2,  "reward": { "gems": 50 } },
+    { "day": 3,  "reward": { "scroll_70": 2 } },
+    { "day": 4,  "reward": { "gold": 8000 } },
+    { "day": 5,  "reward": { "armor_stones": 10 } },
+    { "day": 6,  "reward": { "gems": 80 } },
+    { "day": 7,  "reward": { "cube_normal": 2 } },
+    { "day": 8,  "reward": { "gold": 10000 } },
+    { "day": 9,  "reward": { "weapon_materials": 20 } },
+    { "day": 10, "reward": { "gems": 100 } },
+    { "day": 11, "reward": { "scroll_30": 1 } },
+    { "day": 12, "reward": { "gold": 15000 } },
+    { "day": 13, "reward": { "starforce_scroll": 3 } },
+    { "day": 14, "reward": { "cube_normal": 3, "gems": 150 } },
+    { "day": 15, "reward": { "gold": 20000 } },
+    { "day": 16, "reward": { "armor_stones": 20 } },
+    { "day": 17, "reward": { "gems": 120 } },
+    { "day": 18, "reward": { "scroll_70": 3 } },
+    { "day": 19, "reward": { "gold": 25000 } },
+    { "day": 20, "reward": { "weapon_materials": 30 } },
+    { "day": 21, "reward": { "cube_miracle": 1, "gems": 200 } },
+    { "day": 22, "reward": { "gold": 30000 } },
+    { "day": 23, "reward": { "starforce_scroll": 5 } },
+    { "day": 24, "reward": { "gems": 200 } },
+    { "day": 25, "reward": { "scroll_30": 2 } },
+    { "day": 26, "reward": { "gold": 40000 } },
+    { "day": 27, "reward": { "armor_stones": 30 } },
+    { "day": 28, "reward": { "cube_miracle": 2, "gems": 500 } }
+  ],
+  "consecutiveBonus": {
+    "3days":  { "gold": 5000 },
+    "7days":  { "gems": 100 },
+    "14days": { "cube_normal": 2 },
+    "21days": { "cube_miracle": 1 },
+    "28days": { "gems": 1000 }
+  }
+}

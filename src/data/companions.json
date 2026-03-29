@@ -1,0 +1,28 @@
+{
+  "companions": [
+    { "id": "warrior_knight",   "nameKr": "기사",     "rarity": 0, "jobClass": "warrior", "equipEffect": { "stat": "def", "value": 15 },  "ownEffect": { "stat": "hp", "value": 50 } },
+    { "id": "warrior_berserker","nameKr": "광전사",   "rarity": 1, "jobClass": "warrior", "equipEffect": { "stat": "atk", "value": 20 },  "ownEffect": { "stat": "hp", "value": 100 } },
+    { "id": "warrior_guardian", "nameKr": "수호자",   "rarity": 2, "jobClass": "warrior", "equipEffect": { "stat": "def", "value": 40 },  "ownEffect": { "stat": "hp", "value": 200 } },
+    { "id": "mage_apprentice",  "nameKr": "견습 마법사","rarity": 0, "jobClass": "mage",   "equipEffect": { "stat": "atk", "value": 12 },  "ownEffect": { "stat": "mp", "value": 30 } },
+    { "id": "mage_wizard",     "nameKr": "위자드",   "rarity": 1, "jobClass": "mage",    "equipEffect": { "stat": "atk", "value": 25 },  "ownEffect": { "stat": "mp", "value": 80 } },
+    { "id": "mage_archmage",   "nameKr": "대마법사", "rarity": 2, "jobClass": "mage",    "equipEffect": { "stat": "atk", "value": 50 },  "ownEffect": { "stat": "mp", "value": 200 } },
+    { "id": "archer_scout",    "nameKr": "정찰병",   "rarity": 0, "jobClass": "archer",  "equipEffect": { "stat": "critRate", "value": 5 },"ownEffect": { "stat": "accuracy", "value": 10 } },
+    { "id": "archer_ranger",   "nameKr": "레인저",   "rarity": 1, "jobClass": "archer",  "equipEffect": { "stat": "critRate", "value": 10 },"ownEffect": { "stat": "accuracy", "value": 25 } },
+    { "id": "archer_sniper",   "nameKr": "스나이퍼", "rarity": 2, "jobClass": "archer",  "equipEffect": { "stat": "critDmg", "value": 30 },"ownEffect": { "stat": "accuracy", "value": 50 } },
+    { "id": "thief_rogue",     "nameKr": "도적",     "rarity": 0, "jobClass": "thief",   "equipEffect": { "stat": "atkSpeed", "value": 3 },"ownEffect": { "stat": "evasion", "value": 5 } },
+    { "id": "thief_assassin",  "nameKr": "어쌔신",   "rarity": 1, "jobClass": "thief",   "equipEffect": { "stat": "critRate", "value": 8 },"ownEffect": { "stat": "evasion", "value": 12 } },
+    { "id": "thief_phantom",   "nameKr": "팬텀",     "rarity": 2, "jobClass": "thief",   "equipEffect": { "stat": "critDmg", "value": 25 },"ownEffect": { "stat": "evasion", "value": 25 } },
+    { "id": "healer_priest",   "nameKr": "사제",     "rarity": 1, "jobClass": "mage",    "equipEffect": { "stat": "hp", "value": 200 },   "ownEffect": { "stat": "def", "value": 15 } },
+    { "id": "dragon_whelp",    "nameKr": "드래곤",   "rarity": 2, "jobClass": "warrior", "equipEffect": { "stat": "atk", "value": 45 },   "ownEffect": { "stat": "bossDmgPercent", "value": 5 } }
+  ],
+  "gacha": {
+    "singleCost": 100,
+    "tenPullCost": 900,
+    "rates": { "R": 80, "SR": 17, "SSR": 3 },
+    "tenPullSRGuarantee": true,
+    "pityThreshold": 80,
+    "starPerDuplicate": 1,
+    "maxStar": 5,
+    "starStatBonus": 0.2
+  }
+}

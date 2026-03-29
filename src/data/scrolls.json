@@ -1,0 +1,25 @@
+{
+  "scrollTypes": [
+    { "id": "scroll_100", "nameKr": "100% 주문서", "successRate": 100, "statMultiplier": 0.3, "maxSlots": 7 },
+    { "id": "scroll_70",  "nameKr": "70% 주문서",  "successRate": 70,  "statMultiplier": 0.7, "maxSlots": 7 },
+    { "id": "scroll_30",  "nameKr": "30% 주문서",  "successRate": 30,  "statMultiplier": 1.5, "maxSlots": 7 },
+    { "id": "scroll_15",  "nameKr": "15% 주문서",  "successRate": 15,  "statMultiplier": 2.5, "maxSlots": 7 }
+  ],
+  "baseBonus": {
+    "hat":            { "def": 3, "hp": 15 },
+    "top":            { "def": 4, "hp": 20 },
+    "bottom":         { "def": 3, "hp": 15 },
+    "gloves":         { "atk": 2, "critRate": 1 },
+    "shoes":          { "def": 2, "hp": 10 },
+    "cape":           { "def": 2, "atk": 1 },
+    "shoulder":       { "def": 2, "hp": 12 },
+    "belt":           { "def": 2, "hp": 25 },
+    "necklace":       { "atk": 2, "hp": 15 },
+    "ring":           { "atk": 2, "critDmg": 2 },
+    "face_accessory": { "def": 1, "hp": 8 }
+  },
+  "highLevelBonus": {
+    "levelThreshold": 85,
+    "multiplier": 1.5
+  }
+}

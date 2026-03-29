@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"npx vitest run tests/ 2>&1\",\"timeout\":30000,\"description\":\"Run all tests\"}",
+  "error": "Exit code 1\n\n RUN  v4.1.2 /Users/hoyeon/Documents/workspace/HeroForge\n\n ❯ tests/enhancement.test.js (14 tests | 1 failed) 44ms\n     × scroll fails when no slots remaining 5ms\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  tests/enhancement.test.js > Scroll Enhancement > scroll fails when no slots remaining\nAssertionError: expected true to be false // Object.is equality\n\n- Expected\n+ Received\n\n- false\n+ true\n\n ❯ tests/enhancement.test.js:37:28\n     35|     const item = makeItem({ scrollSlots: 0 })\n     ...",
+  "timestamp": "2026-03-28T09:04:53.894Z",
+  "retry_count": 1
+}

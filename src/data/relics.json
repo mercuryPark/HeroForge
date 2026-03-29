@@ -1,0 +1,18 @@
+{
+  "maxSlots": 6,
+  "relics": [
+    { "id": "relic_sword",   "nameKr": "고대의 검",     "grade": 0, "activeType": "atk_boost",    "activeValue": 20, "activeDuration": 10, "passiveType": "atk_flat",     "passiveValue": 10 },
+    { "id": "relic_shield",  "nameKr": "수호의 방패",   "grade": 0, "activeType": "def_boost",    "activeValue": 30, "activeDuration": 10, "passiveType": "def_flat",     "passiveValue": 8 },
+    { "id": "relic_amulet",  "nameKr": "마력의 부적",   "grade": 1, "activeType": "skill_dmg_boost","activeValue": 15, "activeDuration": 8, "passiveType": "atk_pct",     "passiveValue": 3 },
+    { "id": "relic_ring",    "nameKr": "크리티컬 링",   "grade": 1, "activeType": "crit_boost",   "activeValue": 25, "activeDuration": 8,  "passiveType": "critRate_flat", "passiveValue": 5 },
+    { "id": "relic_crown",   "nameKr": "왕의 왕관",     "grade": 2, "activeType": "all_stat_boost","activeValue": 20, "activeDuration": 12, "passiveType": "hp_pct",       "passiveValue": 5 },
+    { "id": "relic_orb",     "nameKr": "심판의 오브",   "grade": 2, "activeType": "final_dmg_boost","activeValue": 10,"activeDuration": 10, "passiveType": "boss_dmg_flat", "passiveValue": 5 },
+    { "id": "relic_dragon",  "nameKr": "드래곤의 심장", "grade": 3, "activeType": "invincible",   "activeValue": 5,  "activeDuration": 5,  "passiveType": "atk_pct",      "passiveValue": 8 },
+    { "id": "relic_phoenix", "nameKr": "불사조 깃털",   "grade": 3, "activeType": "hp_restore",   "activeValue": 50, "activeDuration": 0,  "passiveType": "hp_pct",       "passiveValue": 10 }
+  ],
+  "gradeNames": ["레어", "에픽", "유니크", "레전더리"],
+  "acquisition": {
+    "bossCoinsPerPull": 50,
+    "gradeRates": [50, 30, 15, 5]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "tiers": ["bronze", "silver", "gold", "diamond"],
+  "achievements": [
+    { "id": "total_kills",     "nameKr": "몬스터 사냥꾼",  "targets": [100, 1000, 10000, 100000],  "rewards": [{ "gold": 1000 }, { "gems": 100 }, { "gems": 500 }, { "cube_miracle": 3 }] },
+    { "id": "total_gold",      "nameKr": "부자",           "targets": [10000, 100000, 1000000, 10000000], "rewards": [{ "gems": 50 }, { "gems": 200 }, { "scroll_30": 5 }, { "cube_miracle": 2 }] },
+    { "id": "total_enhance",   "nameKr": "강화의 달인",    "targets": [10, 50, 200, 1000],         "rewards": [{ "gold": 2000 }, { "scroll_70": 3 }, { "starforce_scroll": 5 }, { "cube_miracle": 5 }] },
+    { "id": "total_gacha",     "nameKr": "행운의 모험가",  "targets": [10, 50, 200, 800],          "rewards": [{ "gems": 100 }, { "gems": 300 }, { "gems": 1000 }, { "gems": 5000 }] },
+    { "id": "chapter_clear",   "nameKr": "모험가",         "targets": [1, 3, 6, 10],              "rewards": [{ "gold": 5000 }, { "gems": 200 }, { "gems": 500 }, { "cube_miracle": 5 }] },
+    { "id": "max_level",       "nameKr": "레벨 마스터",    "targets": [30, 60, 100, 200],          "rewards": [{ "gold": 3000 }, { "gems": 300 }, { "gems": 1000 }, { "gems": 10000 }] },
+    { "id": "total_companions", "nameKr": "동료 수집가",   "targets": [3, 6, 10, 14],             "rewards": [{ "gems": 100 }, { "gems": 300 }, { "gems": 800 }, { "gems": 3000 }] },
+    { "id": "starforce_15",    "nameKr": "스타포스 마스터", "targets": [1, 3, 6, 11],              "rewards": [{ "starforce_scroll": 3 }, { "starforce_scroll": 8 }, { "starforce_scroll": 15 }, { "starforce_scroll": 30 }] }
+  ]
+}

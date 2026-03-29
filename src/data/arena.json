@@ -1,0 +1,26 @@
+{
+  "arena": {
+    "nameKr": "아레나",
+    "type": "async_pvp",
+    "matchCooldownSec": 30,
+    "dailyMatches": 10,
+    "ratingBase": 1000,
+    "ratingGainWin": 25,
+    "ratingLossDefeat": 15,
+    "formations": {
+      "maxSlots": 5,
+      "positions": ["front_left", "front_right", "mid", "back_left", "back_right"]
+    },
+    "weeklyRewards": [
+      { "rank": "top1",  "arenaPoints": 500, "starforceScrolls": 5 },
+      { "rank": "top10", "arenaPoints": 300, "starforceScrolls": 3 },
+      { "rank": "top50", "arenaPoints": 150, "starforceScrolls": 1 },
+      { "rank": "top100","arenaPoints": 80,  "starforceScrolls": 0 }
+    ],
+    "shop": [
+      { "id": "starforce_scroll", "cost": 100, "limit": 5 },
+      { "id": "cube_normal", "cost": 50, "limit": 10 },
+      { "id": "scroll_30", "cost": 80, "limit": 5 }
+    ]
+  }
+}

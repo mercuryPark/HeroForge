@@ -11,6 +11,28 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f .omc/autodev-active ]; then RESULT=$(bash tools/autodev-loop.sh 2>/dev/null); if [ $? -eq 0 ]; then echo \"[AUTODEV] 자동화 루프 활성. 현재 작업 완료 후 다음 작업을 계속 진행하세요. $RESULT\"; else echo \"[AUTODEV] 모든 Phase 완료! .omc/autodev-active를 삭제하고 최종 보고를 작성하세요.\"; fi; fi"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f .omc/autodev-active ]; then echo '[AUTODEV] 빌드/테스트 실패 감지. 에러를 수정하고 다시 검증하세요. 자동화 루프를 중단하지 마세요.'; fi"
+          }
+        ]
+      }
     ]
   }
 }

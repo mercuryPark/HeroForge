@@ -1,0 +1,36 @@
+{
+  "maxStars": 25,
+  "table": [
+    { "star": 0,  "success": 95, "maintain": 5,  "drop": 0,  "destroy": 0,  "allStat": 1 },
+    { "star": 1,  "success": 90, "maintain": 10, "drop": 0,  "destroy": 0,  "allStat": 1 },
+    { "star": 2,  "success": 85, "maintain": 15, "drop": 0,  "destroy": 0,  "allStat": 1 },
+    { "star": 3,  "success": 80, "maintain": 20, "drop": 0,  "destroy": 0,  "allStat": 2 },
+    { "star": 4,  "success": 75, "maintain": 25, "drop": 0,  "destroy": 0,  "allStat": 2 },
+    { "star": 5,  "success": 70, "maintain": 30, "drop": 0,  "destroy": 0,  "allStat": 2 },
+    { "star": 6,  "success": 65, "maintain": 35, "drop": 0,  "destroy": 0,  "allStat": 3 },
+    { "star": 7,  "success": 60, "maintain": 40, "drop": 0,  "destroy": 0,  "allStat": 3 },
+    { "star": 8,  "success": 55, "maintain": 45, "drop": 0,  "destroy": 0,  "allStat": 3 },
+    { "star": 9,  "success": 50, "maintain": 50, "drop": 0,  "destroy": 0,  "allStat": 4 },
+    { "star": 10, "success": 45, "maintain": 40, "drop": 15, "destroy": 0,  "allStat": 4 },
+    { "star": 11, "success": 40, "maintain": 35, "drop": 25, "destroy": 0,  "allStat": 5 },
+    { "star": 12, "success": 35, "maintain": 30, "drop": 34, "destroy": 1,  "allStat": 5, "unlockAdditionalCube": true },
+    { "star": 13, "success": 30, "maintain": 28, "drop": 40, "destroy": 2,  "allStat": 6 },
+    { "star": 14, "success": 25, "maintain": 25, "drop": 45, "destroy": 5,  "allStat": 7 },
+    { "star": 15, "success": 20, "maintain": 22, "drop": 48, "destroy": 10, "allStat": 8 },
+    { "star": 16, "success": 18, "maintain": 20, "drop": 47, "destroy": 15, "allStat": 9 },
+    { "star": 17, "success": 15, "maintain": 18, "drop": 47, "destroy": 20, "allStat": 10 },
+    { "star": 18, "success": 12, "maintain": 15, "drop": 48, "destroy": 25, "allStat": 12 },
+    { "star": 19, "success": 10, "maintain": 12, "drop": 48, "destroy": 30, "allStat": 14 },
+    { "star": 20, "success": 8,  "maintain": 10, "drop": 47, "destroy": 35, "allStat": 16 },
+    { "star": 21, "success": 6,  "maintain": 9,  "drop": 45, "destroy": 40, "allStat": 18 },
+    { "star": 22, "success": 4,  "maintain": 8,  "drop": 43, "destroy": 45, "allStat": 20 },
+    { "star": 23, "success": 3,  "maintain": 7,  "drop": 40, "destroy": 50, "allStat": 23 },
+    { "star": 24, "success": 2,  "maintain": 6,  "drop": 37, "destroy": 55, "allStat": 26 }
+  ],
+  "destroyPenalty": {
+    "starDrop": 3,
+    "goldPenaltyBase": 10000,
+    "goldPenaltyPerStar": 5000
+  },
+  "scrollCostPerAttempt": 1
+}

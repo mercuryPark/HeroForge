@@ -2,7 +2,7 @@ import { openDB } from 'idb'
 import { SAVE_VERSION, AUTOSAVE_INTERVAL } from '@data/constants'
 import { Position, PrevPosition } from '@components/transform'
 import { Stats } from '@components/combat'
-import { Level, Job, StatAllocation } from '@components/character'
+import { Level, Job, StatAllocation, AdvancementQuest } from '@components/character'
 import { AnimState } from '@components/sprite'
 
 const DB_NAME = 'heroforge'
@@ -51,6 +51,15 @@ export class SaveManager {
           atkSpeed: Stats.atkSpeed[eid],
           accuracy: Stats.accuracy[eid],
           evasion: Stats.evasion[eid],
+          armorPen: Stats.armorPen[eid],
+          dmgPercent: Stats.dmgPercent[eid],
+          bossDmgPercent: Stats.bossDmgPercent[eid],
+          normalMonsterDmgPercent: Stats.normalMonsterDmgPercent[eid],
+          skillDmgPercent: Stats.skillDmgPercent[eid],
+          finalDmgPercent: Stats.finalDmgPercent[eid],
+          maxDmgMultiplier: Stats.maxDmgMultiplier[eid],
+          minDmgRatio: Stats.minDmgRatio[eid],
+          maxDmgRatio: Stats.maxDmgRatio[eid],
         },
         level: {
           current: Level.current[eid],
@@ -68,6 +77,13 @@ export class SaveManager {
           int_: StatAllocation.int_[eid],
           luk: StatAllocation.luk[eid],
           availablePoints: StatAllocation.availablePoints[eid],
+        },
+        advancementQuest: {
+          questActive: AdvancementQuest.questActive[eid],
+          questTier: AdvancementQuest.questTier[eid],
+          killCount: AdvancementQuest.killCount[eid],
+          killTarget: AdvancementQuest.killTarget[eid],
+          questComplete: AdvancementQuest.questComplete[eid],
         },
       },
       economy: {
@@ -106,6 +122,15 @@ export class SaveManager {
       Stats.atkSpeed[eid] = p.stats.atkSpeed
       Stats.accuracy[eid] = p.stats.accuracy
       Stats.evasion[eid] = p.stats.evasion
+      Stats.armorPen[eid] = p.stats.armorPen || 0
+      Stats.dmgPercent[eid] = p.stats.dmgPercent || 0
+      Stats.bossDmgPercent[eid] = p.stats.bossDmgPercent || 0
+      Stats.normalMonsterDmgPercent[eid] = p.stats.normalMonsterDmgPercent || 0
+      Stats.skillDmgPercent[eid] = p.stats.skillDmgPercent || 0
+      Stats.finalDmgPercent[eid] = p.stats.finalDmgPercent || 0
+      Stats.maxDmgMultiplier[eid] = p.stats.maxDmgMultiplier || 0
+      Stats.minDmgRatio[eid] = p.stats.minDmgRatio || 0
+      Stats.maxDmgRatio[eid] = p.stats.maxDmgRatio || 0
     }
 
     // Level
@@ -129,6 +154,15 @@ export class SaveManager {
       StatAllocation.int_[eid] = p.statAllocation.int_
       StatAllocation.luk[eid] = p.statAllocation.luk
       StatAllocation.availablePoints[eid] = p.statAllocation.availablePoints
+    }
+
+    // AdvancementQuest
+    if (p.advancementQuest) {
+      AdvancementQuest.questActive[eid] = p.advancementQuest.questActive || 0
+      AdvancementQuest.questTier[eid] = p.advancementQuest.questTier || 0
+      AdvancementQuest.killCount[eid] = p.advancementQuest.killCount || 0
+      AdvancementQuest.killTarget[eid] = p.advancementQuest.killTarget || 0
+      AdvancementQuest.questComplete[eid] = p.advancementQuest.questComplete || 0
     }
 
     // Economy

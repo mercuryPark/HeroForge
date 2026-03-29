@@ -1,0 +1,21 @@
+{
+  "maxNodes": 16,
+  "nodes": [
+    { "id": 0,  "nameKr": "AoE 확대 I",     "type": "aoe_range",   "value": 10,  "cost": 1, "requires": [] },
+    { "id": 1,  "nameKr": "쿨타임 감소 I",   "type": "cooldown_red", "value": 5,  "cost": 1, "requires": [] },
+    { "id": 2,  "nameKr": "스킬 데미지 I",   "type": "skill_dmg",   "value": 5,   "cost": 1, "requires": [] },
+    { "id": 3,  "nameKr": "AoE 확대 II",    "type": "aoe_range",   "value": 15,  "cost": 2, "requires": [0] },
+    { "id": 4,  "nameKr": "쿨타임 감소 II",  "type": "cooldown_red", "value": 8,  "cost": 2, "requires": [1] },
+    { "id": 5,  "nameKr": "스킬 데미지 II",  "type": "skill_dmg",   "value": 8,   "cost": 2, "requires": [2] },
+    { "id": 6,  "nameKr": "추가 타수",       "type": "extra_hit",   "value": 1,   "cost": 3, "requires": [3] },
+    { "id": 7,  "nameKr": "쿨타임 감소 III", "type": "cooldown_red", "value": 12, "cost": 3, "requires": [4] },
+    { "id": 8,  "nameKr": "스킬 데미지 III", "type": "skill_dmg",   "value": 12,  "cost": 3, "requires": [5] },
+    { "id": 9,  "nameKr": "디버프: 슬로우",  "type": "debuff_slow", "value": 20,  "cost": 3, "requires": [3] },
+    { "id": 10, "nameKr": "디버프: 방깎",    "type": "debuff_def",  "value": 15,  "cost": 3, "requires": [5] },
+    { "id": 11, "nameKr": "AoE 확대 III",   "type": "aoe_range",   "value": 20,  "cost": 4, "requires": [6] },
+    { "id": 12, "nameKr": "궁극기 강화",     "type": "ult_dmg",     "value": 20,  "cost": 5, "requires": [7, 8] },
+    { "id": 13, "nameKr": "크리티컬 스킬",   "type": "skill_crit",  "value": 10,  "cost": 4, "requires": [8] },
+    { "id": 14, "nameKr": "MP 절약",         "type": "mp_save",     "value": 15,  "cost": 3, "requires": [1] },
+    { "id": 15, "nameKr": "마스터리 극대화",  "type": "all_skill",   "value": 5,   "cost": 6, "requires": [11, 12, 13] }
+  ]
+}

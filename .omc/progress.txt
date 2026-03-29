@@ -1,0 +1,21 @@
+# Autodev Hook Infrastructure - Progress
+
+## Iteration 1: Implementation Complete
+
+### Files Created
+- tools/autodev-loop.sh — COVERAGE.md parser, detects next incomplete sub-phase
+- .claude/commands/autodev.md — /autodev slash command (loop entry point)
+
+### Files Modified
+- .claude/settings.json — Added PostToolUse(TaskUpdate) and PostToolUseFailure(Bash) hooks
+
+### Key Decisions
+- autodev-loop.sh selects the HIGHEST numbered partial phase (Phase 2 > Phase 0)
+- State tracked via .omc/autodev-active file (touch to start, rm to stop)
+- macOS compatible (no tac, no GNU head -n -1)
+- Hook injects continuation context on TaskUpdate, not on every tool call (avoids noise)
+
+### Verification Results
+- US-001: Script executable, correct exit codes, Phase 2 detected, sub-phase 2.1 identified ✓
+- US-002: Command file exists, references COVERAGE.md/OPENSPEC/autodev-active/screenshot ✓
+- US-003: Valid JSON, all 3 hook matchers present (TaskUpdate, Bash, Edit|Write) ✓

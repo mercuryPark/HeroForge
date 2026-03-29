@@ -1,0 +1,34 @@
+{
+  "worldBoss": {
+    "nameKr": "월드보스: 혼돈의 드래곤",
+    "hp": 999999999,
+    "attackInterval": 120,
+    "rewards": {
+      "participationCoins": 10,
+      "rankRewards": [
+        { "rank": 1, "bonus": 500 },
+        { "rank": 2, "bonus": 300 },
+        { "rank": 3, "bonus": 200 },
+        { "rank": "top10", "bonus": 100 },
+        { "rank": "top50", "bonus": 50 }
+      ]
+    }
+  },
+  "bossRaid": {
+    "stages": 20,
+    "baseHp": 100000,
+    "hpPerStage": 2.5,
+    "rewards": {
+      "bossCoinsBase": 20,
+      "bossCoinsPerStage": 10
+    }
+  },
+  "zakumRaid": {
+    "nameKr": "자쿰 레이드",
+    "hp": 50000000,
+    "timeLimitSec": 600,
+    "requiredLevel": 100,
+    "faceAccessoryDropRate": 0.1,
+    "bossCoinsReward": 200
+  }
+}

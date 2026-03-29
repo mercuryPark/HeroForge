@@ -46,3 +46,91 @@
   color: #fff;
   border-color: #888;
 }
+
+.equipBtn {
+  pointer-events: all;
+  position: absolute;
+  bottom: 8px;
+  left: 182px;
+  padding: 6px 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #5B9BD5;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #5B9BD5;
+  cursor: pointer;
+}
+
+.equipBtn:hover {
+  color: #7BC8FF;
+  border-color: #7BC8FF;
+}
+
+.enhanceBtn {
+  pointer-events: all;
+  position: absolute;
+  bottom: 8px;
+  left: 240px;
+  padding: 6px 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #9B59B6;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #9B59B6;
+  cursor: pointer;
+}
+
+.enhanceBtn:hover {
+  color: #BB79D6;
+  border-color: #BB79D6;
+}
+
+.warriorBtn {
+  pointer-events: all;
+  position: absolute;
+  bottom: 8px;
+  left: 298px;
+  padding: 6px 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #E74C3C;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #E74C3C;
+  cursor: pointer;
+}
+
+.warriorBtn:hover {
+  color: #FF6B5C;
+  border-color: #FF6B5C;
+}
+
+.advBtn {
+  pointer-events: all;
+  position: absolute;
+  bottom: 8px;
+  left: 124px;
+  padding: 6px 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: #F39C12;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #F39C12;
+  cursor: pointer;
+}
+
+.advBtn:hover {
+  color: #FFD700;
+  border-color: #FFD700;
+}
+
+.advBadge {
+  color: #E74C3C;
+  margin-left: 4px;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

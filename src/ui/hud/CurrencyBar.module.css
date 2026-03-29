@@ -1,0 +1,29 @@
+.bar {
+  pointer-events: none;
+  position: absolute;
+  top: 130px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.icon {
+  color: #F39C12;
+  font-size: 7px;
+}
+
+.value {
+  color: #ccc;
+  font-size: 7px;
+  min-width: 40px;
+  text-align: right;
+}
